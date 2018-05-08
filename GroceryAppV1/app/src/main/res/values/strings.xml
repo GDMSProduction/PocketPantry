@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Grocery App V1</string>
+    <string name="pantry_title">My Pantry:</string>
+    <string name="nameLabel">Name:</string>
+    <string name="priceLabel">Price:</string>
+    <string name="dollarSign">$</string>
+    <string name="dateLabel">Expiration Date:</string>
+    <string name="addItemButtonText">Add Item</string>
+    <string name="blank" />
+    <string name="zero">0.00</string>
+</resources>
