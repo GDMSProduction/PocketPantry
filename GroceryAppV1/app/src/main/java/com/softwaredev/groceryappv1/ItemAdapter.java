@@ -30,8 +30,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
-        View listItem = convertView;
-        if(listItem == null)
+        View listItem = null;
+        if(convertView == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
 
         Item currentItem = itemList.get(position);
