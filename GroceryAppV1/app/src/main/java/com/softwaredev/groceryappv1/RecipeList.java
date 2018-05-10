@@ -23,7 +23,7 @@ public class RecipeList extends AppCompatActivity {
     }
     public void Populate()
     {
-        for(int i = 0; i < RList.size(); ++i)
+        for(int i = 0; i < 30; ++i)
         {
             RList.add(new String("Test"));
         }
