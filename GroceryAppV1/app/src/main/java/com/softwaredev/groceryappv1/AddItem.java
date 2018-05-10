@@ -21,7 +21,7 @@ public class AddItem extends AppCompatActivity {
         editText = findViewById(R.id.priceInput);
         float price = Float.valueOf(editText.getText().toString());
 
-        MainActivity.addToPantry(new Item(name, price));
+        PantryUI.addToPantry(new Item(name, price));
 
 
         finish();

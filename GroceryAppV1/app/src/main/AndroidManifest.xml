@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".EntryUI"
+            android:label="EntryUI"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,16 +21,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddItem"
-            android:parentActivityName=".MainActivity">
+            android:name=".PantryUI"
+            android:parentActivityName=".EntryUI">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".EntryUI" />
         </activity>
         <activity
-            android:name=".EntryUI"
-            android:label="@string/title_activity_entry_ui"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".AddItem"
+            android:parentActivityName=".PantryUI">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PantryUI" />
+        </activity>
     </application>
 
 </manifest>

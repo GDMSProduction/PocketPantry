@@ -5,14 +5,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
 
@@ -22,21 +19,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pantry_ui);
         Intent groceryList = getIntent();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddItem.class));
+                startActivity(new Intent(PantryUI.this, AddItem.class));
             }
         });
 
         pantryLV = (ListView) findViewById(R.id.pantryListView);
-        //ArrayAdapter<Item> arrayAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_expandable_list_item_1, pantry);
         adapter = new ItemAdapter(this, pantry);
         pantryLV.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        pantryLV = (ListView) findViewById(R.id.pantryListView);
+        adapter = new ItemAdapter(this, pantry);
+        pantryLV.setAdapter(adapter);
     }
 
     public static void addToPantry(Item _item)
