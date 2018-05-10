@@ -23,38 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        pantry.add(new Item("Apple", 0.98f, 5, 10,2018));
-        pantry.add(new Item("Orange", 2.00f, 5,15,2018));
-        pantry.add(new Item("Banana", 0.50f, 5,5,2018));
-
-       /* TextView textView = (TextView) findViewById(R.id.item1);
-        textView.setText(pantry.get(0).mName);
-
-        textView = (TextView) findViewById(R.id.item1Price);
-        textView.setText("$" + Float.toString(pantry.get(0).mPrice));
-
-        textView = (TextView) findViewById(R.id.item1Exp);
-        textView.setText(Integer.toString(pantry.get(0).mMonth) + "/" + Integer.toString(pantry.get(0).mDay) + "/" + Integer.toString(pantry.get(0).mYear));
-
-        textView = (TextView) findViewById(R.id.item2);
-        textView.setText(pantry.get(1).mName);
-
-        textView = (TextView) findViewById(R.id.item2Price);
-        textView.setText("$" + Float.toString(pantry.get(1).mPrice));
-
-        textView = (TextView) findViewById(R.id.item2Exp);
-        textView.setText(Integer.toString(pantry.get(1).mMonth) + "/" + Integer.toString(pantry.get(1).mDay) + "/" + Integer.toString(pantry.get(1).mYear));
-
-        textView = (TextView) findViewById(R.id.item3);
-        textView.setText(pantry.get(2).mName);
-
-        textView = (TextView) findViewById(R.id.item3Price);
-        textView.setText("$" + Float.toString(pantry.get(2).mPrice));
-
-        textView = (TextView) findViewById(R.id.item3Exp);
-        textView.setText(Integer.toString(pantry.get(2).mMonth) + "/" + Integer.toString(pantry.get(2).mDay) + "/" + Integer.toString(pantry.get(2).mYear));*/
-
+        Intent groceryList = getIntent();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
