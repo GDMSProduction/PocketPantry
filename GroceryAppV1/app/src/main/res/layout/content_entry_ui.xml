@@ -13,9 +13,12 @@
         android:layout_width="373dp"
         android:layout_height="93dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/title_bar" />
 
@@ -24,11 +27,15 @@
         android:layout_width="237dp"
         android:layout_height="54dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="72dp"
-        android:layout_marginTop="160dp"
-        android:onClick="sendMessage"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="172dp"
+        android:onClick="sendGroc"
         android:text="Pantry"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -37,11 +44,18 @@
         android:layout_height="54dp"
         android:layout_marginBottom="216dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="72dp"
-        android:onClick="sendMessage"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="sendGroc"
         android:text="Grocery List"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pantryButton"
+        app:layout_constraintVertical_bias="0.47" />
 
     <Button
         android:id="@+id/recipeButton"
@@ -49,10 +63,17 @@
         android:layout_height="54dp"
         android:layout_marginBottom="132dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="72dp"
-        android:onClick="sendMessage"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="sendRecipe"
         android:text="Recipe List"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groceryButton"
+        app:layout_constraintVertical_bias="0.696" />
 
 </android.support.constraint.ConstraintLayout>
