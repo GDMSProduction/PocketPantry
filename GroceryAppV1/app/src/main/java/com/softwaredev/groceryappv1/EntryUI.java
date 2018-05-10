@@ -15,11 +15,15 @@ public class EntryUI extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-    public void sendMessage(View v)
+    public void sendGroc(View v)
     {
         Intent grocIntent = new Intent(this, PantryUI.class);
         startActivity(grocIntent);
-        //Intent reciIntent = new Intent(this, )
+    }
+    public void sendRecipe(View v)
+    {
+        Intent RecipeIntent = new Intent(this, RecipeList.class);
+        startActivity(RecipeIntent);
     }
 
 }
