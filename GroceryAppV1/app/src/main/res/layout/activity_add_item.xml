@@ -94,6 +94,7 @@
         android:id="@+id/dateInput"
         android:clickable="true"
         android:focusable="false"
+        android:onClick="datePicker"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"

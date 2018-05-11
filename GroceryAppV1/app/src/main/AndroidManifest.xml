@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".PantryUI"
+            android:label="My Pantry"
             android:parentActivityName=".EntryUI">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -28,12 +29,19 @@
         </activity>
         <activity
             android:name=".AddItem"
+            android:label="Add item"
             android:parentActivityName=".PantryUI">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PantryUI" />
         </activity>
-        <activity android:name=".RecipeList"></activity>
+        <activity
+            android:name=".RecipeList">
+            android:parentActivityName=".EntryUI">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EntryUI" />
+        </activity>
     </application>
 
 </manifest>
