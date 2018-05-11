@@ -33,6 +33,8 @@ public class PantryUI extends AppCompatActivity {
         adapter = new ItemAdapter(this, pantry);
         pantryLV.setAdapter(adapter);
 
+        //This is a test
+
     }
 
     @Override
