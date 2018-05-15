@@ -93,4 +93,10 @@ public class PantryUI extends AppCompatActivity {
     {
         pantry.get(position).mQuantity += quantity;
     }
+
+    public static void removeFromList(int position)
+    {
+        if (position > -1)
+            pantry.remove(position);
+    }
 }

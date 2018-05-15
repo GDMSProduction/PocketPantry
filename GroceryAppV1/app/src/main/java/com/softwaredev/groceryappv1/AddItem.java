@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -37,6 +38,11 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
         if (isEditing) {
+            Button button = (Button) findViewById(R.id.removeButton);
+            button.setVisibility(View.VISIBLE);
+            button = (Button) findViewById(R.id.addItemButton);
+            button.setText("Edit Item");
+
             mName = intent.getStringExtra("name");
             mPrice = intent.getFloatExtra("price", mPrice);
             mMonth = intent.getIntExtra("month", mMonth);
@@ -63,7 +69,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         }
     }
 
-    public void buttonPressed(View view)
+    public void addButtonPressed(View view)
     {
 
         EditText NameEditText = (EditText) findViewById(R.id.nameInput);
@@ -105,6 +111,13 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         }
 
+
+        finish();
+    }
+
+    public void removeButtonPressed(View view)
+    {
+        PantryUI.removeFromList(mPosition);
 
         finish();
     }
