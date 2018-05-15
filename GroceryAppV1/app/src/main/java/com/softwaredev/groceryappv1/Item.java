@@ -7,6 +7,7 @@ public class Item
     int mMonth;
     int mDay;
     int mYear;
+    int mQuantity;
 
     public Item(String name, float price, int month, int day, int year)
     {
@@ -15,15 +16,7 @@ public class Item
         mMonth = month;
         mDay = day;
         mYear = year;
-    }
-
-    public Item(String name, float price)
-    {
-        mName = name;
-        mPrice = price;
-        mMonth = 1;
-        mDay = 1;
-        mYear = 2018;
+        mQuantity = 1;
     }
 
     public Item(String name, int month, int day, int year)
@@ -33,15 +26,27 @@ public class Item
         mMonth = month;
         mDay = day;
         mYear = year;
+        mQuantity = 1;
     }
 
-    public Item(String name)
+    public Item(String name, float price, int month, int day, int year, int quantity)
+    {
+        mName = name;
+        mPrice = price;
+        mMonth = month;
+        mDay = day;
+        mYear = year;
+        mQuantity = quantity;
+    }
+
+    public Item(String name, int month, int day, int year, int quantity)
     {
         mName = name;
         mPrice = 0.0f;
-        mMonth = 1;
-        mDay = 1;
-        mYear = 2018;
+        mMonth = month;
+        mDay = day;
+        mYear = year;
+        mQuantity = quantity;
     }
 
     public String getName()
@@ -58,4 +63,6 @@ public class Item
     {
         return(Integer.toString(mMonth) + "/" + Integer.toString(mDay) + "/" + Integer.toString(mYear));
     }
+
+    public String getQuantityString(){ return Integer.toString(mQuantity); }
 }
