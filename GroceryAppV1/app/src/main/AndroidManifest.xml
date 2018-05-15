@@ -33,7 +33,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PantryUI" />
         </activity>
-        <activity android:name=".RecipeList"></activity>
+        <activity android:name=".RecipeList" />
+        <activity android:name=".RecipeExp"></activity>
     </application>
 
 </manifest>
