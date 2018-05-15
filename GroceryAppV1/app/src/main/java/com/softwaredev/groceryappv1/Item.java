@@ -53,10 +53,16 @@ public class Item
     {
         return mName;
     }
+    public float getPrice() { return mPrice; }
+    public int getMonth() { return mMonth; }
+    public int getDay() { return mDay; }
+    public int getYear() { return mYear; }
+    public int getQuantity() { return mQuantity; }
 
     public String getPriceString()
     {
-        return("$" + Float.toString(mPrice));
+        String price = String.format("%.02f", mPrice);
+        return("$" + price);
     }
 
     public String getDateString()
