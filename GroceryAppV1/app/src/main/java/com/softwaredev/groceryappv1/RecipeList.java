@@ -10,22 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeList extends AppCompatActivity {
-    ArrayList<RecipeBase> RList = new ArrayList<>();
-    RecipeAdapter rAdapt = new RecipeAdapter(this, RList);
-    ListView listView = (ListView) findViewById(R.id.dynRecipeList);
+    ArrayList<String> RList;
+    ArrayAdapter<String> rAdapt;
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
-        listView.setAdapter(rAdapt);
+        RList = new ArrayList<>();
         Populate();
+        rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RList);
+        listView = (ListView) findViewById(R.id.dynRecipeList);
+        listView.setAdapter(rAdapt);
     }
     public void Populate()
     {
-        for(int i = 0; i < 30; ++i)
-        {
-
-        }
+            RList.add("Grilled Cheesus");
+            RList.add("Lemon Pepper Chicken");
     }
 
 }
