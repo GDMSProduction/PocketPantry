@@ -18,8 +18,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
 
-    public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list)
-    {
+    public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list) {
         super(context, 0, list);
         mContext = context;
         //itemList.clear();
@@ -28,28 +27,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
-    {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = null;
-        if(convertView == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
+        if (convertView == null)
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
 
         Item currentItem = itemList.get(position);
 
-        TextView name = (TextView)listItem.findViewById(R.id.itemName);;
+        TextView name = (TextView) listItem.findViewById(R.id.itemName);
         name.setText(currentItem.getName());
 
         TextView price = (TextView) listItem.findViewById(R.id.itemPrice);
         price.setText(currentItem.getPriceString());
 
-        TextView date = (TextView)listItem.findViewById(R.id.itemDate);;
+        TextView date = (TextView) listItem.findViewById(R.id.itemDate);
         date.setText(currentItem.getDateString());
 
         return listItem;
     }
-
-    /*public static void clearList()
-    {
-        itemList.clear();
-    }*/
 }
