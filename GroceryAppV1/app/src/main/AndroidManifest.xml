@@ -42,6 +42,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EntryUI" />
         </activity>
+        <activity android:name=".RecipeExp">
+            android:parentActivityName=".RecipeList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RecipeList" />
+        </activity>
     </application>
 
 </manifest>
