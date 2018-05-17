@@ -1,6 +1,8 @@
 package com.softwaredev.groceryappv1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +18,34 @@ public class PantryUI extends AppCompatActivity {
 
     private ListView pantryLV;
     private ItemAdapter adapter;
+    Context context;
+    static SharedPreferences sharedPref;
+    int mSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry_ui);
-        //Intent groceryList = getIntent();
+
+        context = this;
+        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        mSize = sharedPref.getInt("size", 0);
+        String temp;
+        String parse[];
+        pantry.clear();
+
+        for (int i = 0; i < mSize; ++i)
+        {
+            temp = sharedPref.getString("item" + i, "null");
+            if (!temp.equals("null"))
+            {
+                parse = temp.split(",");
+                pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
+            }
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +89,12 @@ public class PantryUI extends AppCompatActivity {
 
     public static void addToPantry(Item _item)
     {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("item" + Integer.toString(pantry.size()), _item.itemToString());
+
         pantry.add(_item);
+        editor.putInt("size", pantry.size());
+        editor.commit();
     }
 
     public static int checkInList(String name)
@@ -96,7 +125,19 @@ public class PantryUI extends AppCompatActivity {
 
     public static void removeFromList(int position)
     {
-        if (position > -1)
+        if (position > -1) {
             pantry.remove(position);
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.clear();
+            editor.commit();
+
+            editor.putInt("size", pantry.size());
+            for (int i = 0; i < pantry.size(); ++i)
+            {
+                editor.putString("item" + Integer.toString(i), pantry.get(i).itemToString());
+            }
+            editor.commit();
+        }
     }
 }
