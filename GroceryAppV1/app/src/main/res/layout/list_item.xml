@@ -12,7 +12,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/itemDate"
+        android:id="@+id/itemDateAndPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

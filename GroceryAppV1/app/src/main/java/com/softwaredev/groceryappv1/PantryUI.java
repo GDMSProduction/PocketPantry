@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,14 +23,26 @@ public class PantryUI extends AppCompatActivity {
     Context context;
     static SharedPreferences sharedPref;
     int mSize;
+    boolean isPantry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry_ui);
 
+        Intent intent = getIntent();
+        isPantry = intent.getBooleanExtra("isPantry", true);
+
         context = this;
-        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+
+        if (isPantry)
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+        else {
+            ((TextView)findViewById(R.id.priceAndDateColumnText)).setText("Price");
+            setTitle("Grocery List");
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
+        }
+
         SharedPreferences.Editor editor = sharedPref.edit();
 
         mSize = sharedPref.getInt("size", 0);
@@ -50,14 +64,14 @@ public class PantryUI extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PantryUI.this, AddItem.class);
-                intent.putExtra("inList", false);
-                startActivity(intent);
+                Intent addIntent = new Intent(PantryUI.this, AddItem.class);
+                addIntent.putExtra("inList", false);
+                startActivity(addIntent);
             }
         });
 
         pantryLV = (ListView) findViewById(R.id.pantryListView);
-        adapter = new ItemAdapter(this, pantry);
+        adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
 
         pantryLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +97,7 @@ public class PantryUI extends AppCompatActivity {
     {
         super.onResume();
         pantryLV = (ListView) findViewById(R.id.pantryListView);
-        adapter = new ItemAdapter(this, pantry);
+        adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
     }
 

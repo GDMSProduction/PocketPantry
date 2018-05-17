@@ -17,12 +17,13 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
+    boolean isPantry;
 
-    public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list) {
+    public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list, boolean _isPantry) {
         super(context, 0, list);
         mContext = context;
-        //itemList.clear();
         itemList = list;
+        isPantry = _isPantry;
     }
 
     @NonNull
@@ -34,14 +35,17 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item currentItem = itemList.get(position);
 
+
         TextView name = (TextView) listItem.findViewById(R.id.itemName);
         name.setText(currentItem.getName());
 
-        //TextView price = (TextView) listItem.findViewById(R.id.itemPrice);
-        //price.setText(currentItem.getPriceString());
-
-        TextView date = (TextView) listItem.findViewById(R.id.itemDate);
-        date.setText(currentItem.getDateString());
+        TextView dateAndPrice = (TextView) listItem.findViewById(R.id.itemDateAndPrice);
+        if (isPantry) {
+            dateAndPrice.setText(currentItem.getDateString());
+        }
+        else {
+            dateAndPrice.setText(currentItem.getPriceString());
+        }
 
         TextView quantity = (TextView) listItem.findViewById(R.id.itemQuantity);
         quantity.setText(currentItem.getQuantityString());
