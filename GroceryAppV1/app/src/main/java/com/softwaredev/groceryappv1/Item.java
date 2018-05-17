@@ -7,6 +7,7 @@ public class Item
     int mMonth;
     int mDay;
     int mYear;
+    int mQuantity;
 
     public Item(String name, float price, int month, int day, int year)
     {
@@ -15,15 +16,7 @@ public class Item
         mMonth = month;
         mDay = day;
         mYear = year;
-    }
-
-    public Item(String name, float price)
-    {
-        mName = name;
-        mPrice = price;
-        mMonth = 1;
-        mDay = 1;
-        mYear = 2018;
+        mQuantity = 1;
     }
 
     public Item(String name, int month, int day, int year)
@@ -33,29 +26,54 @@ public class Item
         mMonth = month;
         mDay = day;
         mYear = year;
+        mQuantity = 1;
     }
 
-    public Item(String name)
+    public Item(String name, float price, int month, int day, int year, int quantity)
+    {
+        mName = name;
+        mPrice = price;
+        mMonth = month;
+        mDay = day;
+        mYear = year;
+        mQuantity = quantity;
+    }
+
+    public Item(String name, int month, int day, int year, int quantity)
     {
         mName = name;
         mPrice = 0.0f;
-        mMonth = 1;
-        mDay = 1;
-        mYear = 2018;
+        mMonth = month;
+        mDay = day;
+        mYear = year;
+        mQuantity = quantity;
     }
 
     public String getName()
     {
         return mName;
     }
+    public float getPrice() { return mPrice; }
+    public int getMonth() { return mMonth; }
+    public int getDay() { return mDay; }
+    public int getYear() { return mYear; }
+    public int getQuantity() { return mQuantity; }
 
     public String getPriceString()
     {
-        return("$" + Float.toString(mPrice));
+        String price = String.format("%.02f", mPrice);
+        return("$" + price);
     }
 
     public String getDateString()
     {
         return(Integer.toString(mMonth) + "/" + Integer.toString(mDay) + "/" + Integer.toString(mYear));
+    }
+
+    public String getQuantityString(){ return Integer.toString(mQuantity); }
+
+    public String itemToString()
+    {
+        return (mName + "," + Float.toString(mPrice) + "," + Integer.toString(mMonth) + "," + Integer.toString(mDay) + "," + Integer.toString(mYear) + "," + Integer.toString(mQuantity));
     }
 }
