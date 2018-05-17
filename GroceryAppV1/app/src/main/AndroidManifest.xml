@@ -35,7 +35,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PantryUI" />
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".RecipeList">
             android:parentActivityName=".EntryUI">
@@ -43,10 +42,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EntryUI" />
         </activity>
-=======
-        <activity android:name=".RecipeList" />
-        <activity android:name=".RecipeExp"></activity>
->>>>>>> DeAngeloRieke
     </application>
 
 </manifest>
