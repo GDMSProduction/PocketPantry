@@ -1,21 +1,49 @@
 package com.softwaredev.groceryappv1;
 
+import android.widget.Button;
+
 public class RecipeBase {
     String recipeName;
-    int quantity;
+    String Utensils;
     String ingredient;
     String instructions;
-    String explain;
-    public RecipeBase(String name, int q, String ing, String ins, String Ex)
+    public RecipeBase(String name, String Uti, String ing, String ins)
     {
         recipeName = name;
-        quantity = q;
+        Utensils = Uti;
         ingredient = ing;
         instructions = ins;
-        explain = Ex;
     }
     public String GetName()
     {
         return recipeName;
+    }
+    public void SetName(String N)
+    {
+        recipeName = N;
+    }
+    public String GetUtiensils()
+    {
+        return Utensils;
+    }
+    public void SetUtensils(String Utien)
+    {
+        Utensils = Utien;
+    }
+    public String GetIng()
+    {
+        return ingredient;
+    }
+    public void SetIng(String Ing)
+    {
+        ingredient = Ing;
+    }
+    public String GetIns()
+    {
+        return instructions;
+    }
+    public void SetIns(String Ins)
+    {
+        instructions = Ins;
     }
 }
