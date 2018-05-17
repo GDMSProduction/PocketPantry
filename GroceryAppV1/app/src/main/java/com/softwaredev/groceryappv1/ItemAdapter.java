@@ -37,8 +37,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView name = (TextView) listItem.findViewById(R.id.itemName);
         name.setText(currentItem.getName());
 
-        TextView price = (TextView) listItem.findViewById(R.id.itemPrice);
-        price.setText(currentItem.getPriceString());
+        //TextView price = (TextView) listItem.findViewById(R.id.itemPrice);
+        //price.setText(currentItem.getPriceString());
 
         TextView date = (TextView) listItem.findViewById(R.id.itemDate);
         date.setText(currentItem.getDateString());
