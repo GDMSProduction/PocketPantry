@@ -33,14 +33,12 @@ public class RecipeAdapter extends ArrayAdapter<RecipeBase> {
         TextView recipeName = (TextView) convertView.findViewById(R.id.recipeName);
         TextView ingredient = (TextView) convertView.findViewById(R.id.ingredient);
         TextView instructions = (TextView) convertView.findViewById(R.id.instructions);
-        TextView explain = (TextView) convertView.findViewById(R.id.explain);
-        TextView quantity = (TextView) convertView.findViewById(R.id.quantity);
+        TextView utensils = (TextView) convertView.findViewById(R.id.ingredient);
 
         recipeName.setText(recipe.recipeName);
         ingredient.setText(recipe.ingredient);
         instructions.setText(recipe.instructions);
-        explain.setText(recipe.explain);
-        quantity.setText(recipe.quantity);
+        utensils.setText(recipe.Utensils);
         return convertView;
     }
 }

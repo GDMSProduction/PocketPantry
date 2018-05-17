@@ -15,6 +15,7 @@ import java.util.List;
 
 public class RecipeList extends AppCompatActivity {
     ArrayList<String> RList;
+    ArrayList<RecipeBase> RecTut;
     ArrayAdapter<String> rAdapt;
     ListView listView;
     static String RecName;
