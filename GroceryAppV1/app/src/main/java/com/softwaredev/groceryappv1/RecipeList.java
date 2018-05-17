@@ -41,8 +41,9 @@ public class RecipeList extends AppCompatActivity {
     }
     public void Populate()
     {
-            RList.add("Grilled Cheesus");
+            RList.add("Grilled Cheese");
             RList.add("Lemon Pepper Chicken");
+            RList.add("Garlic Rosemary Lamb");
     }
     public static String GetName()
     {
