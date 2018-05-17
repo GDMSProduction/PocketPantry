@@ -36,7 +36,7 @@ public class RecipeExp extends AppCompatActivity {
     }
     private void DisplayIns(String Ins)
     {
-            TextView insText = findViewById(R.id.Instructions);
+            TextView insText = (TextView) findViewById(R.id.Instructions);
             insText.setText(Ins);
     }
 }
