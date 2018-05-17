@@ -43,6 +43,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView date = (TextView) listItem.findViewById(R.id.itemDate);
         date.setText(currentItem.getDateString());
 
+        TextView quantity = (TextView) listItem.findViewById(R.id.itemQuantity);
+        quantity.setText(currentItem.getQuantityString());
+
         return listItem;
     }
 }
