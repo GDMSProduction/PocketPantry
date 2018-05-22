@@ -22,8 +22,13 @@ public class EntryUI extends AppCompatActivity {
     }
     public void sendRecipe(View v)
     {
-        Intent RecipeIntent = new Intent(this, RecipeList.class);
-        startActivity(RecipeIntent);
+        Intent recipeIntent = new Intent(this, RecipeList.class);
+        startActivity(recipeIntent);
+    }
+    public void sendHelp(View v)
+    {
+        Intent helpIntent = new Intent(this, HelpUI.class);
+        startActivity(helpIntent);
     }
 
 }

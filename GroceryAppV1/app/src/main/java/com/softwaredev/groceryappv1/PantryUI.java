@@ -1,9 +1,11 @@
 package com.softwaredev.groceryappv1;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static android.app.NotificationChannel.DEFAULT_CHANNEL_ID;
 
 public class PantryUI extends AppCompatActivity {
 
