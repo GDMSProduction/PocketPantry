@@ -104,8 +104,7 @@ public class PantryUI extends AppCompatActivity {
             }
         });
 
-        if (!isPantry)
-            registerForContextMenu(pantryLV);
+        registerForContextMenu(pantryLV);
 
 
     }
@@ -115,29 +114,46 @@ public class PantryUI extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu, menu);
+
+        if(isPantry)
+        {
+            menu.findItem(R.id.addOne).setTitle("Add item to grocery list");
+            menu.findItem(R.id.addAll).setTitle("Add item to grocery list and remove");
+
+        }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Item selectedItem = pantry.get(acmi.position);
+
         switch (item.getItemId()) {
             case R.id.addOne:
-                AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                Item selectedItem = pantry.get(acmi.position);
-
-                addToPantry(selectedItem);
-                removeFromList(acmi.position);
+                if (isPantry)
+                    addToGrocery(selectedItem);
+                else {
+                    addToPantry(selectedItem);
+                    removeFromList(acmi.position);
+                }
                 recreate();
                 return true;
 
             case R.id.addAll:
-                for (int i = 0; i < pantry.size(); ++i)
+                if (isPantry)
                 {
-                    addToPantry(pantry.get(i));
+                    addToGrocery(selectedItem);
+                    removeFromList(acmi.position);
                 }
-                pantry.clear();
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.clear();
-                editor.commit();
+                else {
+                    for (int i = 0; i < pantry.size(); ++i) {
+                        addToPantry(pantry.get(i));
+                    }
+                    pantry.clear();
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.clear();
+                    editor.commit();
+                }
                 recreate();
                 return true;
 
@@ -266,12 +282,59 @@ public class PantryUI extends AppCompatActivity {
         _editor.commit();
     }
 
+    public void addToGrocery(Item item)
+    {
+        SharedPreferences _sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
+
+        int size = _sharedPref.getInt("size", 0);
+        String temp;
+        String parse[];
+        boolean isInList = false;
+        ArrayList<Item> _pantry = new ArrayList<>(1);
+
+        for (int i = 0; i < size; ++i)
+        {
+            temp = _sharedPref.getString("item" + i, "null");
+            if (!temp.equals("null"))
+            {
+                parse = temp.split(",");
+                _pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
+            }
+        }
+
+        item.setQuantity(1);
+
+        for (int i = 0; i < _pantry.size(); ++i)
+        {
+            if (_pantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
+                _pantry.get(i).setQuantity(_pantry.get(i).getQuantity() + 1);
+                isInList = true;
+                break;
+            }
+        }
+
+        if (!isInList)
+            _pantry.add(item);
+
+        SharedPreferences.Editor _editor = _sharedPref.edit();
+        _editor.clear();
+        _editor.commit();
+
+        _editor.putInt("size", _pantry.size());
+        for (int i = 0; i < _pantry.size(); ++i)
+        {
+            _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
+        }
+        _editor.commit();
+    }
+
     public float getTotal()
     {
         float total = 0.0f;
         for (int i = 0; i < pantry.size(); ++i)
         {
             total += pantry.get(i).getPrice();
+            total *= pantry.get(i).getQuantity();
         }
 
         return total;
