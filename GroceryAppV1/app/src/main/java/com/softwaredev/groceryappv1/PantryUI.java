@@ -272,4 +272,9 @@ public class PantryUI extends AppCompatActivity {
 
         return total;
     }
+
+    public static Item getItem (int position)
+    {
+        return pantry.get(position);
+    }
 }

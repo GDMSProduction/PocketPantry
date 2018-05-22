@@ -16,30 +16,29 @@ import java.util.List;
 public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
-    private List<Item> itemList = new ArrayList<>();
     boolean isPantry;
 
     public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list, boolean _isPantry) {
         super(context, 0, list);
         mContext = context;
-        itemList = list;
+        //itemList = list;
         isPantry = _isPantry;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = null;
+        //View listItem = null;
         if (convertView == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
 
-        Item currentItem = itemList.get(position);
+        Item currentItem = PantryUI.getItem(position);
 
 
-        TextView name = (TextView) listItem.findViewById(R.id.itemName);
+        TextView name = (TextView) convertView.findViewById(R.id.itemName);
         name.setText(currentItem.getName());
 
-        TextView dateAndPrice = (TextView) listItem.findViewById(R.id.itemDateAndPrice);
+        TextView dateAndPrice = (TextView) convertView.findViewById(R.id.itemDateAndPrice);
         if (isPantry) {
             dateAndPrice.setText(currentItem.getDateString());
         }
@@ -47,9 +46,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             dateAndPrice.setText(currentItem.getPriceString());
         }
 
-        TextView quantity = (TextView) listItem.findViewById(R.id.itemQuantity);
+        TextView quantity = (TextView) convertView.findViewById(R.id.itemQuantity);
         quantity.setText(currentItem.getQuantityString());
 
-        return listItem;
+        return convertView;
     }
 }
