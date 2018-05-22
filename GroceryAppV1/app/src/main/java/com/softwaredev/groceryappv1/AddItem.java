@@ -87,15 +87,22 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         if (mPosition > -1) {
             if (isEditing) {
                 mPrice = Float.valueOf(PriceEditText.getText().toString());
-                mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                if (QuantEditText.getText().toString().length() < 10)
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                else
+                    mQuantity = 999999999;
                 PantryUI.editItem(mPosition, mName, mPrice, mMonth, mDay, mYear, mQuantity);
             }
             else
             {
                 if (QuantEditText.getText().toString().trim().length() <= 0)
                     mQuantity = 1;
-                else
-                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                else {
+                    if (QuantEditText.getText().toString().length() < 10)
+                        mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                    else
+                        mQuantity = 999999999;
+                }
 
                 PantryUI.addToQuantity(mPosition, mQuantity);
             }
@@ -107,10 +114,15 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 mPrice = Float.valueOf(PriceEditText.getText().toString());
                 PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear)));
             } else if (PriceEditText.getText().toString().trim().length() <= 0) {
-                mQuantity = Integer.valueOf(QuantEditText.getText().toString());
-                PantryUI.addToList((new Item(mName, mMonth + 1, mDay, mYear, mQuantity)));
+                if (QuantEditText.getText().toString().length() < 10)
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                else
+                    mQuantity = 999999999;
             } else {
-                mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                if (QuantEditText.getText().toString().length() < 10)
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                else
+                    mQuantity = 999999999;
                 mPrice = Float.valueOf(PriceEditText.getText().toString());
                 PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
             }

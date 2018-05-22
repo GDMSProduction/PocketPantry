@@ -213,6 +213,11 @@ public class PantryUI extends AppCompatActivity {
     {
         pantry.get(position).mQuantity += quantity;
 
+        if ((pantry.get(position).mQuantity + quantity) < 999999999)
+            pantry.get(position).mQuantity += quantity;
+        else
+            pantry.get(position).mQuantity = 999999999;
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
         editor.commit();
