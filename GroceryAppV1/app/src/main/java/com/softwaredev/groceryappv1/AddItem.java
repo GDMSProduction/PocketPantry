@@ -81,7 +81,8 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
 
         mName = NameEditText.getText().toString();
 
-        mPosition = PantryUI.checkInList(mName);
+        if (!isEditing)
+         mPosition = PantryUI.checkInList(mName);
 
         if (mPosition > -1) {
             if (isEditing) {
@@ -91,23 +92,27 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             }
             else
             {
-                mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                if (QuantEditText.getText().toString().trim().length() <= 0)
+                    mQuantity = 1;
+                else
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+
                 PantryUI.addToQuantity(mPosition, mQuantity);
             }
         }
         else {
             if (PriceEditText.getText().toString().trim().length() <= 0 && QuantEditText.getText().toString().trim().length() <= 0) {
-                PantryUI.addToPantry((new Item(mName, mMonth + 1, mDay, mYear)));
+                PantryUI.addToList((new Item(mName, mMonth + 1, mDay, mYear)));
             } else if (QuantEditText.getText().toString().trim().length() <= 0) {
                 mPrice = Float.valueOf(PriceEditText.getText().toString());
-                PantryUI.addToPantry((new Item(mName, mPrice, mMonth + 1, mDay, mYear)));
+                PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear)));
             } else if (PriceEditText.getText().toString().trim().length() <= 0) {
                 mQuantity = Integer.valueOf(QuantEditText.getText().toString());
-                PantryUI.addToPantry((new Item(mName, mMonth + 1, mDay, mYear, mQuantity)));
+                PantryUI.addToList((new Item(mName, mMonth + 1, mDay, mYear, mQuantity)));
             } else {
                 mQuantity = Integer.valueOf(QuantEditText.getText().toString());
                 mPrice = Float.valueOf(PriceEditText.getText().toString());
-                PantryUI.addToPantry((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
+                PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
             }
         }
 

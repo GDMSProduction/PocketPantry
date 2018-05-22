@@ -58,6 +58,7 @@ public class Item
     public int getDay() { return mDay; }
     public int getYear() { return mYear; }
     public int getQuantity() { return mQuantity; }
+    public void setQuantity(int quantity) {mQuantity = quantity;}
 
     public String getPriceString()
     {

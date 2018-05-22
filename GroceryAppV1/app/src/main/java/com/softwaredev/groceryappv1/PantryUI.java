@@ -8,9 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,15 +30,27 @@ public class PantryUI extends AppCompatActivity {
     Context context;
     static SharedPreferences sharedPref;
     int mSize;
+    boolean isPantry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry_ui);
 
+        Intent intent = getIntent();
+        isPantry = intent.getBooleanExtra("isPantry", true);
+
         context = this;
-        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+
+        if (isPantry)
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+        else {
+            ((TextView)findViewById(R.id.priceAndDateColumnText)).setText("Price");
+            setTitle("Grocery List");
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
+        }
+
+        //SharedPreferences.Editor editor = sharedPref.edit();
 
         mSize = sharedPref.getInt("size", 0);
         String temp;
@@ -50,18 +67,24 @@ public class PantryUI extends AppCompatActivity {
             }
         }
 
+        if (!isPantry)
+        {
+            String price = String.format("%.02f", getTotal());
+            setTitle("Grocery List" + "      Total: $" + price);
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PantryUI.this, AddItem.class);
-                intent.putExtra("inList", false);
-                startActivity(intent);
+                Intent addIntent = new Intent(PantryUI.this, AddItem.class);
+                addIntent.putExtra("inList", false);
+                startActivityForResult(addIntent, 1);
             }
         });
 
         pantryLV = (ListView) findViewById(R.id.pantryListView);
-        adapter = new ItemAdapter(this, pantry);
+        adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
 
         pantryLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,6 +103,47 @@ public class PantryUI extends AppCompatActivity {
             startActivity(intent);
             }
         });
+
+        if (!isPantry)
+            registerForContextMenu(pantryLV);
+
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addOne:
+                AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                Item selectedItem = pantry.get(acmi.position);
+
+                addToPantry(selectedItem);
+                removeFromList(acmi.position);
+                recreate();
+                return true;
+
+            case R.id.addAll:
+                for (int i = 0; i < pantry.size(); ++i)
+                {
+                    addToPantry(pantry.get(i));
+                }
+                pantry.clear();
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.commit();
+                recreate();
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -87,11 +151,18 @@ public class PantryUI extends AppCompatActivity {
     {
         super.onResume();
         pantryLV = (ListView) findViewById(R.id.pantryListView);
-        adapter = new ItemAdapter(this, pantry);
+        adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
+
+        if (!isPantry)
+        {
+            String price = String.format("%.02f", getTotal());
+            setTitle("Grocery List" + "      Total: $" + price);
+        }
     }
 
-    public static void addToPantry(Item _item)
+
+    public static void addToList(Item _item)
     {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("item" + Integer.toString(pantry.size()), _item.itemToString());
@@ -125,6 +196,10 @@ public class PantryUI extends AppCompatActivity {
     public static void addToQuantity(int position, int quantity)
     {
         pantry.get(position).mQuantity += quantity;
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
+        editor.commit();
     }
 
     public static void removeFromList(int position)
@@ -143,5 +218,62 @@ public class PantryUI extends AppCompatActivity {
             }
             editor.commit();
         }
+    }
+
+    public void addToPantry(Item item)
+    {
+        SharedPreferences _sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+
+        int size = _sharedPref.getInt("size", 0);
+        String temp;
+        String parse[];
+        boolean isInList = false;
+        ArrayList<Item> _pantry = new ArrayList<>(1);
+
+        for (int i = 0; i < size; ++i)
+        {
+            temp = _sharedPref.getString("item" + i, "null");
+            if (!temp.equals("null"))
+            {
+                parse = temp.split(",");
+                _pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
+            }
+        }
+
+
+
+        for (int i = 0; i < _pantry.size(); ++i)
+        {
+            if (_pantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
+                _pantry.get(i).setQuantity(_pantry.get(i).getQuantity() + item.getQuantity());
+                isInList = true;
+                break;
+            }
+        }
+
+        if (!isInList)
+            _pantry.add(item);
+
+        SharedPreferences.Editor _editor = _sharedPref.edit();
+        _editor.clear();
+        _editor.commit();
+
+        _editor.putInt("size", _pantry.size());
+        for (int i = 0; i < _pantry.size(); ++i)
+        {
+            _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
+        }
+        _editor.commit();
+    }
+
+    public float getTotal()
+    {
+        float total = 0.0f;
+        for (int i = 0; i < pantry.size(); ++i)
+        {
+            total += pantry.get(i).getPrice();
+        }
+
+        return total;
     }
 }
