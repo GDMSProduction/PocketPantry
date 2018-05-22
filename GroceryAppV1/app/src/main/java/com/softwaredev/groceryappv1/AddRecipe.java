@@ -12,7 +12,7 @@ public class AddRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addRecipeFAB);
+        FloatingActionButton fab = findViewById(R.id.addRecipeFAB);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

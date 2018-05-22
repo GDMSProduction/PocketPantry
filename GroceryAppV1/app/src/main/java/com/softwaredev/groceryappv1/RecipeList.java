@@ -28,7 +28,7 @@ public class RecipeList extends AppCompatActivity {
                 RList = new ArrayList<>();
                 Populate();
                 rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RList);
-                listView = (ListView) findViewById(R.id.dynRecipeList);
+                listView = findViewById(R.id.dynRecipeList);
                 listView.setAdapter(rAdapt);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -61,7 +61,7 @@ public class RecipeList extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        listView = (ListView) findViewById(R.id.dynRecipeList);
+        listView = findViewById(R.id.dynRecipeList);
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RList);
         listView.setAdapter(rAdapt);
     }

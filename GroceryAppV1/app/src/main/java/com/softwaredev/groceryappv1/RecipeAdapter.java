@@ -30,10 +30,10 @@ public class RecipeAdapter extends ArrayAdapter<RecipeBase> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item,parent,false);
         }
-        TextView recipeName = (TextView) convertView.findViewById(R.id.recipeName);
-        TextView ingredient = (TextView) convertView.findViewById(R.id.ingredient);
-        TextView instructions = (TextView) convertView.findViewById(R.id.instructions);
-        TextView utensils = (TextView) convertView.findViewById(R.id.ingredient);
+        TextView recipeName = convertView.findViewById(R.id.recipeName);
+        TextView ingredient = convertView.findViewById(R.id.ingredient);
+        TextView instructions =  convertView.findViewById(R.id.instructions);
+        TextView utensils = convertView.findViewById(R.id.ingredient);
 
         recipeName.setText(recipe.recipeName);
         ingredient.setText(recipe.ingredient);

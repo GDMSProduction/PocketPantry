@@ -38,9 +38,9 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
         if (isEditing) {
-            Button button = (Button) findViewById(R.id.removeButton);
+            Button button = findViewById(R.id.removeButton);
             button.setVisibility(View.VISIBLE);
-            button = (Button) findViewById(R.id.addItemButton);
+            button = findViewById(R.id.addItemButton);
             button.setText("Edit Item");
 
             mName = intent.getStringExtra("name");
@@ -51,20 +51,20 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             mQuantity = intent.getIntExtra("quantity", mQuantity);
             mPosition = intent.getIntExtra("position", -1);
 
-            editText = (EditText) findViewById(R.id.nameInput);
+            editText = findViewById(R.id.nameInput);
             editText.setText(mName);
 
-            editText = (EditText) findViewById(R.id.priceInput);
+            editText = findViewById(R.id.priceInput);
             editText.setText(String.valueOf(mPrice));
 
-            editText = (EditText) findViewById(R.id.dateInput);
+            editText = findViewById(R.id.dateInput);
             ((EditText)findViewById(R.id.dateInput)).setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" "));
 
-            editText = (EditText) findViewById(R.id.quantityInput);
+            editText = findViewById(R.id.quantityInput);
             editText.setText(String.valueOf(mQuantity));
         }
         else {
-            editText = (EditText) findViewById(R.id.dateInput);
+            editText = findViewById(R.id.dateInput);
             editText.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" "));
         }
     }
@@ -72,7 +72,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
     public void addButtonPressed(View view)
     {
 
-        EditText NameEditText = (EditText) findViewById(R.id.nameInput);
+        EditText NameEditText = findViewById(R.id.nameInput);
         EditText PriceEditText = findViewById(R.id.priceInput);
         EditText QuantEditText = findViewById(R.id.quantityInput);
 
