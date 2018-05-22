@@ -63,13 +63,19 @@ public class PantryUI extends AppCompatActivity {
             }
         }
 
+        if (!isPantry)
+        {
+            String price = String.format("%.02f", getTotal());
+            setTitle("Grocery List" + "      Total: $" + price);
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addIntent = new Intent(PantryUI.this, AddItem.class);
                 addIntent.putExtra("inList", false);
-                startActivity(addIntent);
+                startActivityForResult(addIntent, 1);
             }
         });
 
@@ -143,7 +149,14 @@ public class PantryUI extends AppCompatActivity {
         pantryLV = (ListView) findViewById(R.id.pantryListView);
         adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
+
+        if (!isPantry)
+        {
+            String price = String.format("%.02f", getTotal());
+            setTitle("Grocery List" + "      Total: $" + price);
+        }
     }
+
 
     public static void addToList(Item _item)
     {
@@ -179,6 +192,10 @@ public class PantryUI extends AppCompatActivity {
     public static void addToQuantity(int position, int quantity)
     {
         pantry.get(position).mQuantity += quantity;
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
+        editor.commit();
     }
 
     public static void removeFromList(int position)
@@ -243,5 +260,16 @@ public class PantryUI extends AppCompatActivity {
             _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
         }
         _editor.commit();
+    }
+
+    public float getTotal()
+    {
+        float total = 0.0f;
+        for (int i = 0; i < pantry.size(); ++i)
+        {
+            total += pantry.get(i).getPrice();
+        }
+
+        return total;
     }
 }

@@ -81,7 +81,8 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
 
         mName = NameEditText.getText().toString();
 
-        mPosition = PantryUI.checkInList(mName);
+        if (!isEditing)
+         mPosition = PantryUI.checkInList(mName);
 
         if (mPosition > -1) {
             if (isEditing) {
@@ -91,7 +92,11 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             }
             else
             {
-                mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                if (QuantEditText.getText().toString().trim().length() <= 0)
+                    mQuantity = 1;
+                else
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+
                 PantryUI.addToQuantity(mPosition, mQuantity);
             }
         }
