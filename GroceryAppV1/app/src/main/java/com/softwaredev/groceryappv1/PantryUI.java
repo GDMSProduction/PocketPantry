@@ -73,7 +73,7 @@ public class PantryUI extends AppCompatActivity {
             setTitle("Grocery List" + "      Total: $" + price);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.switchToInput);
+        FloatingActionButton fab = findViewById(R.id.switchToInput);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +83,7 @@ public class PantryUI extends AppCompatActivity {
             }
         });
 
-        pantryLV = (ListView) findViewById(R.id.pantryListView);
+        pantryLV = findViewById(R.id.pantryListView);
         adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
 
@@ -166,7 +166,7 @@ public class PantryUI extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        pantryLV = (ListView) findViewById(R.id.pantryListView);
+        pantryLV = findViewById(R.id.pantryListView);
         adapter = new ItemAdapter(this, pantry, isPantry);
         pantryLV.setAdapter(adapter);
 

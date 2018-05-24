@@ -21,24 +21,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     public ItemAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list, boolean _isPantry) {
         super(context, 0, list);
         mContext = context;
-        //itemList = list;
         isPantry = _isPantry;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //View listItem = null;
         if (convertView == null)
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
 
         Item currentItem = PantryUI.getItem(position);
 
 
-        TextView name = (TextView) convertView.findViewById(R.id.itemName);
+        TextView name = convertView.findViewById(R.id.itemName);
         name.setText(currentItem.getName());
 
-        TextView dateAndPrice = (TextView) convertView.findViewById(R.id.itemDateAndPrice);
+        TextView dateAndPrice = convertView.findViewById(R.id.itemDateAndPrice);
         if (isPantry) {
             dateAndPrice.setText(currentItem.getDateString());
         }
@@ -46,7 +44,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             dateAndPrice.setText(currentItem.getPriceString());
         }
 
-        TextView quantity = (TextView) convertView.findViewById(R.id.itemQuantity);
+        TextView quantity = convertView.findViewById(R.id.itemQuantity);
         quantity.setText(currentItem.getQuantityString());
 
         return convertView;

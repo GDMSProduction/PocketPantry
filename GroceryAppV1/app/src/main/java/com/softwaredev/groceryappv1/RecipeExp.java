@@ -39,12 +39,12 @@ public class RecipeExp extends AppCompatActivity {
     }
     private void DisplayRec(String name)
     {
-            TextView textView = (TextView) findViewById(R.id.recTitle);
+            TextView textView = findViewById(R.id.recTitle);
             textView.setText(name);
     }
     private void DisplayIns(String Ins)
     {
-            TextView insText = (TextView) findViewById(R.id.Instructions);
+            TextView insText = findViewById(R.id.Instructions);
             insText.setText(Ins);
     }
 }
