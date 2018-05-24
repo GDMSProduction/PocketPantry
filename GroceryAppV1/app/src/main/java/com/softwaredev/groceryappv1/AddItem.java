@@ -45,7 +45,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
 
             mName = intent.getStringExtra("name");
             mPrice = intent.getFloatExtra("price", mPrice);
-            mMonth = intent.getIntExtra("month", mMonth);
+            mMonth = intent.getIntExtra("month", mMonth) - 1;
             mDay = intent.getIntExtra("day", mDay);
             mYear = intent.getIntExtra("year", mYear);
             mQuantity = intent.getIntExtra("quantity", mQuantity);
