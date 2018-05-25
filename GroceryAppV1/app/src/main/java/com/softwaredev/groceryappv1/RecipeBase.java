@@ -14,6 +14,13 @@ public class RecipeBase {
         ingredient = ing;
         instructions = ins;
     }
+    public RecipeBase(String name, String ins)
+    {
+        recipeName = name;
+        instructions = ins;
+        Utensils = " ";
+        ingredient = " ";
+    }
     public String GetName()
     {
         return recipeName;
@@ -45,5 +52,10 @@ public class RecipeBase {
     public void SetIns(String Ins)
     {
         instructions = Ins;
+    }
+
+    public String RecToString()
+    {
+        return (recipeName + "," + instructions);
     }
 }

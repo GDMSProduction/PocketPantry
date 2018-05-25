@@ -8,10 +8,14 @@ import android.widget.TextView;
 public class RecipeExp extends AppCompatActivity {
 
     static String RecipeText;
+    int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         intent.getStringExtra("Name");
+        position = intent.getIntExtra("position", 0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_exp);
         DisplayRec(RecipeList.GetName());
@@ -32,8 +36,10 @@ public class RecipeExp extends AppCompatActivity {
         }
         else
         {
-            RecipeText = RecipeList.GetName();
-            DisplayIns(RecipeText);
+            DisplayRec(RecipeList.RecNameList.get(position));
+            //RecipeText = RecipeList.GetName();
+            String instructions = RecipeList.RecList.get(position).instructions;
+            DisplayIns(instructions);
         }
 
     }

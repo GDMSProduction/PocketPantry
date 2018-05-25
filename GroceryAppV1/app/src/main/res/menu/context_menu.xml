@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/remove"
+        android:title="Remove item" />
+    <item android:id="@+id/removeAll"
+        android:title="Remove all items" />
     <item android:id="@+id/addOne"
     android:title="Add item to pantry" />
     <item android:id="@+id/addAll"

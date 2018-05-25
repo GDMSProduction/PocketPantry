@@ -50,8 +50,6 @@ public class PantryUI extends AppCompatActivity {
             sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
         }
 
-        //SharedPreferences.Editor editor = sharedPref.edit();
-
         mSize = sharedPref.getInt("size", 0);
         String temp;
         String parse[];
@@ -119,7 +117,6 @@ public class PantryUI extends AppCompatActivity {
         {
             menu.findItem(R.id.addOne).setTitle("Add item to grocery list");
             menu.findItem(R.id.addAll).setTitle("Add item to grocery list and remove");
-
         }
     }
 
@@ -127,8 +124,19 @@ public class PantryUI extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Item selectedItem = pantry.get(acmi.position);
+        SharedPreferences.Editor editor = sharedPref.edit();
 
         switch (item.getItemId()) {
+            case R.id.remove:
+                removeFromList(acmi.position);
+                recreate();
+                return true;
+            case R.id.removeAll:
+                pantry.clear();
+                editor.clear();
+                editor.commit();
+                recreate();
+                return true;
             case R.id.addOne:
                 if (isPantry)
                     addToGrocery(selectedItem);
@@ -150,7 +158,6 @@ public class PantryUI extends AppCompatActivity {
                         addToPantry(pantry.get(i));
                     }
                     pantry.clear();
-                    SharedPreferences.Editor editor = sharedPref.edit();
                     editor.clear();
                     editor.commit();
                 }
