@@ -45,7 +45,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
 
             mName = intent.getStringExtra("name");
             mPrice = intent.getFloatExtra("price", mPrice);
-            mMonth = intent.getIntExtra("month", mMonth) - 1;
+            mMonth = intent.getIntExtra("month", mMonth);
             mDay = intent.getIntExtra("day", mDay);
             mYear = intent.getIntExtra("year", mYear);
             mQuantity = intent.getIntExtra("quantity", mQuantity);
@@ -58,7 +58,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             editText.setText(String.valueOf(mPrice));
 
             editText = findViewById(R.id.dateInput);
-            ((EditText)findViewById(R.id.dateInput)).setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" "));
+            ((EditText)findViewById(R.id.dateInput)).setText(new StringBuilder().append(mMonth).append("/").append(mDay).append("/").append(mYear).append(" "));
 
             editText = findViewById(R.id.quantityInput);
             editText.setText(String.valueOf(mQuantity));
@@ -107,27 +107,25 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 PantryUI.addToQuantity(mPosition, mQuantity);
             }
         }
-        else {
-            if (PriceEditText.getText().toString().trim().length() <= 0 && QuantEditText.getText().toString().trim().length() <= 0) {
-                PantryUI.addToList((new Item(mName, mMonth + 1, mDay, mYear)));
-            } else if (QuantEditText.getText().toString().trim().length() <= 0) {
-                mPrice = Float.valueOf(PriceEditText.getText().toString());
-                PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear)));
-            } else if (PriceEditText.getText().toString().trim().length() <= 0) {
-                if (QuantEditText.getText().toString().length() < 10)
-                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
-                else
-                    mQuantity = 999999999;
-            } else {
-                if (QuantEditText.getText().toString().length() < 10)
-                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
-                else
-                    mQuantity = 999999999;
-                mPrice = Float.valueOf(PriceEditText.getText().toString());
-                PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
+        else{
+            if (PriceEditText.getText().toString().trim().length() <= 0) {
+                mPrice = 0f;
             }
-        }
+            else {
+                mPrice = Float.valueOf(PriceEditText.getText().toString());
+            }
+            if (QuantEditText.getText().toString().trim().length() <= 0) {
+                mQuantity = 1;
+            }
+            else {
+                if (QuantEditText.getText().toString().length() < 10)
+                    mQuantity = Integer.valueOf(QuantEditText.getText().toString());
+                else
+                    mQuantity = 999999999;
+            }
 
+            PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
+        }
 
         finish();
     }
