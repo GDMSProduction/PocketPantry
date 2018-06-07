@@ -17,25 +17,30 @@ public class EntryUI extends AppCompatActivity {
     }
     public void sendPantry(View v)
     {
+
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
+
     }
     public void sendGroc(View v)
     {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
+
     }
     public void sendRecipe(View v)
     {
         Intent recipeIntent = new Intent(this, RecipeList.class);
         startActivity(recipeIntent);
+
     }
     public void sendHelp(View v)
     {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
+
     }
 
 }

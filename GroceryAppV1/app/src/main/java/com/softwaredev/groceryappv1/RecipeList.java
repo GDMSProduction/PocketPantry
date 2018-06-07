@@ -3,13 +3,16 @@ package com.softwaredev.groceryappv1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,6 +34,7 @@ public class RecipeList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
         recSharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.recipeList", Context.MODE_PRIVATE);
+
 
         int listSize = recSharedPref.getInt("size", 0);
         String temp;
@@ -63,6 +67,7 @@ public class RecipeList extends AppCompatActivity {
                 RecIntent.putExtra("position", position);
                 RecipeName = RecNameList.get(position);
                 startActivity(RecIntent);
+
             }
         });
 
@@ -72,6 +77,7 @@ public class RecipeList extends AppCompatActivity {
             public void onClick(View view) {
                 Intent addRecipeIntent = new Intent(RecipeList.this, AddRecipe.class);
                 startActivityForResult(addRecipeIntent, 1);
+
             }
         });
 
@@ -137,6 +143,7 @@ public class RecipeList extends AppCompatActivity {
     {
         Intent addRecIntent = new Intent(this, AddRecipe.class);
         startActivity(addRecIntent);
+
     }
     @Override
     public void onResume()
@@ -193,5 +200,11 @@ public class RecipeList extends AppCompatActivity {
             }
             editor.commit();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
