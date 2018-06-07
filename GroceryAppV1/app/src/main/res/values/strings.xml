@@ -14,7 +14,7 @@
     <string name="editButtonText">Edit Item</string>
     <string name="helpList">Pantry - You can add anything you have on hand to your pantry to better keep track of all your food and supplies.
         \n\nGrocery List- This is a wonderful place to store everything youre going to need, the add button can make sure you keep track of what you need on your way to the store. As well as having the ability to remove items you feel you dont need anymore!
-        \n\nRecipe List- This is a list of recipes that you can try out as well as making sure you pantry items are conveniently on hand.\n\n\nApplication Credits\nJustin Smith\nDe\'Angelo Rieke\n </string>
+        \n\nRecipe List- This is a list of recipes that you can try out as well as making sure you pantry items are conveniently on hand.\n\n\nApplication Credits:\nDevelopers:\nJustin Smith\nDe\'Angelo Rieke\n </string>
     <string name="title_activity_add_recipe">AddRecipe</string>
     <string name="nameColumn">Item name</string>
     <string name="priceAndDateColumn">Expiration Date</string>
