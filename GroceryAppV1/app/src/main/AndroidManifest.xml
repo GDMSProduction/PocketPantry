@@ -14,7 +14,6 @@
 
         <activity
             android:name=".PantryUI"
-            android:label="My Pantry"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddItem"
-            android:label="Add item"></activity>
-        <activity android:name=".RecipeList"></activity>
+            android:name=".AddItem">
+        </activity>
+        <activity android:name=".RecipeList">
+        </activity>
         <activity android:name=".RecipeExp">
             android:parentActivityName=".RecipeList">
             <meta-data

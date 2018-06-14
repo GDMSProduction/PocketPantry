@@ -10,7 +10,7 @@
         android:maxWidth = "150dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/itemDateAndPrice"
