@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeExp">
+    tools:context=".RecipeExp"
+    android:background="@drawable/bgtest">
 
     <TextView
         android:id="@+id/recTitle"
