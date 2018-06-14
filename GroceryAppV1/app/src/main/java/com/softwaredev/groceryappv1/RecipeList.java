@@ -47,7 +47,7 @@ public class RecipeList extends AppCompatActivity {
             temp = recSharedPref.getString("recipe" + i, "null");
             if (!temp.equals("null"))
             {
-                parse = temp.split(",");
+                parse = temp.split("`~`");
                 RecList.add(new RecipeBase(parse[0], parse[1]));
                 RecNameList.add(parse[0]);
             }
@@ -164,7 +164,7 @@ public class RecipeList extends AppCompatActivity {
             temp = recSharedPref.getString("recipe" + i, "null");
             if (!temp.equals("null"))
             {
-                parse = temp.split(",");
+                parse = temp.split("`~`");
                 RecList.add(new RecipeBase(parse[0], parse[1]));
                 RecNameList.add(parse[0]);
             }

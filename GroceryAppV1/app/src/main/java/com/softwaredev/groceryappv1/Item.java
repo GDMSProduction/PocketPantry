@@ -75,6 +75,6 @@ public class Item
 
     public String itemToString()
     {
-        return (mName + "," + Float.toString(mPrice) + "," + Integer.toString(mMonth) + "," + Integer.toString(mDay) + "," + Integer.toString(mYear) + "," + Integer.toString(mQuantity));
+        return (mName + "`~`" + Float.toString(mPrice) + "`~`" + Integer.toString(mMonth) + "`~`" + Integer.toString(mDay) + "`~`" + Integer.toString(mYear) + "`~`" + Integer.toString(mQuantity));
     }
 }
