@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowAnimationStyle">@style/SlideAnimation</item>
+        <item name="android:colorBackground">@android:color/white</item>
     </style>
 
     <style name="SlideAnimation" parent="@android:style/Animation.Activity">
