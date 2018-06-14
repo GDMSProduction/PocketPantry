@@ -10,11 +10,11 @@
         <item android:id="@+id/nav_recipes"
             android:title="Recipe List" />
 
-        <item android:id="@+id/nav_about"
-            android:title="About" />
-
         <item android:id="@+id/nav_allergies"
             android:title="Allergies" />
+
+        <item android:id="@+id/nav_about"
+            android:title="About" />
     </group>
 
 </menu>

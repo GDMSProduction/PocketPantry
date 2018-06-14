@@ -56,6 +56,10 @@ public class HelpUI extends AppCompatActivity {
                         {
                             sendRecipe();
                         }
+                        else if (menuItem.toString().equals("Allergies"))
+                        {
+                            sendAllergies();
+                        }
 
                         return true;
                     }
@@ -94,10 +98,10 @@ public class HelpUI extends AppCompatActivity {
         startActivity(recipeIntent);
 
     }
-    public void sendHelp()
+    public void sendAllergies()
     {
-        Intent helpIntent = new Intent(this, HelpUI.class);
-        startActivity(helpIntent);
+        Intent allergyIntent = new Intent(this, AllergyUI.class);
+        startActivity(allergyIntent);
 
     }
 }

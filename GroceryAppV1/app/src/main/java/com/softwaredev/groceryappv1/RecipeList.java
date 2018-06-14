@@ -74,6 +74,10 @@ public class RecipeList extends AppCompatActivity {
                         {
                             sendGroc();
                         }
+                        else if (menuItem.toString().equals("Allergies"))
+                        {
+                            sendAllergies();
+                        }
                         else if (menuItem.toString().equals("About"))
                         {
                             sendHelp();
@@ -202,7 +206,6 @@ public class RecipeList extends AppCompatActivity {
     {
         Intent addRecIntent = new Intent(this, AddRecipe.class);
         startActivity(addRecIntent);
-
     }
     @Override
     public void onResume()
@@ -246,10 +249,10 @@ public class RecipeList extends AppCompatActivity {
         startActivity(grocIntent);
 
     }
-    public void sendRecipe()
+    public void sendAllergies()
     {
-        Intent recipeIntent = new Intent(this, RecipeList.class);
-        startActivity(recipeIntent);
+        Intent allergyIntent = new Intent(this, AllergyUI.class);
+        startActivity(allergyIntent);
 
     }
     public void sendHelp()
