@@ -56,6 +56,6 @@ public class RecipeBase {
 
     public String RecToString()
     {
-        return (recipeName + "," + instructions);
+        return (recipeName + "`~`" + instructions);
     }
 }
