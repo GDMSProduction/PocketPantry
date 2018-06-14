@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pocket Pantry V1.4</string>
+    <string name="app_name">Pocket Pantry V1.5</string>
     <string name="pantry_title">My Pantry:</string>
     <string name="nameLabel">Name:</string>
     <string name="priceLabel">Price:</string>

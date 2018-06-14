@@ -28,10 +28,6 @@
             android:label="Add item">
         </activity>
         <activity android:name=".RecipeList">
-            android:parentActivityName=".EntryUI">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".EntryUI" />
         </activity>
         <activity android:name=".RecipeExp">
             android:parentActivityName=".RecipeList">
