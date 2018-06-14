@@ -127,8 +127,10 @@ public class PantryUI extends AppCompatActivity {
 
         if (!isPantry)
         {
-            String price = String.format("%.02f", getTotal());
-            setTitle("Grocery List" + "      Total: $" + price);
+            String total = String.format("%.02f", getTotal());
+            TextView totalText = findViewById(R.id.totalText);
+            totalText.setVisibility(View.VISIBLE);
+            totalText.setText("Total: $" + total);
         }
 
         FloatingActionButton fab = findViewById(R.id.switchToInput);
@@ -246,8 +248,10 @@ public class PantryUI extends AppCompatActivity {
 
         if (!isPantry)
         {
-            String price = String.format("%.02f", getTotal());
-            setTitle("Grocery List" + "      Total: $" + price);
+            String total = String.format("%.02f", getTotal());
+            TextView totalText = findViewById(R.id.totalText);
+            totalText.setVisibility(View.VISIBLE);
+            totalText.setText("Total: $" + total);
         }
     }
 
@@ -314,6 +318,10 @@ public class PantryUI extends AppCompatActivity {
         pantry.get(position).mDay = day;
         pantry.get(position).mYear = year;
         pantry.get(position).mQuantity = quantity;
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
+        editor.commit();
     }
 
     public static void addToQuantity(int position, int quantity)
@@ -445,8 +453,7 @@ public class PantryUI extends AppCompatActivity {
         float total = 0.0f;
         for (int i = 0; i < pantry.size(); ++i)
         {
-            total += pantry.get(i).getPrice();
-            total *= pantry.get(i).getQuantity();
+            total += (pantry.get(i).getPrice() * pantry.get(i).getQuantity());
         }
 
         return total;
