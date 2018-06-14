@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.softwaredev.groceryappv1">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,6 +32,8 @@
                 android:value=".RecipeList" />
         </activity>
         <activity android:name=".HelpUI" />
-        <activity android:name=".AddRecipe"></activity>
+        <activity android:name=".AddRecipe" />
+        <activity android:name=".AllergyUI"></activity>
     </application>
+
 </manifest>

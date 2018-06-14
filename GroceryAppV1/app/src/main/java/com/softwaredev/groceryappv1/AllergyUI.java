@@ -11,7 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class HelpUI extends AppCompatActivity {
+
+public class AllergyUI extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -19,14 +20,14 @@ public class HelpUI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help_ui);
+        setContentView(R.layout.activity_allergy_ui);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle("Help");
+        actionbar.setTitle("Allergies");
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -44,21 +45,15 @@ public class HelpUI extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
 
-                        if (menuItem.toString().equals("Pantry"))
-                        {
+                        if (menuItem.toString().equals("Pantry")) {
                             sendPantry();
-                        }
-                        else if (menuItem.toString().equals("Grocery List"))
-                        {
+                        } else if (menuItem.toString().equals("Grocery List")) {
                             sendGroc();
-                        }
-                        else if (menuItem.toString().equals("Recipe List"))
-                        {
+                        } else if (menuItem.toString().equals("Recipe List")) {
                             sendRecipe();
                         }
-                        else if (menuItem.toString().equals("Allergies"))
-                        {
-                            sendAllergies();
+                        else if (menuItem.toString().equals("About")) {
+                            sendHelp();
                         }
 
                         return true;
@@ -77,31 +72,30 @@ public class HelpUI extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendPantry()
-    {
+    public void sendPantry() {
 
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
 
     }
-    public void sendGroc()
-    {
+
+    public void sendGroc() {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
 
     }
-    public void sendRecipe()
-    {
+
+    public void sendRecipe() {
         Intent recipeIntent = new Intent(this, RecipeList.class);
         startActivity(recipeIntent);
 
     }
-    public void sendAllergies()
-    {
-        Intent allergyIntent = new Intent(this, AllergyUI.class);
-        startActivity(allergyIntent);
+
+    public void sendHelp() {
+        Intent helpIntent = new Intent(this, HelpUI.class);
+        startActivity(helpIntent);
 
     }
 }
