@@ -101,6 +101,10 @@ public class PantryUI extends AppCompatActivity {
                         {
                            sendRecipe();
                         }
+                        else if (menuItem.toString().equals("Allergies"))
+                        {
+                            sendAllergies();
+                        }
                         else if (menuItem.toString().equals("About"))
                         {
                             sendHelp();
@@ -282,6 +286,12 @@ public class PantryUI extends AppCompatActivity {
     {
         Intent recipeIntent = new Intent(this, RecipeList.class);
         startActivity(recipeIntent);
+
+    }
+    public void sendAllergies()
+    {
+        Intent allergyIntent = new Intent(this, AllergyUI.class);
+        startActivity(allergyIntent);
 
     }
     public void sendHelp()
