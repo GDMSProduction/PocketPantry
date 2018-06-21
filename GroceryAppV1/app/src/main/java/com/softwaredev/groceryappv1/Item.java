@@ -3,6 +3,7 @@ package com.softwaredev.groceryappv1;
 public class Item
 {
     String mName;
+    String mUnit;
     float mPrice;
     int mMonth;
     int mDay;
@@ -49,6 +50,17 @@ public class Item
         mQuantity = quantity;
     }
 
+    public Item(String name, int quantity, String unit)
+    {
+        mName = name;
+        mPrice = 0.0f;
+        mMonth = 0;
+        mDay = 0;
+        mYear = 0;
+        mQuantity = quantity;
+        mUnit = unit;
+    }
+
     public String getName()
     {
         return mName;
@@ -76,5 +88,10 @@ public class Item
     public String itemToString()
     {
         return (mName + "`~`" + Float.toString(mPrice) + "`~`" + Integer.toString(mMonth) + "`~`" + Integer.toString(mDay) + "`~`" + Integer.toString(mYear) + "`~`" + Integer.toString(mQuantity));
+    }
+
+    public String ingredientToString()
+    {
+        return (Integer.toString(mQuantity) + " " + mUnit + " " + mName);
     }
 }

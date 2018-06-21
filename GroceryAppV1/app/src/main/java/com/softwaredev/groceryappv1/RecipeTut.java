@@ -21,7 +21,7 @@ public class RecipeTut extends AppCompatActivity {
                 if(Step == 2)
                 {
                     TextView textView = findViewById(R.id.insTextView);
-                    textView.setText("Use your cheese slicer to cut generous slices off your block of white cheddar\nSet these to the side for now, grab two slices of break and butter one side generously on each\nSet your skillet over low-medium heat and move onto a next step where a timer will start!");
+                    textView.setText("Use your cheese slicer to cut generous slices off your block of white cheddar\nSet these to the side for now, grab two slices of bread and butter one side generously on each\nSet your skillet over low-medium heat and move onto the next step where a timer will start!");
                     Step ++;
                 }
                 else if(Step == 3)
