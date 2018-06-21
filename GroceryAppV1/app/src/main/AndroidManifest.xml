@@ -20,11 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AddItem">
-        </activity>
-        <activity android:name=".RecipeList">
-        </activity>
+        <activity android:name=".AddItem"></activity>
+        <activity android:name=".RecipeList"></activity>
         <activity android:name=".RecipeExp">
             android:parentActivityName=".RecipeList">
             <meta-data
@@ -33,7 +30,11 @@
         </activity>
         <activity android:name=".HelpUI" />
         <activity android:name=".AddRecipe" />
-        <activity android:name=".AllergyUI"></activity>
+        <activity android:name=".AllergyUI" />
+        <activity
+            android:name=".AddIngredient"
+            android:label="@string/title_activity_add_ingredient"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

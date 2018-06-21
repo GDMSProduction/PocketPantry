@@ -2,25 +2,35 @@ package com.softwaredev.groceryappv1;
 
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class RecipeBase {
     String recipeName;
     String Utensils;
-    String ingredient;
     String instructions;
-    public RecipeBase(String name, String Uti, String ing, String ins)
+    private static ArrayList<Item> ingredients = new ArrayList<>(1);
+
+    public RecipeBase(String name, String Uti, String ins)
     {
         recipeName = name;
         Utensils = Uti;
-        ingredient = ing;
         instructions = ins;
     }
+
     public RecipeBase(String name, String ins)
     {
         recipeName = name;
         instructions = ins;
         Utensils = " ";
-        ingredient = " ";
     }
+
+    public RecipeBase (String name, String ins, ArrayList<Item> ings)
+    {
+        recipeName = name;
+        instructions = ins;
+        ingredients = ings;
+    }
+
     public String GetName()
     {
         return recipeName;
@@ -29,21 +39,13 @@ public class RecipeBase {
     {
         recipeName = N;
     }
-    public String GetUtiensils()
+    public String GetUtensils()
     {
         return Utensils;
     }
-    public void SetUtensils(String Utien)
+    public void SetUtensils(String Uten)
     {
-        Utensils = Utien;
-    }
-    public String GetIng()
-    {
-        return ingredient;
-    }
-    public void SetIng(String Ing)
-    {
-        ingredient = Ing;
+        Utensils = Uten;
     }
     public String GetIns()
     {

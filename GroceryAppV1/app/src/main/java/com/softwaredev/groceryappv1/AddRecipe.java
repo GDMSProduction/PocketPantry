@@ -16,11 +16,21 @@ public class AddRecipe extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = findViewById(R.id.editRecNameText);
-                String recipeName = editText.getText().toString();
-                editText = findViewById(R.id.editRecDescText);
-                String recipeDescription = editText.getText().toString();
-                RecipeList.addToRecList(new RecipeBase(recipeName, recipeDescription));
+                EditText nameEditText = findViewById(R.id.editRecNameText);
+                String recipeName;
+                if (nameEditText.getText().toString().trim().length() <= 0)
+                    return;
+                else
+                    recipeName = nameEditText.getText().toString();
+
+                EditText insEditText = findViewById(R.id.editRecDescText);
+                String recipeInstructions;
+                if (insEditText.getText().toString().trim().length() <= 0)
+                    return;
+                else
+                    recipeInstructions = insEditText.getText().toString();
+
+                RecipeList.addToRecList(new RecipeBase(recipeName, recipeInstructions));
                 finish();
             }
         });
