@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bgtest">
 
    <!-- <FrameLayout
         android:id="@+id/content_frame"
@@ -48,7 +49,8 @@
             android:text="@string/nameColumn"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBaseline_toBaselineOf="@+id/priceAndDateColumnText"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/textColor"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/switchToInput"
@@ -63,16 +65,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <ListView
-        android:id="@+id/pantryListView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/switchToInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceAndDateColumnText" />
+        <ListView
+            android:id="@+id/pantryListView"
+            style="@android:style/Widget.DeviceDefault.Light.ListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/switchToInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priceAndDateColumnText"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/priceAndDateColumnText"
@@ -87,7 +92,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:id="@+id/quantityColumnText"
@@ -98,7 +104,8 @@
             android:text="@string/quantityColumn"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBaseline_toBaselineOf="@+id/priceAndDateColumnText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:id="@+id/totalText"

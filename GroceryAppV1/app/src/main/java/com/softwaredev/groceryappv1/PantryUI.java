@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
@@ -24,12 +25,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.app.NotificationChannel.DEFAULT_CHANNEL_ID;
 
 public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
+
+   //NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(getTaskId()))
+   //        .setSmallIcon(R.drawable.shitsgoingdown)
+   //        .setContentTitle("Expiration!")
+   //        .setContentText("Something in your pantry is going to expire!");
+//
+   // NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+    final Calendar calendar = Calendar.getInstance();
+    int Year = calendar.get(Calendar.YEAR);
+    int Month = calendar.get(Calendar.MONTH);
+    int Day = calendar.get(Calendar.DAY_OF_MONTH);
 
     private ListView pantryLV;
     private ItemAdapter adapter;
@@ -53,8 +67,9 @@ public class PantryUI extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        if (isPantry)
+        if (isPantry) {
             actionbar.setTitle("My Pantry");
+        }
         else
             actionbar.setTitle("Grocery List");
 
@@ -165,6 +180,7 @@ public class PantryUI extends AppCompatActivity {
         });
 
         registerForContextMenu(pantryLV);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -457,6 +473,23 @@ public class PantryUI extends AppCompatActivity {
         }
 
         return total;
+    }
+
+    public void checkExpiration()
+    {
+        for (int i = 0; i < pantry.size(); ++i)
+        {
+            if(pantry.get(i).getYear() == Year)
+            {
+                if(pantry.get(i).getMonth() == Month)
+                {
+                    if(pantry.get(i).getDay() == Day)
+                    {
+                       // notificationManager.notify(0 ,mBuilder.build());
+                    }
+                }
+            }
+        }
     }
 
     public static Item getItem (int position)

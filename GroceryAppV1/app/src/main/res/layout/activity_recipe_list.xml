@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true">
-
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bgtest">
 
 
     <android.support.constraint.ConstraintLayout

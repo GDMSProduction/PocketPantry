@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeExp">
+    tools:context=".RecipeExp"
+    android:background="@drawable/bgtest">
 
     <TextView
         android:id="@+id/recTitle"
@@ -16,7 +17,8 @@
         android:textSize="30sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/textColor"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"
@@ -42,7 +44,8 @@
                 android:id="@+id/Instructions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

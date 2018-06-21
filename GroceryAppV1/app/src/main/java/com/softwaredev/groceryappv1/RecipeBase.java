@@ -5,15 +5,17 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class RecipeBase {
+
     String recipeName;
     String Utensils;
     String instructions;
     private static ArrayList<Item> ingredients = new ArrayList<>(1);
 
-    public RecipeBase(String name, String Uti, String ins)
+
+    public RecipeBase(String name, String uti, String ins)
     {
         recipeName = name;
-        Utensils = Uti;
+        Utensils = uti;
         instructions = ins;
     }
 
@@ -24,7 +26,7 @@ public class RecipeBase {
         Utensils = " ";
     }
 
-    public RecipeBase (String name, String ins, ArrayList<Item> ings)
+    public RecipeBase(String name, String ins, ArrayList<Item> ings)
     {
         recipeName = name;
         instructions = ins;
