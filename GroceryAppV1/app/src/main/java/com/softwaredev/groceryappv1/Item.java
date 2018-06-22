@@ -94,4 +94,9 @@ public class Item
     {
         return (Integer.toString(mQuantity) + " " + mUnit + " " + mName);
     }
+
+    public String storeIngredientString()
+    {
+        return (Integer.toString(mQuantity) + "`~`" + mUnit + "`~`" + mName);
+    }
 }

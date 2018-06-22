@@ -46,7 +46,7 @@ public class AddRecipe extends AppCompatActivity {
                 else
                     recipeInstructions = insEditText.getText().toString();
 
-                RecipeList.addToRecList(new RecipeBase(recipeName, recipeInstructions));
+                RecipeList.addToRecList(new RecipeBase(recipeName, recipeInstructions, ingredients));
                 finish();
             }
         });

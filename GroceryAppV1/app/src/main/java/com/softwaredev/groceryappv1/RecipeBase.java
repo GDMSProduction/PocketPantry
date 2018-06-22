@@ -57,9 +57,17 @@ public class RecipeBase {
     {
         instructions = Ins;
     }
+    public ArrayList<Item> GetIngredients() {return ingredients;}
 
     public String RecToString()
     {
-        return (recipeName + "`~`" + instructions);
+        String recipe = recipeName + "`~`" + instructions + "`~`" + Integer.toString(ingredients.size());
+
+        for (int i =0; i < ingredients.size(); ++i)
+        {
+            recipe = recipe + "`~`" + ingredients.get(i).storeIngredientString();
+        }
+
+        return (recipe);
     }
 }

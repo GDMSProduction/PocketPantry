@@ -101,7 +101,15 @@ public class RecipeList extends AppCompatActivity {
             if (!temp.equals("null"))
             {
                 parse = temp.split("`~`");
-                RecList.add(new RecipeBase(parse[0], parse[1]));
+                int numIngredients = Integer.parseInt(parse[2]);
+                ArrayList<Item> ingredients = new ArrayList<>();
+
+                for (int j = 3; j < numIngredients * 3 + 3; j += 3)
+                {
+                    ingredients.add(new Item(parse[j+2], Integer.parseInt(parse[j]), parse[j+1]));
+                }
+
+                RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
                 RecNameList.add(parse[0]);
             }
         }
@@ -227,7 +235,15 @@ public class RecipeList extends AppCompatActivity {
             if (!temp.equals("null"))
             {
                 parse = temp.split("`~`");
-                RecList.add(new RecipeBase(parse[0], parse[1]));
+                int numIngredients = Integer.parseInt(parse[2]);
+                ArrayList<Item> ingredients = new ArrayList<>();
+
+                for (int j = 3; j < numIngredients * 3 + 3; j += 3)
+                {
+                    ingredients.add(new Item(parse[j+2], Integer.parseInt(parse[j]), parse[j+1]));
+                }
+
+                RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
                 RecNameList.add(parse[0]);
             }
         }

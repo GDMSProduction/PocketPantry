@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class RecipeExp extends AppCompatActivity {
 
     static String RecipeText;
@@ -45,7 +47,16 @@ public class RecipeExp extends AppCompatActivity {
             DisplayRec(RecipeList.RecNameList.get(position));
             //RecipeText = RecipeList.GetName();
             String instructions = RecipeList.RecList.get(position).instructions;
-            DisplayIns(instructions);
+            RecipeBase recipe = RecipeList.RecList.get(position);
+
+            ArrayList<Item> ingredients = recipe.GetIngredients();
+            String description = "Ingredients: \n";
+            for (int i = 0; i < ingredients.size(); ++i)
+            {
+                description = description + ingredients.get(i).ingredientToString() + "\n";
+            }
+            description = description + "\n" + instructions;
+            DisplayIns(description);
         }
 
     }
