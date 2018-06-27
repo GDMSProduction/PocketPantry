@@ -10,9 +10,8 @@
     <TextView
         android:id="@+id/insTextView"
         android:layout_width="392dp"
-        android:layout_height="440dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/GCT1"
+        android:layout_height="352dp"
+        android:layout_marginTop="212dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,5 +25,15 @@
         android:text="Next Step"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <VideoView
+        android:id="@+id/tutVideo"
+        android:layout_width="341dp"
+        android:layout_height="190dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
