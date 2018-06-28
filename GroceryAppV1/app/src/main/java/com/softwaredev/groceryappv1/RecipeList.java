@@ -207,7 +207,6 @@ public class RecipeList extends AppCompatActivity {
     public void Populate() {
         RecNameList.add("Grilled Cheese");
         RecNameList.add("Lemon Pepper Chicken");
-        RecNameList.add("Garlic Rosemary Lamb");
     }
 
     public static String GetName() {

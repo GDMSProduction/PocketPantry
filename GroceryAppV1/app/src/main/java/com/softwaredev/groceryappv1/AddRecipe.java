@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -29,7 +30,7 @@ public class AddRecipe extends AppCompatActivity {
         listView = findViewById(R.id.ingredientsListView);
         listView.setAdapter(ingAdapt);
 
-        FloatingActionButton fab = findViewById(R.id.addRecipeFAB);
+        Button fab = findViewById(R.id.addrecbutton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
