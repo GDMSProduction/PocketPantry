@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +25,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -32,6 +36,8 @@ import static android.app.NotificationChannel.DEFAULT_CHANNEL_ID;
 public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
+    //private static FirebaseDatabase mDatabase;
+    //private static DatabaseReference mRef;
 
    //NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(getTaskId()))
    //        .setSmallIcon(R.drawable.shitsgoingdown)
@@ -117,6 +123,9 @@ public class PantryUI extends AppCompatActivity {
 
         context = this;
 
+
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
+
         if (isPantry)
             sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
         else {
@@ -132,8 +141,8 @@ public class PantryUI extends AppCompatActivity {
 
         for (int i = 0; i < mSize; ++i)
         {
-            temp = sharedPref.getString("item" + i, "null");
-            if (!temp.equals("null"))
+            temp = sharedPref.getString("item" + i, "!null!");
+            if (!temp.equals("!null!"))
             {
                 parse = temp.split("`~`");
                 pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
@@ -269,6 +278,7 @@ public class PantryUI extends AppCompatActivity {
             totalText.setVisibility(View.VISIBLE);
             totalText.setText("Total: $" + total);
         }
+
     }
 
     public void sendPantry()
@@ -313,6 +323,9 @@ public class PantryUI extends AppCompatActivity {
         pantry.add(_item);
         editor.putInt("size", pantry.size());
         editor.commit();
+        //mDatabase = FirebaseDatabase.getInstance();
+        //mRef = mDatabase.getReference("pantry");
+        //mRef.setValue(_item);
     }
 
     public static int checkInList(String name)

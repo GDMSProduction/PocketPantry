@@ -26,7 +26,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class RecipeList extends AppCompatActivity {
-    static ArrayList<String> RecNameList  = new ArrayList<>(1);;
+    static ArrayList<String> RecNameList  = new ArrayList<>(1);
     static ArrayList<RecipeBase> RecList = new ArrayList<>(1);
     ArrayList<RecipeBase> RecTut;
     ArrayAdapter<String> rAdapt;
