@@ -9,7 +9,7 @@ public class RecipeBase {
     String recipeName;
     String Utensils;
     String instructions;
-    private static ArrayList<Item> ingredients = new ArrayList<>(1);
+    ArrayList<Item> ingredients = new ArrayList<>(1);
 
 
     public RecipeBase(String name, String uti, String ins)
