@@ -102,7 +102,7 @@ public class SpiceRackUI extends AppCompatActivity {
         spiceList.clear();
         String temp;
 
-        for (int i = 0; i < mSize; ++i)
+        for (int i = 1; i < mSize + 1; ++i)
         {
             temp = sharedPref.getString("spice" + i, "!null!");
             if (!temp.equals("!null!"))
@@ -169,6 +169,6 @@ public class SpiceRackUI extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("spice" + Integer.toString(spiceList.size()), spice);
         editor.putInt("size", spiceList.size());
-        editor.apply();
+        editor.commit();
     }
 }

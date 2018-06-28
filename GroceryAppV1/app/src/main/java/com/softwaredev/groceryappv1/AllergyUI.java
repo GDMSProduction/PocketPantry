@@ -97,7 +97,7 @@ public class AllergyUI extends AppCompatActivity {
         allergyList.clear();
         String temp;
 
-        for (int i = 0; i < mSize; ++i)
+        for (int i = 1; i < mSize + 1; ++i)
         {
             temp = sharedPref.getString("allergy" + i, "!null!");
             if (!temp.equals("!null!"))
