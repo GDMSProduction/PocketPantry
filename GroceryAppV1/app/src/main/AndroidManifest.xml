@@ -20,8 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddItem"></activity>
-        <activity android:name=".RecipeList"></activity>
+        <activity android:name=".AddItem" />
+        <activity android:name=".RecipeList" />
         <activity android:name=".RecipeExp">
             android:parentActivityName=".RecipeList">
             <meta-data
@@ -34,8 +34,9 @@
         <activity
             android:name=".AddIngredient"
             android:label="@string/title_activity_add_ingredient"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".RecipeTut"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".RecipeTut" />
+        <activity android:name=".SpiceRackUI"></activity>
     </application>
 
 </manifest>

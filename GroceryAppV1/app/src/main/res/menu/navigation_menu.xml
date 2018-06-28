@@ -4,6 +4,9 @@
         <item android:id="@+id/nav_pantry"
             android:title="Pantry" />
 
+        <item android:id="@+id/nav_spice"
+            android:title="Spice Rack" />
+
         <item android:id="@+id/nav_grocery"
             android:title="Grocery List" />
 

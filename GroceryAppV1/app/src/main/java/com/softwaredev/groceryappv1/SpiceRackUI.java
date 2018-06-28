@@ -19,12 +19,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-
-public class AllergyUI extends AppCompatActivity {
+public class SpiceRackUI extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    static ArrayList<String> allergyList  = new ArrayList<>(1);
+    static ArrayList<String> spiceList  = new ArrayList<>(1);
     ArrayAdapter<String> arrAdapter;
     static SharedPreferences sharedPref;
     int mSize;
@@ -32,14 +31,14 @@ public class AllergyUI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_allergy_ui);
+        setContentView(R.layout.activity_spice_rack_ui);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle("Allergies");
+        actionbar.setTitle("Spice Rack");
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -57,18 +56,24 @@ public class AllergyUI extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
 
-                        if (menuItem.toString().equals("Pantry")) {
+                        if (menuItem.toString().equals("Pantry"))
+                        {
                             sendPantry();
-                        } else if (menuItem.toString().equals("Grocery List")) {
+                        }
+                        else if (menuItem.toString().equals("Grocery List"))
+                        {
                             sendGroc();
                         }
-                        else if (menuItem.toString().equals("Spice Rack")) {
-                            sendSpiceRack();
-                        }
-                        else if (menuItem.toString().equals("Recipe List")) {
+                        else if (menuItem.toString().equals("Recipe List"))
+                        {
                             sendRecipe();
                         }
-                        else if (menuItem.toString().equals("About")) {
+                        else if (menuItem.toString().equals("Allergies"))
+                        {
+                            sendAllergies();
+                        }
+                        else if (menuItem.toString().equals("About"))
+                        {
                             sendHelp();
                         }
 
@@ -77,42 +82,41 @@ public class AllergyUI extends AppCompatActivity {
                 }
         );
 
-        FloatingActionButton fab = findViewById(R.id.addAllergyButton);
+        FloatingActionButton fab = findViewById(R.id.addSpiceButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addIntent = new Intent(AllergyUI.this, AddItem.class);
-                addIntent.putExtra("allergy", true);
+                Intent addIntent = new Intent(SpiceRackUI.this, AddItem.class);
+                addIntent.putExtra("spice", true);
                 startActivityForResult(addIntent, 1);
             }
         });
 
-        arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allergyList);
-        ListView listView = findViewById(R.id.allergyListView);
+        arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, spiceList);
+        ListView listView = findViewById(R.id.spiceListView);
         listView.setAdapter(arrAdapter);
 
-        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.allergy", Context.MODE_PRIVATE);
+        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.spices", Context.MODE_PRIVATE);
 
         mSize = sharedPref.getInt("size", 0);
-        allergyList.clear();
+        spiceList.clear();
         String temp;
 
         for (int i = 0; i < mSize; ++i)
         {
-            temp = sharedPref.getString("allergy" + i, "!null!");
+            temp = sharedPref.getString("spice" + i, "!null!");
             if (!temp.equals("!null!"))
             {
-                allergyList.add(temp);
+                spiceList.add(temp);
             }
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();
 
-        arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allergyList);
-        ListView listView = findViewById(R.id.allergyListView);
+        arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, spiceList);
+        ListView listView = findViewById(R.id.spiceListView);
         listView.setAdapter(arrAdapter);
     }
 
@@ -134,11 +138,6 @@ public class AllergyUI extends AppCompatActivity {
 
     }
 
-    public void sendSpiceRack() {
-        Intent pantryIntent = new Intent(this, SpiceRackUI.class);
-        startActivity(pantryIntent);
-    }
-
     public void sendGroc() {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
@@ -151,6 +150,12 @@ public class AllergyUI extends AppCompatActivity {
         startActivity(recipeIntent);
 
     }
+    public void sendAllergies()
+    {
+        Intent allergyIntent = new Intent(this, AllergyUI.class);
+        startActivity(allergyIntent);
+
+    }
 
     public void sendHelp() {
         Intent helpIntent = new Intent(this, HelpUI.class);
@@ -158,12 +163,12 @@ public class AllergyUI extends AppCompatActivity {
 
     }
 
-    public static void addAllergy(String allergy)
+    public static void addSpice(String spice)
     {
-        allergyList.add(allergy);
+        spiceList.add(spice);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("allergy" + Integer.toString(allergyList.size()), allergy);
-        editor.putInt("size", allergyList.size());
+        editor.putString("spice" + Integer.toString(spiceList.size()), spice);
+        editor.putInt("size", spiceList.size());
         editor.apply();
     }
 }

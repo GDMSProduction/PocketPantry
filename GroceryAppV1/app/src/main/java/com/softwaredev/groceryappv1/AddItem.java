@@ -24,6 +24,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
     int mPosition = -1;
     boolean isEditing = false;
     boolean isAllergy = false;
+    boolean isSpice;
     EditText editText;
 
     @Override
@@ -34,8 +35,9 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         Intent intent = getIntent();
         isEditing = intent.getBooleanExtra("inList", false);
         isAllergy = intent.getBooleanExtra("allergy", false);
+        isSpice = intent.getBooleanExtra("spice", false);
 
-        if(!isAllergy) {
+        if(!isAllergy && !isSpice) {
 
             final Calendar cal = Calendar.getInstance();
             mYear = cal.get(Calendar.YEAR);
@@ -73,9 +75,10 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 editText.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" "));
             }
         }
-        else
-        {
+        else{
+
             TextView textView;
+            Button button = findViewById(R.id.addItemButton);
 
             textView = findViewById(R.id.priceLabel);
             textView.setVisibility(View.INVISIBLE);
@@ -93,6 +96,12 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             textView.setVisibility(View.INVISIBLE);
             editText = findViewById(R.id.quantityInput);
             editText.setVisibility(View.INVISIBLE);
+
+            if (isAllergy)
+                button.setText("Add allergy");
+            else if (isSpice)
+                button.setText("Add spice");
+
         }
     }
 
@@ -110,7 +119,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         EditText PriceEditText = findViewById(R.id.priceInput);
         EditText QuantEditText = findViewById(R.id.quantityInput);
 
-        if (!isAllergy) {
+        if (!isAllergy && !isSpice) {
             if (!isEditing)
                 mPosition = PantryUI.checkInList(mName);
 
@@ -152,9 +161,13 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 PantryUI.addToList((new Item(mName, mPrice, mMonth + 1, mDay, mYear, mQuantity)));
             }
         }
-        else
+        else if (isAllergy)
         {
             AllergyUI.addAllergy(mName);
+        }
+        else if (isSpice)
+        {
+            SpiceRackUI.addSpice(mName);
         }
 
         finish();

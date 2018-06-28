@@ -70,6 +70,10 @@ public class RecipeList extends AppCompatActivity {
                         {
                             sendPantry();
                         }
+                        else if (menuItem.toString().equals("Spice Rack"))
+                        {
+                            sendSpiceRack();
+                        }
                         else if (menuItem.toString().equals("Grocery List"))
                         {
                             sendGroc();
@@ -257,6 +261,10 @@ public class RecipeList extends AppCompatActivity {
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
 
+    }
+    public void sendSpiceRack() {
+        Intent pantryIntent = new Intent(this, SpiceRackUI.class);
+        startActivity(pantryIntent);
     }
     public void sendGroc()
     {
