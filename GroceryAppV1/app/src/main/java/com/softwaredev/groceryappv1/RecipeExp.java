@@ -37,7 +37,6 @@ public class RecipeExp extends AppCompatActivity {
         else
         {
             DisplayRec(RecipeList.RecNameList.get(position));
-            //RecipeText = RecipeList.GetName();
             String instructions = RecipeList.RecList.get(position).instructions;
             RecipeBase recipe = RecipeList.RecList.get(position);
 
@@ -67,7 +66,7 @@ public class RecipeExp extends AppCompatActivity {
         Intent recipeIntent = new Intent(this, RecipeTut.class);
         startActivity(recipeIntent);
     }
-    public void LoadInstructions()
+    public void LoadIngredients()
     {
         RecipeBase recipe = RecipeList.RecList.get(position);
         ArrayList<Item> ingredients = recipe.GetIngredients();

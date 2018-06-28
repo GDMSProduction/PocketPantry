@@ -20,9 +20,28 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/textColor"/>
 
+    <Button
+        android:id="@+id/StartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:onClick="StartRec"
+        android:text="Start"
+        android:visibility="invisible"
+        android:background="@drawable/button_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2" />
+
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="334dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -32,8 +51,10 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recTitle">
+        app:layout_constraintTop_toBottomOf="@+id/recTitle"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,13 +68,6 @@
                 android:textColor="@color/textColor"
                 android:textSize="14sp" />
 
-            <Button
-                android:id="@+id/StartButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="StartRec"
-                android:text="Start"
-                android:visibility="invisible" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -1,6 +1,7 @@
 package com.softwaredev.groceryappv1;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,18 +14,18 @@ import org.w3c.dom.Text;
 
 public class RecipeTut extends AppCompatActivity {
     int Step = 1;
-    int minute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_tut);
         final TextView textView = findViewById(R.id.insTextView);
         textView.setText("Remember to make sure you're prepared!");
+
         VideoView videoView = findViewById(R.id.tutVideo);
-
-
-       // videoView.setVideoPath(""); -------------------------------- Find a video to download>>>
-
+        String path="https://www.demonuts.com/Demonuts/smallvideo.mp4";
+        Uri uri= Uri.parse(path);
+        videoView.setVideoURI(uri);
+        videoView.start();
 
         final Button button = findViewById(R.id.nextStepButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +34,7 @@ public class RecipeTut extends AppCompatActivity {
                 if(RecipeList.GetName() == "Grilled Cheese") {
                     if (Step == 1) {
                         textView.setText("Ingredients required: \nBlocked white cheddar cheese\nSliced munster cheese\nSliced bread of choice\nButter or butter substitute of choice\n\n" +
-                                "    Utensils required: \nSkillet\nHeat resistant flipper\nSpreading knife\nCheese slicer(Wire or otherwise)\nBasic kitchen knife");
+                                "Utensils required: \nSkillet\nHeat resistant flipper\nSpreading knife\nCheese slicer(Wire or otherwise)\nBasic kitchen knife");
                         Step++;
                     }
                     else if (Step == 2) {
@@ -41,11 +42,18 @@ public class RecipeTut extends AppCompatActivity {
                         Step++;
                     } else if (Step == 3) {
                         final TextView textView = findViewById(R.id.insTextView);
-                        new CountDownTimer(5000, 1000) {
+                        new CountDownTimer(90000, 1000) {
                             public void onTick(long millisUntilFinished) {
-                                textView.setText("seconds remaining: " + millisUntilFinished / 1000);
+                                if (millisUntilFinished >= 60000 && millisUntilFinished <= 90000)
+                                    textView.setText("Time remaining: 1:" + millisUntilFinished / 1000 % 60);
+                                else if(millisUntilFinished <= 60000)
+                                {
+                                    textView.setText("Time remaining: " + millisUntilFinished / 1000);
+                                }
+                                findViewById(R.id.nextStepButton).setVisibility(View.INVISIBLE);
                             }
                             public void onFinish() {
+                                findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now place the bread butter side down into the skillet placing 2 slices of cheddar on one piece of bread and 2 slices of munster on the other\nwait until you can see the cheese start to glisten and melt. Use your flipper to place the two pieces of bread together\nContinue cooking each side evenly flipping the sandwich frequently until golden brown\n Slice and enjoy!");
                                 Step++;
                             }
@@ -81,6 +89,7 @@ public class RecipeTut extends AppCompatActivity {
 
                         new CountDownTimer(300000, 1000) {
                             public void onTick(long millisUntilFinished) {
+                                findViewById(R.id.nextStepButton).setVisibility(View.INVISIBLE);
                                 if (millisUntilFinished >= 240000 && millisUntilFinished <= 300000)
                                     textView.setText("Time remaining: 4:" + millisUntilFinished / 1000 % 60);
                                else if (millisUntilFinished > 180000 && millisUntilFinished < 240000)
@@ -102,6 +111,7 @@ public class RecipeTut extends AppCompatActivity {
                             }
 
                             public void onFinish() {
+                                findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now flip the chicken breast!");
                                 Step++;
                             }
@@ -112,6 +122,7 @@ public class RecipeTut extends AppCompatActivity {
 
                         new CountDownTimer(300000, 1000) {
                             public void onTick(long millisUntilFinished) {
+                                findViewById(R.id.nextStepButton).setVisibility(View.INVISIBLE);
                                 if (millisUntilFinished >= 240000 && millisUntilFinished <= 300000)
                                     textView.setText("Time remaining: 4:" + millisUntilFinished / 1000 % 60);
                                 else if (millisUntilFinished > 180000 && millisUntilFinished < 240000)
@@ -133,6 +144,7 @@ public class RecipeTut extends AppCompatActivity {
                             }
 
                             public void onFinish() {
+                                findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now remove the skillet from the heat and turn the burner off.");
                                 Step++;
                             }
@@ -147,6 +159,7 @@ public class RecipeTut extends AppCompatActivity {
                     {
                         new CountDownTimer(780000, 1000) {
                             public void onTick(long millisUntilFinished) {
+                                findViewById(R.id.nextStepButton).setVisibility(View.INVISIBLE);
                                 if(millisUntilFinished >= 720000 && millisUntilFinished <= 780000)
                                 {
                                     textView.setText("Time remaining: 12:" + millisUntilFinished / 1000 % 60);
@@ -200,6 +213,7 @@ public class RecipeTut extends AppCompatActivity {
                             }
 
                             public void onFinish() {
+                                findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now plate and ladle the sauce on top of the chicken, then garnish with parsley");
                                 Step++;
                             }
