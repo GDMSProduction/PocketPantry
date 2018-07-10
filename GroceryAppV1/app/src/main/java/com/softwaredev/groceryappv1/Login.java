@@ -1,6 +1,8 @@
 package com.softwaredev.groceryappv1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,23 +12,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
-public class HelpUI extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    SharedPreferences mSharedPref;
+    String mUsername;
+    EditText mUsernameInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help_ui);
+        setContentView(R.layout.activity_login);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle("Help");
+        actionbar.setTitle("Login");
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -64,15 +71,17 @@ public class HelpUI extends AppCompatActivity {
                         {
                             sendAllergies();
                         }
-                        else if (menuItem.toString().equals("Login"))
-                        {
-                            sendLogin();
-                        }
 
                         return true;
                     }
                 }
         );
+
+        mSharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
+
+        mUsername = mSharedPref.getString("username", "");
+        mUsernameInput = findViewById(R.id.usernameInput);
+        mUsernameInput.setText(mUsername);
     }
 
     @Override
@@ -116,9 +125,23 @@ public class HelpUI extends AppCompatActivity {
         startActivity(allergyIntent);
 
     }
-    public void sendLogin()
+
+    public void saveUsername(View view)
     {
-        Intent loginIntent = new Intent(this,Login.class);
-        startActivity(loginIntent);
+        mUsername = mUsernameInput.getText().toString();
+        SharedPreferences.Editor _editor = mSharedPref.edit();
+
+        if (!mUsername.equals(""))
+        {
+            _editor.putString("username", mUsername);
+            _editor.putBoolean("signedIn", true);
+            _editor.commit();
+            finish();
+        }
+        else
+        {
+            _editor.putBoolean("signedIn", false);
+            _editor.commit();
+        }
     }
 }

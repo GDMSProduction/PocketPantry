@@ -36,7 +36,8 @@
             android:label="@string/title_activity_add_ingredient"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".RecipeTut" />
-        <activity android:name=".SpiceRackUI"></activity>
+        <activity android:name=".SpiceRackUI" />
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>

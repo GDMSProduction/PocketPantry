@@ -10,6 +10,11 @@ public class Item
     int mYear;
     int mQuantity;
 
+    public Item()
+    {
+
+    }
+
     public Item(String name, float price, int month, int day, int year)
     {
         mName = name;

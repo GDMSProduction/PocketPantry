@@ -72,6 +72,10 @@ public class SpiceRackUI extends AppCompatActivity {
                         {
                             sendAllergies();
                         }
+                        else if (menuItem.toString().equals("Login"))
+                        {
+                            sendLogin();
+                        }
                         else if (menuItem.toString().equals("About"))
                         {
                             sendHelp();
@@ -156,7 +160,11 @@ public class SpiceRackUI extends AppCompatActivity {
         startActivity(allergyIntent);
 
     }
-
+    public void sendLogin()
+    {
+        Intent loginIntent = new Intent(this,Login.class);
+        startActivity(loginIntent);
+    }
     public void sendHelp() {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);

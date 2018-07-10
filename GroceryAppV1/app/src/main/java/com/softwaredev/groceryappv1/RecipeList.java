@@ -82,6 +82,10 @@ public class RecipeList extends AppCompatActivity {
                         {
                             sendAllergies();
                         }
+                        else if (menuItem.toString().equals("Login"))
+                        {
+                            sendLogin();
+                        }
                         else if (menuItem.toString().equals("About"))
                         {
                             sendHelp();
@@ -255,11 +259,9 @@ public class RecipeList extends AppCompatActivity {
 
     public void sendPantry()
     {
-
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
-
     }
     public void sendSpiceRack() {
         Intent pantryIntent = new Intent(this, SpiceRackUI.class);
@@ -270,21 +272,22 @@ public class RecipeList extends AppCompatActivity {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
-
     }
     public void sendAllergies()
     {
         Intent allergyIntent = new Intent(this, AllergyUI.class);
         startActivity(allergyIntent);
-
+    }
+    public void sendLogin()
+    {
+        Intent loginIntent = new Intent(this,Login.class);
+        startActivity(loginIntent);
     }
     public void sendHelp()
     {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
-
     }
-
     public static void addToRecList(RecipeBase recipe)
     {
         SharedPreferences.Editor editor = recSharedPref.edit();
