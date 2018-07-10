@@ -53,16 +53,6 @@ public class PantryUI extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-   //Intent notifIntent = new Intent(this, PantryUI.class);
-   //PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), notifIntent, 0);
-   //Notification n  = new Notification.Builder(this)
-   //        .setContentTitle("Something in your pantry is expiring!")
-   //        .setContentText("Please check your pantry and act accordingly.")
-   //        .setSmallIcon(R.drawable.shitsgoingdown)
-   //        .setContentIntent(pIntent).build();
-   //NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -507,19 +497,25 @@ public class PantryUI extends AppCompatActivity {
         CharSequence name = "my_channel";
         String CHANNEL_ID = "my_channel_01";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
             int importance = NotificationManager.IMPORTANCE_LOW;
+
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,name, importance);
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.enableVibration(true);
             notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
+
         Intent intent = new Intent(this, PantryUI.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setAutoCancel(true);
         mBuilder.setSmallIcon(R.drawable.shitsgoingdown);
@@ -528,6 +524,8 @@ public class PantryUI extends AppCompatActivity {
 
         notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
     }
+
+
     public static Item getItem (int position)
     {
         return pantry.get(position);
