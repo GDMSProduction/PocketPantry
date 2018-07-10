@@ -37,7 +37,7 @@ public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
     //private static FirebaseDatabase mDatabase;
-    //private static DatabaseReference mRef;
+    private static DatabaseReference mRef;
 
    //NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(getTaskId()))
    //        .setSmallIcon(R.drawable.shitsgoingdown)
@@ -331,9 +331,8 @@ public class PantryUI extends AppCompatActivity {
         pantry.add(_item);
         editor.putInt("size", pantry.size());
         editor.commit();
-        //mDatabase = FirebaseDatabase.getInstance();
-        //mRef = mDatabase.getReference("pantry");
-        //mRef.setValue(_item);
+        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef.child("jsmith1113").push().setValue(_item);
     }
 
     public static int checkInList(String name)
