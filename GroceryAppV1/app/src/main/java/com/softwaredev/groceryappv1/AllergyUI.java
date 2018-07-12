@@ -68,6 +68,9 @@ public class AllergyUI extends AppCompatActivity {
                         else if (menuItem.toString().equals("Recipe List")) {
                             sendRecipe();
                         }
+                        else if (menuItem.toString().equals("Login")) {
+                            sendLogin();
+                        }
                         else if (menuItem.toString().equals("About")) {
                             sendHelp();
                         }
@@ -151,7 +154,11 @@ public class AllergyUI extends AppCompatActivity {
         startActivity(recipeIntent);
 
     }
-
+    public void sendLogin()
+    {
+        Intent loginIntent = new Intent(this,Login.class);
+        startActivity(loginIntent);
+    }
     public void sendHelp() {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
