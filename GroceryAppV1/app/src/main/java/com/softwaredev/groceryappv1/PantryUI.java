@@ -620,20 +620,24 @@ public class PantryUI extends AppCompatActivity {
 
                     mUser = new User();
 
-                    mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).getPantrySize());
-                    mUser.setPantry(dataSnapshot.child(mUsername).getValue(User.class).getPantry());
-                    mUser.setGrocerySize(dataSnapshot.child(mUsername).getValue(User.class).getGrocerySize());
-                    mUser.setGrocery(dataSnapshot.child(mUsername).getValue(User.class).getGrocery());
-                    mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
+                    if (dataSnapshot.hasChild(mUsername)) {
+                        mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).getPantrySize());
+                        mUser.setPantry(dataSnapshot.child(mUsername).getValue(User.class).getPantry());
+                        mUser.setGrocerySize(dataSnapshot.child(mUsername).getValue(User.class).getGrocerySize());
+                        mUser.setGrocery(dataSnapshot.child(mUsername).getValue(User.class).getGrocery());
+                        mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
 
-                    if (isPantry) {
-                        pantry = mUser.getPantry();
-                        mSize = mUser.getPantrySize();
-                    } else {
-                        pantry = mUser.getGrocery();
-                        mSize = mUser.getGrocerySize();
+                        if (isPantry) {
+                            pantry = mUser.getPantry();
+                            mSize = mUser.getPantrySize();
+                        } else {
+                            pantry = mUser.getGrocery();
+                            mSize = mUser.getGrocerySize();
+                        }
+                        mUsername = mUser.getUsername();
                     }
-                    mUsername = mUser.getUsername();
+                    else
+                        StoreInFirebase();
 
                     pantryLV = findViewById(R.id.pantryListView);
                     adapter = new ItemAdapter(context, pantry, isPantry);
