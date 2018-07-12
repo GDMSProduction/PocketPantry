@@ -15,8 +15,20 @@ public class User {
     {
         return pantrySize;
     }
+    public ArrayList<Item> getPantry()
+    {
+        return mPantry;
+    }
     public void setPantry (ArrayList<Item> _pantry)
     {
         mPantry = _pantry;
+    }
+    public void setUsername (String _userName)
+    {
+        mUsername = _userName;
+    }
+    public String getUsername ()
+    {
+        return mUsername;
     }
 }

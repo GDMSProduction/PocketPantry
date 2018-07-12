@@ -263,6 +263,8 @@ public class PantryUI extends AppCompatActivity {
         mUsername = sharedPref.getString("username", "");
         isSignedIn = sharedPref.getBoolean("signedIn", false);
 
+        LoadList();
+
         if (!isPantry)
         {
             String total = String.format("%.02f", getTotal());
@@ -322,9 +324,13 @@ public class PantryUI extends AppCompatActivity {
             editor.commit();
         }
         else {
-            mRef = FirebaseDatabase.getInstance().getReference().child(mUsername);
-            mRef.child("pantry").child("item" + Integer.toString(pantry.size() - 1)).push().setValue(_item);
-            mRef.child("pantry").child("size").setValue(pantry.size());
+            mRef = FirebaseDatabase.getInstance().getReference();
+            User mUser = new User();
+            mUser.setPantry(pantry);
+            mUser.setPantrySize(pantry.size());
+            mUser.setUsername(mUsername);
+            mRef.child(mUsername).setValue(mUser);
+            //mRef.child("pantry").child("size").setValue(pantry.size());
         }
     }
 
@@ -540,7 +546,12 @@ public class PantryUI extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     User mUser = new User();
-                    mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).)
+                    mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).getPantrySize());
+                    mUser.setPantry(dataSnapshot.child(mUsername).getValue(User.class).getPantry());
+                    mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
+                    pantry = mUser.getPantry();
+                    mSize = mUser.getPantrySize();
+                    mUsername = mUser.getUsername();
                 }
 
                 @Override
