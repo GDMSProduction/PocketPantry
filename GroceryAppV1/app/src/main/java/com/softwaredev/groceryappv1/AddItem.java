@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -15,6 +18,7 @@ import java.util.Calendar;
 
 public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    String mSpice;
     String mName;
     float mPrice = 0.0f;
     int mDay = 0;
@@ -32,6 +36,8 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        Spinner dropdown = findViewById(R.id.SpiceSpinner);
+
         Intent intent = getIntent();
         isEditing = intent.getBooleanExtra("inList", false);
         isAllergy = intent.getBooleanExtra("allergy", false);
@@ -45,6 +51,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             mDay = cal.get(Calendar.DAY_OF_MONTH);
 
             if (isEditing) {
+                dropdown.setVisibility(View.INVISIBLE);
                 Button button = findViewById(R.id.removeButton);
                 button.setVisibility(View.VISIBLE);
                 button = findViewById(R.id.addItemButton);
@@ -71,12 +78,13 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 editText.setText(String.valueOf(mQuantity));
             }
             else {
+                dropdown.setVisibility(View.INVISIBLE);
                 editText = findViewById(R.id.dateInput);
                 editText.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" "));
             }
         }
         else{
-
+            dropdown.setVisibility(View.INVISIBLE);
             TextView textView;
             Button button = findViewById(R.id.addItemButton);
 
@@ -97,10 +105,37 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             editText = findViewById(R.id.quantityInput);
             editText.setVisibility(View.INVISIBLE);
 
-            if (isAllergy)
+            if (isAllergy) {
+                dropdown.setVisibility(View.INVISIBLE);
                 button.setText("Add allergy");
-            else if (isSpice)
+            }
+            else if (isSpice) {
+                dropdown.setVisibility(View.VISIBLE);
+                editText = findViewById(R.id.nameInput);
+                editText.setVisibility(View.INVISIBLE);
+                textView = findViewById(R.id.nameLabel);
+                textView.setVisibility(View.INVISIBLE);
+                String[] spices = new String[]{"Black Pepper","Cayanne Pepper","Chili Powder", "A bunch", "of other", "spices"};
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spices);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown.setAdapter(adapter);
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Object spice = adapter.getItem(position);
+                        if (spice != null)
+                        {
+                            mSpice = spice.toString();
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
                 button.setText("Add spice");
+            }
 
         }
     }
@@ -109,6 +144,11 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
     {
 
         EditText NameEditText = findViewById(R.id.nameInput);
+        if (isSpice)
+    {
+        SpiceRackUI.addSpice(mSpice);
+        finish();
+    }
 
         if (NameEditText.getText().toString().trim().length() <= 0)
             return;
@@ -164,10 +204,6 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         else if (isAllergy)
         {
             AllergyUI.addAllergy(mName);
-        }
-        else if (isSpice)
-        {
-            SpiceRackUI.addSpice(mName);
         }
 
         finish();
