@@ -35,9 +35,15 @@
             android:name=".AddIngredient"
             android:label="@string/title_activity_add_ingredient"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity android:name=".RecipeTut" />
         <activity android:name=".SpiceRackUI" />
         <activity android:name=".Login"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
