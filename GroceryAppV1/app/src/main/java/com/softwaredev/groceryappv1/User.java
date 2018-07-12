@@ -11,6 +11,7 @@ public class User {
 
     User()
     {
+        mUsername = "";
         pantrySize = 0;
         grocerySize = 0;
         mPantry = new ArrayList<>();
