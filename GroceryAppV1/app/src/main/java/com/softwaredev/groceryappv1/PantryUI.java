@@ -1,9 +1,16 @@
 package com.softwaredev.groceryappv1;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +43,7 @@ import static android.app.NotificationChannel.DEFAULT_CHANNEL_ID;
 public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
+
     //private static FirebaseDatabase mDatabase;
     //private static DatabaseReference mRef;
 
@@ -73,8 +81,10 @@ public class PantryUI extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+
         if (isPantry) {
             actionbar.setTitle("My Pantry");
+            //checkExpiration();
         }
         else
             actionbar.setTitle("Grocery List");
@@ -165,6 +175,7 @@ public class PantryUI extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkExpiration(view);
                 Intent addIntent = new Intent(PantryUI.this, AddItem.class);
                 addIntent.putExtra("inList", false);
                 startActivityForResult(addIntent, 1);
@@ -496,25 +507,58 @@ public class PantryUI extends AppCompatActivity {
         return total;
     }
 
-    public void checkExpiration()
+    public void checkExpiration(View view)
     {
         for (int i = 0; i < pantry.size(); ++i)
         {
             if(pantry.get(i).getYear() == Year)
             {
-                if(pantry.get(i).getMonth() == Month)
+                if(pantry.get(i).getMonth() == Month+1)
                 {
                     if(pantry.get(i).getDay() == Day)
                     {
-                       // notificationManager.notify(0 ,mBuilder.build());
+                        sendNotification(view);
                     }
                 }
             }
         }
     }
+    public void sendNotification(View view) {
+        CharSequence name = "my_channel";
+        String CHANNEL_ID = "my_channel_01";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_LOW;
+
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,name, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
+
+        Intent intent = new Intent(this, PantryUI.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setSmallIcon(R.drawable.shitsgoingdown);
+        mBuilder.setContentTitle("Expirations");
+        mBuilder.setContentText("Something in your pantry is expired!");
+
+        notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
+    }
+
 
     public static Item getItem (int position)
     {
         return pantry.get(position);
     }
 }
+
