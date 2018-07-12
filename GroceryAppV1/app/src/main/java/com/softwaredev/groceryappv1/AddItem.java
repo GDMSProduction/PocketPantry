@@ -115,7 +115,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 editText.setVisibility(View.INVISIBLE);
                 textView = findViewById(R.id.nameLabel);
                 textView.setVisibility(View.INVISIBLE);
-                String[] spices = new String[]{"Black Pepper","Cayanne Pepper","Chili Powder", "A bunch", "of other", "spices"};
+                String[] spices = new String[]{"Black Pepper","Cayanne Pepper","Chili Powder", "Cinnamon", "Cumin", "Curry Powder", "Garlic Powder", "Ginger", "Salt", "Oregano", "Paprika", "Rosemary", "Thyme", "Vanilla"};
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spices);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 dropdown.setAdapter(adapter);
