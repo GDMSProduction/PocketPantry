@@ -131,7 +131,13 @@ public class Login extends AppCompatActivity {
         mUsername = mUsernameInput.getText().toString();
         SharedPreferences.Editor _editor = mSharedPref.edit();
 
-        if (!mUsername.equals(""))
+        if (mUsernameInput.getText().toString().trim().length() <= 0) {
+            _editor.putString("username", mUsername);
+            _editor.putBoolean("signedIn", false);
+            _editor.commit();
+            finish();
+        }
+        else if (!mUsername.equals(""))
         {
             _editor.putString("username", mUsername);
             _editor.putBoolean("signedIn", true);

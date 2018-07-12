@@ -5,7 +5,17 @@ import java.util.ArrayList;
 public class User {
     String mUsername;
     int pantrySize;
+    int grocerySize;
     ArrayList<Item> mPantry;
+    ArrayList<Item> mGrocery;
+
+    User()
+    {
+        pantrySize = 0;
+        grocerySize = 0;
+        mPantry = new ArrayList<>();
+        mGrocery = new ArrayList<>();
+    }
 
     public void setPantrySize(int size)
     {
@@ -19,14 +29,21 @@ public class User {
     {
         return mPantry;
     }
-    public void setPantry (ArrayList<Item> _pantry)
+    public void setPantry (ArrayList<Item> _pantry) { mPantry = _pantry; }
+    public ArrayList<Item> getGrocery()
     {
-        mPantry = _pantry;
+        return mGrocery;
     }
-    public void setUsername (String _userName)
+    public void setGrocery (ArrayList<Item> _grocery) { mGrocery = _grocery; }
+    public void setGrocerySize(int size)
     {
-        mUsername = _userName;
+        grocerySize = size;
     }
+    public int getGrocerySize()
+    {
+        return grocerySize;
+    }
+    public void setUsername (String _userName) { mUsername = _userName; }
     public String getUsername ()
     {
         return mUsername;
