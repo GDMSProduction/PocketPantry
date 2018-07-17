@@ -94,19 +94,24 @@ public class AllergyUI extends AppCompatActivity {
         ListView listView = findViewById(R.id.allergyListView);
         listView.setAdapter(arrAdapter);
 
-        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.allergy", Context.MODE_PRIVATE);
+        if (!PantryUI.isSignedIn) {
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.allergy", Context.MODE_PRIVATE);
 
-        mSize = sharedPref.getInt("size", 0);
-        allergyList.clear();
-        String temp;
+            mSize = sharedPref.getInt("size", 0);
+            allergyList.clear();
+            String temp;
 
-        for (int i = 1; i < mSize + 1; ++i)
-        {
-            temp = sharedPref.getString("allergy" + i, "!null!");
-            if (!temp.equals("!null!"))
-            {
-                allergyList.add(temp);
+            for (int i = 1; i < mSize + 1; ++i) {
+                temp = sharedPref.getString("allergy" + i, "!null!");
+                if (!temp.equals("!null!")) {
+                    allergyList.add(temp);
+                }
             }
+        }
+        else
+        {
+            allergyList = PantryUI.getUser().getAllergyList();
+            mSize = PantryUI.getUser().getAllergySize();
         }
     }
 
@@ -130,11 +135,9 @@ public class AllergyUI extends AppCompatActivity {
     }
 
     public void sendPantry() {
-
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
-
     }
 
     public void sendSpiceRack() {
@@ -146,32 +149,36 @@ public class AllergyUI extends AppCompatActivity {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
-
     }
 
     public void sendRecipe() {
         Intent recipeIntent = new Intent(this, RecipeList.class);
         startActivity(recipeIntent);
-
     }
-    public void sendLogin()
-    {
+    public void sendLogin() {
         Intent loginIntent = new Intent(this,Login.class);
         startActivity(loginIntent);
     }
     public void sendHelp() {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
-
     }
 
     public static void addAllergy(String allergy)
     {
         allergyList.add(allergy);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("allergy" + Integer.toString(allergyList.size()), allergy);
-        editor.putInt("size", allergyList.size());
-        editor.apply();
+
+        if (!PantryUI.getSignedIn()) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("allergy" + Integer.toString(allergyList.size()), allergy);
+            editor.putInt("size", allergyList.size());
+            editor.apply();
+        }
+        else {
+        PantryUI.getUser().setAllergyList(allergyList);
+        PantryUI.getUser().setAllergySize(allergyList.size());
+        PantryUI.StoreInFirebase();
+        }
     }
     public boolean CheckRec()
     {

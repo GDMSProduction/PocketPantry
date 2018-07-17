@@ -58,10 +58,23 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_bg"
             android:onClick="saveUsername"
-            android:text="Save"
+            android:text="Save and Login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ListView
+            android:id="@+id/usernameListView"
+            android:layout_width="343dp"
+            android:layout_height="353dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
 
     </android.support.constraint.ConstraintLayout>
 

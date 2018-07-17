@@ -60,12 +60,13 @@ public class PantryUI extends AppCompatActivity {
     Context context;
     static SharedPreferences sharedPref;
     int mSize;
-    boolean isPantry;
+    int mUsernamePosition;
+    static boolean isPantry;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     static String mUsername;
     static boolean isSignedIn = false;
-    User mUser;
+    static User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +143,15 @@ public class PantryUI extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
-        mUsername = sharedPref.getString("username", "");
+        mUsernamePosition = sharedPref.getInt("usernamePosition", -1);
+        mUsername = sharedPref.getString("username" + mUsernamePosition, "");
         isSignedIn = sharedPref.getBoolean("signedIn", false);
+
+        if (isPantry)
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+        else {
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
+        }
 
         LoadList();
 
@@ -218,8 +226,13 @@ public class PantryUI extends AppCompatActivity {
                 return true;
             case R.id.removeAll:
                 pantry.clear();
-                editor.clear();
-                editor.commit();
+
+                if (!isSignedIn) {
+                    editor.clear();
+                    editor.commit();
+                }
+                else
+                    StoreInFirebase();
                 recreate();
                 return true;
             case R.id.addOne:
@@ -261,8 +274,15 @@ public class PantryUI extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
-        mUsername = sharedPref.getString("username", "");
+        mUsernamePosition = sharedPref.getInt("usernamePosition", -1);
+        mUsername = sharedPref.getString("username" + mUsernamePosition, "");
         isSignedIn = sharedPref.getBoolean("signedIn", false);
+
+        if (isPantry)
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
+        else {
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
+        }
 
 
         LoadList();
@@ -324,19 +344,13 @@ public class PantryUI extends AppCompatActivity {
         pantry.add(_item);
         if (!isSignedIn) {
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("item" + Integer.toString(pantry.size()), _item.itemToString());
+            editor.putString("item" + Integer.toString(pantry.size() - 1), _item.itemToString());
 
             editor.putInt("size", pantry.size());
             editor.commit();
         }
         else {
-            mRef = FirebaseDatabase.getInstance().getReference();
-            User mUser = new User();
-            mUser.setPantry(pantry);
-            mUser.setPantrySize(pantry.size());
-            mUser.setUsername(mUsername);
-            mRef.child(mUsername).setValue(mUser);
-            //mRef.child("pantry").child("size").setValue(pantry.size());
+            StoreInFirebase();
         }
     }
 
@@ -360,9 +374,15 @@ public class PantryUI extends AppCompatActivity {
         pantry.get(position).mYear = year;
         pantry.get(position).mQuantity = quantity;
 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
-        editor.commit();
+        if (!isSignedIn) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
+            editor.commit();
+        }
+        else
+        {
+            StoreInFirebase();
+        }
     }
 
     public static void addToQuantity(int position, int quantity)
@@ -374,9 +394,13 @@ public class PantryUI extends AppCompatActivity {
         else
             pantry.get(position).mQuantity = 999999999;
 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
-        editor.commit();
+        if (!isSignedIn) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("item" + Integer.toString(position), pantry.get(position).itemToString());
+            editor.commit();
+        }
+        else
+            StoreInFirebase();
     }
 
     public static void removeFromList(int position)
@@ -384,16 +408,21 @@ public class PantryUI extends AppCompatActivity {
         if (position > -1) {
             pantry.remove(position);
 
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.clear();
-            editor.commit();
+            if (!isSignedIn) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.commit();
 
-            editor.putInt("size", pantry.size());
-            for (int i = 0; i < pantry.size(); ++i)
-            {
-                editor.putString("item" + Integer.toString(i), pantry.get(i).itemToString());
+                editor.putInt("size", pantry.size());
+                for (int i = 0; i < pantry.size(); ++i) {
+                    editor.putString("item" + Integer.toString(i), pantry.get(i).itemToString());
+                }
+                editor.commit();
             }
-            editor.commit();
+            else{
+                StoreInFirebase();
+            }
+
         }
     }
 
@@ -500,6 +529,16 @@ public class PantryUI extends AppCompatActivity {
         return total;
     }
 
+    public static boolean getSignedIn()
+    {
+        return isSignedIn;
+    }
+
+    public static User getUser()
+    {
+        return mUser;
+    }
+
     public void checkExpiration(View view)
     {
         for (int i = 0; i < pantry.size(); ++i)
@@ -556,6 +595,7 @@ public class PantryUI extends AppCompatActivity {
 
     public void LoadList () {
         if (!isSignedIn) {
+
             if (isPantry)
                 sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
             else {
@@ -585,20 +625,30 @@ public class PantryUI extends AppCompatActivity {
 
                     mUser = new User();
 
-                    mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).getPantrySize());
-                    mUser.setPantry(dataSnapshot.child(mUsername).getValue(User.class).getPantry());
-                    mUser.setGrocerySize(dataSnapshot.child(mUsername).getValue(User.class).getGrocerySize());
-                    mUser.setGrocery(dataSnapshot.child(mUsername).getValue(User.class).getGrocery());
-                    mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
+                    if (dataSnapshot.hasChild(mUsername)) {
+                        mUser.setPantrySize(dataSnapshot.child(mUsername).getValue(User.class).getPantrySize());
+                        mUser.setPantry(dataSnapshot.child(mUsername).getValue(User.class).getPantry());
+                        mUser.setGrocerySize(dataSnapshot.child(mUsername).getValue(User.class).getGrocerySize());
+                        mUser.setGrocery(dataSnapshot.child(mUsername).getValue(User.class).getGrocery());
+                        mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
+                        mUser.setSpiceList(dataSnapshot.child(mUsername).getValue(User.class).getSpiceList());
+                        mUser.setAllergyList(dataSnapshot.child(mUsername).getValue(User.class).getAllergyList());
+                        mUser.setRecipeList(dataSnapshot.child(mUsername).getValue(User.class).getRecipeList());
+                        mUser.setSpiceSize(dataSnapshot.child(mUsername).getValue(User.class).getSpiceSize());
+                        mUser.setAllergySize(dataSnapshot.child(mUsername).getValue(User.class).getAllergySize());
+                        mUser.setRecipeSize(dataSnapshot.child(mUsername).getValue(User.class).getRecipeSize());
 
-                    if (isPantry) {
-                        pantry = mUser.getPantry();
-                        mSize = mUser.getPantrySize();
-                    } else {
-                        pantry = mUser.getGrocery();
-                        mSize = mUser.getGrocerySize();
+                        if (isPantry) {
+                            pantry = mUser.getPantry();
+                            mSize = mUser.getPantrySize();
+                        } else {
+                            pantry = mUser.getGrocery();
+                            mSize = mUser.getGrocerySize();
+                        }
+                        mUsername = mUser.getUsername();
                     }
-                    mUsername = mUser.getUsername();
+                    else
+                        StoreInFirebase();
 
                     pantryLV = findViewById(R.id.pantryListView);
                     adapter = new ItemAdapter(context, pantry, isPantry);
@@ -624,6 +674,21 @@ public class PantryUI extends AppCompatActivity {
                 totalText.setText("Total: $" + total);
             }
 
+    }
+
+    public static void StoreInFirebase () {
+        mRef = FirebaseDatabase.getInstance().getReference();
+
+        if (isPantry) {
+            mUser.setPantry(pantry);
+            mUser.setPantrySize(pantry.size());
+        }
+        else {
+            mUser.setGrocery(pantry);
+            mUser.setGrocerySize(pantry.size());
+        }
+        mUser.setUsername(mUsername);
+        mRef.child(mUsername).setValue(mUser);
     }
 }
 

@@ -13,7 +13,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
@@ -22,6 +27,11 @@ public class Login extends AppCompatActivity {
     SharedPreferences mSharedPref;
     String mUsername;
     EditText mUsernameInput;
+    static ArrayList<String> mUsernameList  = new ArrayList<>(1);
+    ArrayAdapter<String> arrAdapter;
+    ListView usernameLV;
+    int mSize;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +87,37 @@ public class Login extends AppCompatActivity {
                 }
         );
 
+        mUsernameList.clear();
+
         mSharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
-        mUsername = mSharedPref.getString("username", "");
+        position = mSharedPref.getInt("usernamePosition", -1);
+        mUsername = mSharedPref.getString("username" + position, "");
+        mSize = mSharedPref.getInt("usernameListSize", 0);
         mUsernameInput = findViewById(R.id.usernameInput);
         mUsernameInput.setText(mUsername);
+
+        for (int i = 0; i < mSize; ++i)
+        {
+            mUsernameList.add(mSharedPref.getString("username" + i, ""));
+        }
+
+        arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mUsernameList);
+        usernameLV = findViewById(R.id.usernameListView);
+        usernameLV.setAdapter(arrAdapter);
+
+        usernameLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor _editor = mSharedPref.edit();
+
+                mUsername = mUsernameList.get(position);
+                _editor.putBoolean("signedIn", true);
+                _editor.putInt("usernamePosition", position);
+                _editor.commit();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -139,14 +175,18 @@ public class Login extends AppCompatActivity {
         }
         else if (!mUsername.equals(""))
         {
-            _editor.putString("username", mUsername);
+            mUsernameList.add(mUsername);
+            _editor.putString("username" + (mUsernameList.size() - 1), mUsername);
             _editor.putBoolean("signedIn", true);
+            _editor.putInt("usernamePosition", mUsernameList.size() - 1);
+            _editor.putInt("usernameListSize", mUsernameList.size());
             _editor.commit();
             finish();
         }
         else
         {
             _editor.putBoolean("signedIn", false);
+            _editor.putInt("usernamePosition", - 1);
             _editor.commit();
         }
     }

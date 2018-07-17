@@ -36,6 +36,8 @@ public class RecipeList extends AppCompatActivity {
     static SharedPreferences recSharedPref;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    int listSize;
+    static User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,28 +99,39 @@ public class RecipeList extends AppCompatActivity {
         );
 
 
-        int listSize = recSharedPref.getInt("size", 0);
-        String temp;
-        String parse[];
-        RecList.clear();
-        RecNameList.clear();
+        if (!PantryUI.getSignedIn()) {
+            listSize = recSharedPref.getInt("size", 0);
+            String temp;
+            String parse[];
+            RecList.clear();
+            RecNameList.clear();
 
-        for (int i = 0; i < listSize; ++i)
-        {
-            temp = recSharedPref.getString("recipe" + i, "null");
-            if (!temp.equals("null"))
-            {
-                parse = temp.split("`~`");
-                int numIngredients = Integer.parseInt(parse[2]);
-                ArrayList<Item> ingredients = new ArrayList<>();
+            for (int i = 0; i < listSize; ++i) {
+                temp = recSharedPref.getString("recipe" + i, "null");
+                if (!temp.equals("null")) {
+                    parse = temp.split("`~`");
+                    int numIngredients = Integer.parseInt(parse[2]);
+                    ArrayList<Item> ingredients = new ArrayList<>();
 
-                for (int j = 3; j < numIngredients * 3 + 3; j += 3)
-                {
-                    ingredients.add(new Item(parse[j+2], Integer.parseInt(parse[j]), parse[j+1]));
+                    for (int j = 3; j < numIngredients * 3 + 3; j += 3) {
+                        ingredients.add(new Item(parse[j + 2], Integer.parseInt(parse[j]), parse[j + 1]));
+                    }
+
+                    RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
+                    RecNameList.add(parse[0]);
                 }
+            }
+        }
+        else {
+            RecList.clear();
+            RecNameList.clear();
+            mUser = PantryUI.getUser();
+            RecList = PantryUI.getUser().getRecipeList();
+            listSize = PantryUI.getUser().getRecipeSize();
 
-                RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
-                RecNameList.add(parse[0]);
+            for (int i = 0; i < listSize; ++i)
+            {
+                RecNameList.add(RecList.get(i).recipeName);
             }
         }
 
@@ -230,31 +243,46 @@ public class RecipeList extends AppCompatActivity {
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RecNameList);
         listView.setAdapter(rAdapt);
 
-        int listSize = recSharedPref.getInt("size", 0);
-        String temp;
-        String parse[];
-        RecList.clear();
-        RecNameList.clear();
+       /*if (!PantryUI.getSignedIn()) {
+            listSize = recSharedPref.getInt("size", 0);
+            String temp;
+            String parse[];
+            RecList.clear();
+            RecNameList.clear();
 
-        for (int i = 0; i < listSize; ++i)
-        {
-            temp = recSharedPref.getString("recipe" + i, "null");
-            if (!temp.equals("null"))
-            {
-                parse = temp.split("`~`");
-                int numIngredients = Integer.parseInt(parse[2]);
-                ArrayList<Item> ingredients = new ArrayList<>();
+            for (int i = 0; i < listSize; ++i) {
+                temp = recSharedPref.getString("recipe" + i, "null");
+                if (!temp.equals("null")) {
+                    parse = temp.split("`~`");
+                    int numIngredients = Integer.parseInt(parse[2]);
+                    ArrayList<Item> ingredients = new ArrayList<>();
 
-                for (int j = 3; j < numIngredients * 3 + 3; j += 3)
-                {
-                    ingredients.add(new Item(parse[j+2], Integer.parseInt(parse[j]), parse[j+1]));
+                    for (int j = 3; j < numIngredients * 3 + 3; j += 3) {
+                        ingredients.add(new Item(parse[j + 2], Integer.parseInt(parse[j]), parse[j + 1]));
+                    }
+
+                    RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
+                    RecNameList.add(parse[0]);
                 }
+            }
 
-                RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
-                RecNameList.add(parse[0]);
+        }
+        else {
+            RecList.clear();
+            RecNameList.clear();
+            //mUser = PantryUI.getUser();
+            mUser.getRecipeList();
+            listSize = mUser.getRecipeSize();
+
+
+            for (int i = 0; i < listSize; ++i)
+            {
+                RecNameList.add(RecList.get(i).recipeName);
             }
         }
+
         Populate();
+        */
     }
 
     public void sendPantry()
@@ -290,31 +318,46 @@ public class RecipeList extends AppCompatActivity {
     }
     public static void addToRecList(RecipeBase recipe)
     {
-        SharedPreferences.Editor editor = recSharedPref.edit();
-        editor.putString("recipe" + Integer.toString(RecList.size()), recipe.RecToString());
-
         RecList.add(recipe);
         RecNameList.add((recipe.recipeName));
-        editor.putInt("size", RecList.size());
-        editor.commit();
+
+        if (!PantryUI.getSignedIn()) {
+            SharedPreferences.Editor editor = recSharedPref.edit();
+            editor.putString("recipe" + Integer.toString(RecList.size() - 1), recipe.RecToString());
+
+            editor.putInt("size", RecList.size());
+            editor.commit();
+        }
+        else {
+            PantryUI.getUser().setRecipeList(RecList);
+            PantryUI.getUser().setRecipeSize(RecList.size());
+            PantryUI.StoreInFirebase();
+        }
     }
 
-    public static void removeRecipe(int position)
+    public void removeRecipe(int position)
     {
         if (position > -1) {
             RecList.remove(position);
             RecNameList.remove(position);
 
-            SharedPreferences.Editor editor = recSharedPref.edit();
-            editor.clear();
-            editor.commit();
+            if (!PantryUI.getSignedIn()) {
+                SharedPreferences.Editor editor = recSharedPref.edit();
+                editor.clear();
+                editor.commit();
 
-            editor.putInt("size", RecList.size());
-            for (int i = 0; i < RecList.size(); ++i)
-            {
-                editor.putString("recipe" + Integer.toString(i), RecList.get(i).RecToString());
+                editor.putInt("size", RecList.size());
+                for (int i = 0; i < RecList.size(); ++i) {
+                    editor.putString("recipe" + Integer.toString(i), RecList.get(i).RecToString());
+                }
+                editor.commit();
             }
-            editor.commit();
+            else {
+                PantryUI.getUser().setRecipeList(RecList);
+                PantryUI.getUser().setRecipeSize(RecList.size());
+                PantryUI.StoreInFirebase();
+            }
+            recreate();
         }
     }
 
