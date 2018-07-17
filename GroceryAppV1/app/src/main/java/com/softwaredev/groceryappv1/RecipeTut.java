@@ -29,8 +29,6 @@ public class RecipeTut extends AppCompatActivity {
         final TextView textView = findViewById(R.id.insTextView);
         textView.setText("Remember to make sure you're prepared!");
 
-        Context context = this;
-
         VideoView videoView = findViewById(R.id.tutVideo);
         String path="https://www.demonuts.com/Demonuts/smallvideo.mp4";
         Uri uri= Uri.parse(path);
@@ -52,10 +50,15 @@ public class RecipeTut extends AppCompatActivity {
                         Step++;
                     } else if (Step == 3) {
                         final TextView textView = findViewById(R.id.insTextView);
-                        new CountDownTimer(15000, 1000) {
+                        new CountDownTimer(90000, 1000) {
                             public void onTick(long millisUntilFinished) {
-                                if (millisUntilFinished >= 60000 && millisUntilFinished <= 90000)
+                                if (millisUntilFinished >= 60000 && millisUntilFinished <= 90000) {
                                     textView.setText("Time remaining: 1:" + millisUntilFinished / 1000 % 60);
+                                    if(millisUntilFinished >= 60000 && millisUntilFinished <= 70000)
+                                    {
+                                        textView.setText("Time remaining: 1:0" + millisUntilFinished / 1000 % 60);
+                                    }
+                                }
                                 else if(millisUntilFinished <= 60000)
                                 {
                                     textView.setText("Time remaining: " + millisUntilFinished / 1000);
@@ -261,14 +264,11 @@ public class RecipeTut extends AppCompatActivity {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
 
-        Intent intent = new Intent(this, RecipeTut.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        mBuilder.setContentIntent(pendingIntent);
         mBuilder.setAutoCancel(true);
         mBuilder.setSmallIcon(R.drawable.shitsgoingdown);
         mBuilder.setContentTitle("Time for the next step!");
         mBuilder.setContentText("Your recipe timer has finished!");
+        mBuilder.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
 
         notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
     }
