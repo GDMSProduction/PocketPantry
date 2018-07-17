@@ -242,47 +242,6 @@ public class RecipeList extends AppCompatActivity {
         listView = findViewById(R.id.dynRecipeList);
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RecNameList);
         listView.setAdapter(rAdapt);
-
-       /*if (!PantryUI.getSignedIn()) {
-            listSize = recSharedPref.getInt("size", 0);
-            String temp;
-            String parse[];
-            RecList.clear();
-            RecNameList.clear();
-
-            for (int i = 0; i < listSize; ++i) {
-                temp = recSharedPref.getString("recipe" + i, "null");
-                if (!temp.equals("null")) {
-                    parse = temp.split("`~`");
-                    int numIngredients = Integer.parseInt(parse[2]);
-                    ArrayList<Item> ingredients = new ArrayList<>();
-
-                    for (int j = 3; j < numIngredients * 3 + 3; j += 3) {
-                        ingredients.add(new Item(parse[j + 2], Integer.parseInt(parse[j]), parse[j + 1]));
-                    }
-
-                    RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
-                    RecNameList.add(parse[0]);
-                }
-            }
-
-        }
-        else {
-            RecList.clear();
-            RecNameList.clear();
-            //mUser = PantryUI.getUser();
-            mUser.getRecipeList();
-            listSize = mUser.getRecipeSize();
-
-
-            for (int i = 0; i < listSize; ++i)
-            {
-                RecNameList.add(RecList.get(i).recipeName);
-            }
-        }
-
-        Populate();
-        */
     }
 
     public void sendPantry()
