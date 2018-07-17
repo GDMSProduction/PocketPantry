@@ -19,6 +19,7 @@ import java.util.Calendar;
 public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     String mSpice;
+    String mAllergy;
     String mName;
     float mPrice = 0.0f;
     int mDay = 0;
@@ -106,7 +107,30 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             editText.setVisibility(View.INVISIBLE);
 
             if (isAllergy) {
-                dropdown.setVisibility(View.INVISIBLE);
+                dropdown.setVisibility(View.VISIBLE);
+                editText = findViewById(R.id.nameInput);
+                editText.setVisibility(View.INVISIBLE);
+                textView = findViewById(R.id.nameLabel);
+                textView.setVisibility(View.INVISIBLE);
+                String[] allergies = new String[]{"Dairy","Eggs","Tree Nuts", "Peanuts", "Shellfish", "Wheat", "Soy", "Fish", "Other"};
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, allergies);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown.setAdapter(adapter);
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Object allergy = adapter.getItem(position);
+                        if (allergy != null)
+                        {
+                            mAllergy = allergy.toString();
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
                 button.setText("Add allergy");
             }
             else if (isSpice) {
@@ -145,10 +169,15 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
 
         EditText NameEditText = findViewById(R.id.nameInput);
         if (isSpice)
-    {
+        {
         SpiceRackUI.addSpice(mSpice);
         finish();
-    }
+        }
+    else if(isAllergy)
+        {
+            AllergyUI.addAllergy(mAllergy);
+            finish();
+        }
 
         if (NameEditText.getText().toString().trim().length() <= 0)
             return;
