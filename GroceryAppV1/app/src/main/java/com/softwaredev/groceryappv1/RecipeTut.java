@@ -1,8 +1,14 @@
 package com.softwaredev.groceryappv1;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.CountDownTimer;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,12 +20,16 @@ import org.w3c.dom.Text;
 
 public class RecipeTut extends AppCompatActivity {
     int Step = 1;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_tut);
         final TextView textView = findViewById(R.id.insTextView);
         textView.setText("Remember to make sure you're prepared!");
+
+        Context context = this;
 
         VideoView videoView = findViewById(R.id.tutVideo);
         String path="https://www.demonuts.com/Demonuts/smallvideo.mp4";
@@ -30,7 +40,7 @@ public class RecipeTut extends AppCompatActivity {
         final Button button = findViewById(R.id.nextStepButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if(RecipeList.GetName() == "Grilled Cheese") {
                     if (Step == 1) {
                         textView.setText("Ingredients required: \nBlocked white cheddar cheese\nSliced munster cheese\nSliced bread of choice\nButter or butter substitute of choice\n\n" +
@@ -42,7 +52,7 @@ public class RecipeTut extends AppCompatActivity {
                         Step++;
                     } else if (Step == 3) {
                         final TextView textView = findViewById(R.id.insTextView);
-                        new CountDownTimer(90000, 1000) {
+                        new CountDownTimer(15000, 1000) {
                             public void onTick(long millisUntilFinished) {
                                 if (millisUntilFinished >= 60000 && millisUntilFinished <= 90000)
                                     textView.setText("Time remaining: 1:" + millisUntilFinished / 1000 % 60);
@@ -53,6 +63,7 @@ public class RecipeTut extends AppCompatActivity {
                                 findViewById(R.id.nextStepButton).setVisibility(View.INVISIBLE);
                             }
                             public void onFinish() {
+                                sendNotification(v);
                                 findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now place the bread butter side down into the skillet placing 2 slices of cheddar on one piece of bread and 2 slices of munster on the other\nwait until you can see the cheese start to glisten and melt. Use your flipper to place the two pieces of bread together\nContinue cooking each side evenly flipping the sandwich frequently until golden brown\n Slice and enjoy!");
                                 Step++;
@@ -114,6 +125,7 @@ public class RecipeTut extends AppCompatActivity {
                                 findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now flip the chicken breast!");
                                 Step++;
+                                sendNotification(v);
                             }
                         }.start();
                     }
@@ -147,6 +159,7 @@ public class RecipeTut extends AppCompatActivity {
                                 findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now remove the skillet from the heat and turn the burner off.");
                                 Step++;
+                                sendNotification(v);
                             }
                         }.start();
                     }
@@ -216,6 +229,7 @@ public class RecipeTut extends AppCompatActivity {
                                 findViewById(R.id.nextStepButton).setVisibility(View.VISIBLE);
                                 textView.setText("Now plate and ladle the sauce on top of the chicken, then garnish with parsley");
                                 Step++;
+                                sendNotification(v);
                             }
                         }.start();
                     }
@@ -227,4 +241,36 @@ public class RecipeTut extends AppCompatActivity {
             }
         });
     }
+    public void sendNotification(View view) {
+        CharSequence name = "my_channel2";
+        String CHANNEL_ID = "my_channel_02";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,name, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
+
+        Intent intent = new Intent(this, RecipeTut.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setSmallIcon(R.drawable.shitsgoingdown);
+        mBuilder.setContentTitle("Time for the next step!");
+        mBuilder.setContentText("Your recipe timer has finished!");
+
+        notificationManager.notify((int)(System.currentTimeMillis()/1000), mBuilder.build());
+    }
 }
+
