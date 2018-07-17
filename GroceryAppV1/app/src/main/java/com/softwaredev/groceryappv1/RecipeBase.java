@@ -11,7 +11,12 @@ public class RecipeBase {
     String instructions;
     ArrayList<Item> ingredients = new ArrayList<>(1);
 
-    public RecipeBase() {}
+    public RecipeBase() {
+        recipeName = "";
+        Utensils = "";
+        String instructions = "";
+        ingredients= new ArrayList<>();
+    }
 
     public RecipeBase(String name, String uti, String ins)
     {

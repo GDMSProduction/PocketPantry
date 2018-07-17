@@ -115,7 +115,7 @@ public class Login extends AppCompatActivity {
                 _editor.putBoolean("signedIn", true);
                 _editor.putInt("usernamePosition", position);
                 _editor.commit();
-                finish();
+                sendPantry();
             }
         });
     }
@@ -171,7 +171,7 @@ public class Login extends AppCompatActivity {
             _editor.putString("username", mUsername);
             _editor.putBoolean("signedIn", false);
             _editor.commit();
-            finish();
+            sendPantry();
         }
         else if (!mUsername.equals(""))
         {
@@ -181,7 +181,7 @@ public class Login extends AppCompatActivity {
             _editor.putInt("usernamePosition", mUsernameList.size() - 1);
             _editor.putInt("usernameListSize", mUsernameList.size());
             _editor.commit();
-            finish();
+            sendPantry();
         }
         else
         {
