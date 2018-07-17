@@ -173,4 +173,19 @@ public class AllergyUI extends AppCompatActivity {
         editor.putInt("size", allergyList.size());
         editor.apply();
     }
+    public boolean CheckRec()
+    {
+        ArrayList<String> RecListTemp = AddRecipe.getIngredients();
+        if(allergyList != null) {
+            for (int i = 0; i <= allergyList.size(); i++) {
+                for (int j = 0; j <= RecListTemp.size(); j++) {
+                    if (allergyList.toArray()[i].equals(RecListTemp.toArray()[j])) {
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
 }

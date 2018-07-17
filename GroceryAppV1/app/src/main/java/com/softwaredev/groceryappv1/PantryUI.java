@@ -48,15 +48,7 @@ public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
 
-    //private static FirebaseDatabase mDatabase;
     private static DatabaseReference mRef;
-
-   //NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(getTaskId()))
-   //        .setSmallIcon(R.drawable.shitsgoingdown)
-   //        .setContentTitle("Expiration!")
-   //        .setContentText("Something in your pantry is going to expire!");
-//
-   // NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
     final Calendar calendar = Calendar.getInstance();
     int Year = calendar.get(Calendar.YEAR);
@@ -531,7 +523,7 @@ public class PantryUI extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
 
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,name, importance);
             notificationChannel.enableLights(true);

@@ -73,4 +73,8 @@ public class AddRecipe extends AppCompatActivity {
         ingredients.add(ingredient);
         ingredientsString.add(ingredient.ingredientToString());
     }
+    public static ArrayList<String> getIngredients()
+    {
+        return ingredientsString;
+    }
 }
