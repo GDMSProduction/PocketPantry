@@ -100,20 +100,25 @@ public class SpiceRackUI extends AppCompatActivity {
         ListView listView = findViewById(R.id.spiceListView);
         listView.setAdapter(arrAdapter);
 
-        sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.spices", Context.MODE_PRIVATE);
+        if (!PantryUI.getSignedIn()) {
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.spices", Context.MODE_PRIVATE);
 
-        mSize = sharedPref.getInt("size", 0);
-        spiceList.clear();
-        String temp;
+            mSize = sharedPref.getInt("size", 0);
+            spiceList.clear();
+            String temp;
 
-        for (int i = 1; i < mSize + 1; ++i)
-        {
-            temp = sharedPref.getString("spice" + i, "!null!");
-            if (!temp.equals("!null!"))
-            {
-                spiceList.add(temp);
+            for (int i = 1; i < mSize + 1; ++i) {
+                temp = sharedPref.getString("spice" + i, "!null!");
+                if (!temp.equals("!null!")) {
+                    spiceList.add(temp);
+                }
             }
         }
+        else {
+            spiceList = PantryUI.getUser().getSpiceList();
+            mSize = PantryUI.getUser().getSpiceSize();
+        }
+
     }
     @Override
     public void onResume() {
@@ -174,9 +179,17 @@ public class SpiceRackUI extends AppCompatActivity {
     public static void addSpice(String spice)
     {
         spiceList.add(spice);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("spice" + Integer.toString(spiceList.size()), spice);
-        editor.putInt("size", spiceList.size());
-        editor.commit();
+
+        if (!PantryUI.getSignedIn()) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("spice" + Integer.toString(spiceList.size()), spice);
+            editor.putInt("size", spiceList.size());
+            editor.commit();
+        }
+        else {
+            PantryUI.getUser().setSpiceList(spiceList);
+            PantryUI.getUser().setSpiceSize(spiceList.size());
+            PantryUI.StoreInFirebase();
+        }
     }
 }

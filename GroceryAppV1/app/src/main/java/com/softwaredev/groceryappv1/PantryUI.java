@@ -68,6 +68,7 @@ public class PantryUI extends AppCompatActivity {
     Context context;
     static SharedPreferences sharedPref;
     int mSize;
+    int mUsernamePosition;
     static boolean isPantry;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -150,7 +151,8 @@ public class PantryUI extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
-        mUsername = sharedPref.getString("username", "");
+        mUsernamePosition = sharedPref.getInt("usernamePosition", -1);
+        mUsername = sharedPref.getString("username" + mUsernamePosition, "");
         isSignedIn = sharedPref.getBoolean("signedIn", false);
 
         if (isPantry)
@@ -280,7 +282,8 @@ public class PantryUI extends AppCompatActivity {
 
         sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
-        mUsername = sharedPref.getString("username", "");
+        mUsernamePosition = sharedPref.getInt("usernamePosition", -1);
+        mUsername = sharedPref.getString("username" + mUsernamePosition, "");
         isSignedIn = sharedPref.getBoolean("signedIn", false);
 
         if (isPantry)
@@ -534,6 +537,16 @@ public class PantryUI extends AppCompatActivity {
         return total;
     }
 
+    public static boolean getSignedIn()
+    {
+        return isSignedIn;
+    }
+
+    public static User getUser()
+    {
+        return mUser;
+    }
+
     public void checkExpiration(View view)
     {
         for (int i = 0; i < pantry.size(); ++i)
@@ -626,6 +639,12 @@ public class PantryUI extends AppCompatActivity {
                         mUser.setGrocerySize(dataSnapshot.child(mUsername).getValue(User.class).getGrocerySize());
                         mUser.setGrocery(dataSnapshot.child(mUsername).getValue(User.class).getGrocery());
                         mUser.setUsername(dataSnapshot.child(mUsername).getValue(User.class).getUsername());
+                        mUser.setSpiceList(dataSnapshot.child(mUsername).getValue(User.class).getSpiceList());
+                        mUser.setAllergyList(dataSnapshot.child(mUsername).getValue(User.class).getAllergyList());
+                        mUser.setRecipeList(dataSnapshot.child(mUsername).getValue(User.class).getRecipeList());
+                        mUser.setSpiceSize(dataSnapshot.child(mUsername).getValue(User.class).getSpiceSize());
+                        mUser.setAllergySize(dataSnapshot.child(mUsername).getValue(User.class).getAllergySize());
+                        mUser.setRecipeSize(dataSnapshot.child(mUsername).getValue(User.class).getRecipeSize());
 
                         if (isPantry) {
                             pantry = mUser.getPantry();
