@@ -47,6 +47,7 @@ import static android.app.NotificationChannel.DEFAULT_CHANNEL_ID;
 public class PantryUI extends AppCompatActivity {
 
     private static ArrayList<Item> pantry = new ArrayList<>(1);
+    private static ArrayList<Item> grocery = new ArrayList<>(1);
 
     private static DatabaseReference mRef;
 
@@ -59,6 +60,7 @@ public class PantryUI extends AppCompatActivity {
     private ItemAdapter adapter;
     Context context;
     static SharedPreferences sharedPref;
+    static SharedPreferences groceryPref;
     int mSize;
     int mUsernamePosition;
     static boolean isPantry;
@@ -140,6 +142,7 @@ public class PantryUI extends AppCompatActivity {
         );
 
         context = this;
+        groceryPref = this.getSharedPreferences("com.softwaredev.groceryappv1.pantry", Context.MODE_PRIVATE);
 
         sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.username", Context.MODE_PRIVATE);
 
@@ -472,58 +475,79 @@ public class PantryUI extends AppCompatActivity {
         _editor.commit();
     }
 
-    public void addToGrocery(Item item)
+    public static void addToGrocery(Item item)
     {
-        SharedPreferences _sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.grocery", Context.MODE_PRIVATE);
-
-        int size = _sharedPref.getInt("size", 0);
-        String temp;
-        String parse[];
         boolean isInList = false;
-        ArrayList<Item> _pantry = new ArrayList<>(1);
 
-        for (int i = 0; i < size; ++i)
+        if (!isSignedIn) {
+            int size = groceryPref.getInt("size", 0);
+            String temp;
+            String parse[];
+            ArrayList<Item> _pantry = new ArrayList<>(1);
+
+            for (int i = 0; i < size; ++i) {
+                temp = groceryPref.getString("item" + i, "null");
+                if (!temp.equals("null")) {
+                    parse = temp.split("`~`");
+                    _pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
+                }
+            }
+
+            item.setQuantity(1);
+
+            for (int i = 0; i < _pantry.size(); ++i) {
+                if (_pantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
+                    _pantry.get(i).setQuantity(_pantry.get(i).getQuantity() + 1);
+                    isInList = true;
+                    break;
+                }
+            }
+
+            if (!isInList)
+                _pantry.add(item);
+
+            SharedPreferences.Editor _editor = groceryPref.edit();
+            _editor.clear();
+            _editor.commit();
+
+            _editor.putInt("size", _pantry.size());
+            for (int i = 0; i < _pantry.size(); ++i) {
+                _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
+            }
+            _editor.commit();
+        }
+        else
         {
-            temp = _sharedPref.getString("item" + i, "null");
-            if (!temp.equals("null"))
+            for (int i = 0; i < mUser.getGrocery().size(); ++i) {
+                if (mUser.getGrocery().get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
+                    grocery.get(i).setQuantity(mUser.getGrocery().get(i).getQuantity() + 1);
+                    isInList = true;
+                    if (isInList)
+                        mUser.getGrocery().get(i).setQuantity(mUser.getGrocery().get(i).getQuantity() + item.getQuantity());
+                    break;
+                }
+            }
+            if (!isInList)
             {
-                parse = temp.split("`~`");
-                _pantry.add(new Item(parse[0], Float.parseFloat(parse[1]), Integer.parseInt(parse[2]), Integer.parseInt(parse[3]), Integer.parseInt(parse[4]), Integer.parseInt(parse[5])));
+                mUser.getGrocery().add(item);
             }
+            StoreInFirebase();
         }
-
-        item.setQuantity(1);
-
-        for (int i = 0; i < _pantry.size(); ++i)
-        {
-            if (_pantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
-                _pantry.get(i).setQuantity(_pantry.get(i).getQuantity() + 1);
-                isInList = true;
-                break;
-            }
-        }
-
-        if (!isInList)
-            _pantry.add(item);
-
-        SharedPreferences.Editor _editor = _sharedPref.edit();
-        _editor.clear();
-        _editor.commit();
-
-        _editor.putInt("size", _pantry.size());
-        for (int i = 0; i < _pantry.size(); ++i)
-        {
-            _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
-        }
-        _editor.commit();
     }
 
     public float getTotal()
     {
         float total = 0.0f;
-        for (int i = 0; i < pantry.size(); ++i)
-        {
-            total += (pantry.get(i).getPrice() * pantry.get(i).getQuantity());
+
+        if (!isSignedIn) {
+            for (int i = 0; i < pantry.size(); ++i) {
+                total += (pantry.get(i).getPrice() * pantry.get(i).getQuantity());
+            }
+        }
+        else {
+            for (int i = 0; i < mUser.getGrocery().size(); ++i) {
+                total += (mUser.getGrocery().get(i).getPrice() * mUser.getGrocery().get(i).getQuantity());
+            }
         }
 
         return total;
@@ -640,9 +664,11 @@ public class PantryUI extends AppCompatActivity {
 
                         if (isPantry) {
                             pantry = mUser.getPantry();
+                            grocery = mUser.getGrocery();
                             mSize = mUser.getPantrySize();
                         } else {
                             pantry = mUser.getGrocery();
+                            grocery = mUser.getGrocery();
                             mSize = mUser.getGrocerySize();
                         }
                         mUsername = mUser.getUsername();

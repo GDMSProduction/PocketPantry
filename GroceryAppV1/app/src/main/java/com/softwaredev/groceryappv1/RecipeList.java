@@ -208,16 +208,25 @@ public class RecipeList extends AppCompatActivity {
                     {
                         if(PantryUI.getUser().checkInPantry(selectedItem.GetIngredients().get(i)) < 0)
                         {
-                            PantryUI.getUser().getGrocery().add(selectedItem.ingredients.get(i));
+                            PantryUI.addToGrocery(selectedItem.ingredients.get(i));
                         }
                     }
-                    PantryUI.StoreInFirebase();
+                    if(PantryUI.getSignedIn())
+                        PantryUI.StoreInFirebase();
+
                     sendGroc();
                     return true;
 
                 case R.id.addAll: //Add all ingredients to grocery list
 
-                    recreate();
+                    for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
+                    {
+                        PantryUI.addToGrocery(selectedItem.ingredients.get(i));
+                    }
+                    if(PantryUI.getSignedIn())
+                        PantryUI.StoreInFirebase();
+
+                    sendGroc();
                     return true;
 
                 default:

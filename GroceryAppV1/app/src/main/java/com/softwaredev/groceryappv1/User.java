@@ -79,7 +79,7 @@ public class User {
         for (int i = 0; i < mPantry.size(); ++i)
         {
             if (mPantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase()))
-                if (mPantry.get(i).getQuantity() < item.getQuantity())
+                if (mPantry.get(i).getQuantity() >= item.getQuantity())
                     return i;
         }
 
