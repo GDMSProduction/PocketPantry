@@ -264,47 +264,6 @@ public class RecipeList extends AppCompatActivity {
         listView = findViewById(R.id.dynRecipeList);
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RecNameList);
         listView.setAdapter(rAdapt);
-
-       /*if (!PantryUI.getSignedIn()) {
-            listSize = recSharedPref.getInt("size", 0);
-            String temp;
-            String parse[];
-            RecList.clear();
-            RecNameList.clear();
-
-            for (int i = 0; i < listSize; ++i) {
-                temp = recSharedPref.getString("recipe" + i, "null");
-                if (!temp.equals("null")) {
-                    parse = temp.split("`~`");
-                    int numIngredients = Integer.parseInt(parse[2]);
-                    ArrayList<Item> ingredients = new ArrayList<>();
-
-                    for (int j = 3; j < numIngredients * 3 + 3; j += 3) {
-                        ingredients.add(new Item(parse[j + 2], Integer.parseInt(parse[j]), parse[j + 1]));
-                    }
-
-                    RecList.add(new RecipeBase(parse[0], parse[1], ingredients));
-                    RecNameList.add(parse[0]);
-                }
-            }
-
-        }
-        else {
-            RecList.clear();
-            RecNameList.clear();
-            //mUser = PantryUI.getUser();
-            mUser.getRecipeList();
-            listSize = mUser.getRecipeSize();
-
-
-            for (int i = 0; i < listSize; ++i)
-            {
-                RecNameList.add(RecList.get(i).recipeName);
-            }
-        }
-
-        Populate();
-        */
     }
 
     public void sendPantry()
@@ -312,31 +271,43 @@ public class RecipeList extends AppCompatActivity {
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendSpiceRack() {
         Intent pantryIntent = new Intent(this, SpiceRackUI.class);
         startActivity(pantryIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendGroc()
     {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendAllergies()
     {
         Intent allergyIntent = new Intent(this, AllergyUI.class);
         startActivity(allergyIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendLogin()
     {
         Intent loginIntent = new Intent(this,Login.class);
         startActivity(loginIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendHelp()
     {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public static void addToRecList(RecipeBase recipe)
     {

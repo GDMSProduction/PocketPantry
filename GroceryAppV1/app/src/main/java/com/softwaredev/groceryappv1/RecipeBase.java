@@ -18,20 +18,6 @@ public class RecipeBase {
         ingredients= new ArrayList<>();
     }
 
-    public RecipeBase(String name, String uti, String ins)
-    {
-        recipeName = name;
-        Utensils = uti;
-        instructions = ins;
-    }
-
-    public RecipeBase(String name, String ins)
-    {
-        recipeName = name;
-        instructions = ins;
-        Utensils = " ";
-    }
-
     public RecipeBase(String name, String ins, ArrayList<Item> ings)
     {
         recipeName = name;
