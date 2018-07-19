@@ -138,30 +138,42 @@ public class AllergyUI extends AppCompatActivity {
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
         startActivity(pantryIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
 
     public void sendSpiceRack() {
         Intent pantryIntent = new Intent(this, SpiceRackUI.class);
         startActivity(pantryIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
 
     public void sendGroc() {
         Intent grocIntent = new Intent(this, PantryUI.class);
         grocIntent.putExtra("isPantry", false);
         startActivity(grocIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
 
     public void sendRecipe() {
         Intent recipeIntent = new Intent(this, RecipeList.class);
         startActivity(recipeIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendLogin() {
         Intent loginIntent = new Intent(this,Login.class);
         startActivity(loginIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
     public void sendHelp() {
         Intent helpIntent = new Intent(this, HelpUI.class);
         startActivity(helpIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
     }
 
     public static void addAllergy(String allergy)
