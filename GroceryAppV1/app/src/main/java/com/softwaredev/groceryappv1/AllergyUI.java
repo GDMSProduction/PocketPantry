@@ -119,9 +119,30 @@ public class AllergyUI extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        if (!PantryUI.isSignedIn) {
+            sharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.allergy", Context.MODE_PRIVATE);
+
+            mSize = sharedPref.getInt("size", 0);
+            allergyList.clear();
+            String temp;
+
+            for (int i = 1; i < mSize + 1; ++i) {
+                temp = sharedPref.getString("allergy" + i, "!null!");
+                if (!temp.equals("!null!")) {
+                    allergyList.add(temp);
+                }
+            }
+        }
+        else
+        {
+            allergyList = PantryUI.getUser().getAllergyList();
+            mSize = PantryUI.getUser().getAllergySize();
+        }
+
         arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allergyList);
         ListView listView = findViewById(R.id.allergyListView);
         listView.setAdapter(arrAdapter);
+
     }
 
     @Override

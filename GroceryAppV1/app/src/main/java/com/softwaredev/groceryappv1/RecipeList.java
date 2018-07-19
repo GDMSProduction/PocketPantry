@@ -204,13 +204,29 @@ public class RecipeList extends AppCompatActivity {
                     recreate();
                     return true;
                 case R.id.addOne: //Add missing ingredients to grocery list
+                    for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
+                    {
+                        if(PantryUI.getUser().checkInPantry(selectedItem.GetIngredients().get(i)) < 0)
+                        {
+                            PantryUI.addToGrocery(selectedItem.ingredients.get(i));
+                        }
+                    }
+                    if(PantryUI.getSignedIn())
+                        PantryUI.StoreInFirebase();
 
-                    recreate();
+                    sendGroc();
                     return true;
 
                 case R.id.addAll: //Add all ingredients to grocery list
 
-                    recreate();
+                    for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
+                    {
+                        PantryUI.addToGrocery(selectedItem.ingredients.get(i));
+                    }
+                    if(PantryUI.getSignedIn())
+                        PantryUI.StoreInFirebase();
+
+                    sendGroc();
                     return true;
 
                 default:

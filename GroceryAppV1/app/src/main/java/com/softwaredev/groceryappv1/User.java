@@ -74,4 +74,16 @@ public class User {
     public int getRecipeSize() {return recipeSize;}
     public void setRecipeSize (int size) {recipeSize = size;}
 
+    public int checkInPantry(Item item)
+    {
+        for (int i = 0; i < mPantry.size(); ++i)
+        {
+            if (mPantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase()))
+                if (mPantry.get(i).getQuantity() >= item.getQuantity())
+                    return i;
+        }
+
+        return -1;
+    }
+
 }
