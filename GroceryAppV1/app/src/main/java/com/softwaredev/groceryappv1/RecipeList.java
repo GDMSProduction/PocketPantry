@@ -206,9 +206,15 @@ public class RecipeList extends AppCompatActivity {
                 case R.id.addOne: //Add missing ingredients to grocery list
                     for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
                     {
-                        if(PantryUI.getUser().checkInPantry(selectedItem.GetIngredients().get(i)) < 0)
+                        int index = PantryUI.getUser().checkInPantry(selectedItem.GetIngredients().get(i));
+                        if(index < 0)
                         {
                             PantryUI.addToGrocery(selectedItem.ingredients.get(i));
+                        }
+                        else if(selectedItem.GetIngredients().get(i).getQuantity() > PantryUI.getUser().getPantry().get(index).getQuantity())
+                        {
+                            selectedItem.GetIngredients().get(i).setQuantity(selectedItem.GetIngredients().get(i).getQuantity() - PantryUI.getUser().getPantry().get(index).getQuantity());
+                            PantryUI.addToGrocery(selectedItem.GetIngredients().get(i));
                         }
                     }
                     if(PantryUI.getSignedIn())
