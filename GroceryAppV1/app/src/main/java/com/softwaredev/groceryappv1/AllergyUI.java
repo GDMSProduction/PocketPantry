@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -114,6 +116,7 @@ public class AllergyUI extends AppCompatActivity {
             allergyList = PantryUI.getuser().getallergyList();
             mSize = PantryUI.getuser().getallergySize();
         }
+        registerForContextMenu(listView);
     }
 
     @Override
@@ -144,6 +147,14 @@ public class AllergyUI extends AppCompatActivity {
         ListView listView = findViewById(R.id.allergyListView);
         listView.setAdapter(arrAdapter);
 
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+
+        menu.findItem(R.id.remove).setTitle("Remove item from list");
     }
 
     @Override
