@@ -34,7 +34,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
 
         TextView name = convertView.findViewById(R.id.itemName);
-        name.setText(currentItem.getName());
+        name.setText(currentItem.getname());
 
         TextView dateAndPrice = convertView.findViewById(R.id.itemDateAndPrice);
         if (isPantry) {
