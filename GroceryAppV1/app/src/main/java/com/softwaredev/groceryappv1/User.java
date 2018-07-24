@@ -3,82 +3,82 @@ package com.softwaredev.groceryappv1;
 import java.util.ArrayList;
 
 public class User {
-    String mUsername;
+    String username;
     int pantrySize;
     int grocerySize;
     int spiceSize;
     int allergySize;
     int recipeSize;
-    ArrayList<Item> mPantry;
-    ArrayList<Item> mGrocery;
-    ArrayList<String> mSpiceList;
-    ArrayList<String> mAllergyList;
-    ArrayList<RecipeBase> mRecipeList;
+    ArrayList<Item> pantry;
+    ArrayList<Item> grocery;
+    ArrayList<String> spiceList;
+    ArrayList<String> allergyList;
+    ArrayList<RecipeBase> recipeList;
 
     User()
     {
-        mUsername = "";
+        username = "";
         pantrySize = 0;
         grocerySize = 0;
         spiceSize = 0;
         allergySize = 0;
         recipeSize = 0;
-        mPantry = new ArrayList<>();
-        mGrocery = new ArrayList<>();
-        mSpiceList = new ArrayList<>();
-        mAllergyList = new ArrayList<>();
-        mRecipeList = new ArrayList<>();
+        pantry = new ArrayList<>();
+        grocery = new ArrayList<>();
+        spiceList = new ArrayList<>();
+        allergyList = new ArrayList<>();
+        recipeList = new ArrayList<>();
     }
 
-    public void setPantrySize(int size)
+    public void setpantrySize(int size)
     {
         pantrySize = size;
     }
-    public int getPantrySize()
+    public int getpantrySize()
     {
         return pantrySize;
     }
-    public ArrayList<Item> getPantry()
+    public ArrayList<Item> getpantry()
     {
-        return mPantry;
+        return pantry;
     }
-    public void setPantry (ArrayList<Item> _pantry) { mPantry = _pantry; }
-    public ArrayList<Item> getGrocery()
+    public void setpantry (ArrayList<Item> _pantry) { pantry = _pantry; }
+    public ArrayList<Item> getgrocery()
     {
-        return mGrocery;
+        return grocery;
     }
-    public void setGrocery (ArrayList<Item> _grocery) { mGrocery = _grocery; }
-    public void setGrocerySize(int size)
+    public void setgrocery (ArrayList<Item> _grocery) { grocery = _grocery; }
+    public void setgrocerySize(int size)
     {
         grocerySize = size;
     }
-    public int getGrocerySize()
+    public int getgrocerySize()
     {
         return grocerySize;
     }
-    public void setUsername (String _userName) { mUsername = _userName; }
-    public String getUsername ()
+    public void setusername (String _userName) { username = _userName; }
+    public String getusername ()
     {
-        return mUsername;
+        return username;
     }
-    public ArrayList<String> getSpiceList() {return mSpiceList;}
-    public void setSpiceList(ArrayList<String> _spices) {mSpiceList = _spices;}
-    public int getSpiceSize() {return spiceSize;}
-    public void setSpiceSize (int size) {spiceSize = size;}
-    public ArrayList<String> getAllergyList() {return mAllergyList;}
-    public void setAllergyList(ArrayList<String> _allergies) {mAllergyList = _allergies;}
-    public int getAllergySize() {return allergySize;}
-    public void setAllergySize (int size) {allergySize = size;}
-    public ArrayList<RecipeBase> getRecipeList() {return mRecipeList; }
-    public void setRecipeList (ArrayList<RecipeBase> _recipes) {mRecipeList = _recipes;}
-    public int getRecipeSize() {return recipeSize;}
-    public void setRecipeSize (int size) {recipeSize = size;}
+    public ArrayList<String> getspiceList() {return spiceList;}
+    public void setspiceList(ArrayList<String> _spices) {spiceList = _spices;}
+    public int getspiceSize() {return spiceSize;}
+    public void setspiceSize (int size) {spiceSize = size;}
+    public ArrayList<String> getallergyList() {return allergyList;}
+    public void setallergyList(ArrayList<String> _allergies) {allergyList = _allergies;}
+    public int getallergySize() {return allergySize;}
+    public void setallergySize (int size) {allergySize = size;}
+    public ArrayList<RecipeBase> getrecipeList() {return recipeList; }
+    public void setrecipeList (ArrayList<RecipeBase> _recipes) {recipeList = _recipes;}
+    public int getrecipeSize() {return recipeSize;}
+    public void setrecipeSize (int size) {recipeSize = size;}
 
     public int checkInPantry(Item item)
     {
-        for (int i = 0; i < mPantry.size(); ++i)
+        for (int i = 0; i < pantry.size(); ++i)
         {
-            if (mPantry.get(i).getName().toLowerCase().equals(item.getName().toLowerCase()))
+            if (pantry.get(i).getname().toLowerCase().equals(item.getname().toLowerCase()))
                 return i;
         }
 

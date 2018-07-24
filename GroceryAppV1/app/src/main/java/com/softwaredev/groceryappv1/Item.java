@@ -2,106 +2,106 @@ package com.softwaredev.groceryappv1;
 
 public class Item
 {
-    String mName;
-    String mUnit;
-    float mPrice;
-    int mMonth;
-    int mDay;
-    int mYear;
-    int mQuantity;
+    String name;
+    String unit;
+    float price = 0.0f;
+    int month;
+    int day;
+    int year;
+    int quantity;
 
     public Item()
     {
 
     }
 
-    public Item(String name, float price, int month, int day, int year)
+    public Item(String _name, float _price, int _month, int _day, int _year)
     {
-        mName = name;
-        mPrice = price;
-        mMonth = month;
-        mDay = day;
-        mYear = year;
-        mQuantity = 1;
+        name = _name;
+        price = _price;
+        month = _month;
+        day = _day;
+        year = _year;
+        quantity = 1;
     }
 
-    public Item(String name, int month, int day, int year)
+    public Item(String _name, int _month, int _day, int _year)
     {
-        mName = name;
-        mPrice = 0.0f;
-        mMonth = month;
-        mDay = day;
-        mYear = year;
-        mQuantity = 1;
+        name = _name;
+        price = 0.0f;
+        month = _month;
+        day = _day;
+        year = _year;
+        quantity = 1;
     }
 
-    public Item(String name, float price, int month, int day, int year, int quantity)
+    public Item(String _name, float _price, int _month, int _day, int _year, int _quantity)
     {
-        mName = name;
-        mPrice = price;
-        mMonth = month;
-        mDay = day;
-        mYear = year;
-        mQuantity = quantity;
+        name = _name;
+        price = _price;
+        month = _month;
+        day = _day;
+        year = _year;
+        quantity = _quantity;
     }
 
-    public Item(String name, int month, int day, int year, int quantity)
+    public Item(String _name, int _month, int _day, int _year, int _quantity)
     {
-        mName = name;
-        mPrice = 0.0f;
-        mMonth = month;
-        mDay = day;
-        mYear = year;
-        mQuantity = quantity;
+        name = _name;
+        price = 0.0f;
+        month = _month;
+        day = _day;
+        year = _year;
+        quantity = _quantity;
     }
 
-    public Item(String name, int quantity, String unit)
+    public Item(String _name, int _quantity, String _unit)
     {
-        mName = name;
-        mPrice = 0.0f;
-        mMonth = 0;
-        mDay = 0;
-        mYear = 0;
-        mQuantity = quantity;
-        mUnit = unit;
+        name = _name;
+        price = 0.0f;
+        month = 0;
+        day = 0;
+        year = 0;
+        quantity = _quantity;
+        unit = _unit;
     }
 
-    public String getName()
+    public String getname()
     {
-        return mName;
+        return name;
     }
-    public float getPrice() { return mPrice; }
-    public int getMonth() { return mMonth; }
-    public int getDay() { return mDay; }
-    public int getYear() { return mYear; }
-    public int getQuantity() { return mQuantity; }
-    public void setQuantity(int quantity) {mQuantity = quantity;}
+    public float getprice() { return price; }
+    public int getmonth() { return month; }
+    public int getday() { return day; }
+    public int getyear() { return year; }
+    public int getquantity() { return quantity; }
+    public void setquantity(int _quantity) {quantity = _quantity;}
 
     public String getPriceString()
     {
-        String price = String.format("%.02f", mPrice);
-        return("$" + price);
+        String priceString = String.format("%.02f", price);
+        return("$" + priceString);
     }
 
     public String getDateString()
     {
-        return(Integer.toString(mMonth) + "/" + Integer.toString(mDay) + "/" + Integer.toString(mYear));
+        return(Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year));
     }
 
-    public String getQuantityString(){ return Integer.toString(mQuantity); }
+    public String getQuantityString(){ return Integer.toString(quantity); }
 
     public String itemToString()
     {
-        return (mName + "`~`" + Float.toString(mPrice) + "`~`" + Integer.toString(mMonth) + "`~`" + Integer.toString(mDay) + "`~`" + Integer.toString(mYear) + "`~`" + Integer.toString(mQuantity));
+        return (name + "`~`" + Float.toString(price) + "`~`" + Integer.toString(month) + "`~`" + Integer.toString(day) + "`~`" + Integer.toString(year) + "`~`" + Integer.toString(quantity));
     }
 
     public String ingredientToString()
     {
-        return (Integer.toString(mQuantity) + " " + mUnit + " " + mName);
+        return (Integer.toString(quantity) + " " + unit + " " + name);
     }
 
     public String storeIngredientString()
     {
-        return (Integer.toString(mQuantity) + "`~`" + mUnit + "`~`" + mName);
+        return (Integer.toString(quantity) + "`~`" + unit + "`~`" + name);
     }
 }

@@ -99,7 +99,7 @@ public class RecipeList extends AppCompatActivity {
         );
 
 
-        if (!PantryUI.getSignedIn()) {
+        if (!PantryUI.getisSignedIn()) {
             listSize = recSharedPref.getInt("size", 0);
             String temp;
             String parse[];
@@ -125,9 +125,9 @@ public class RecipeList extends AppCompatActivity {
         else {
             RecList.clear();
             RecNameList.clear();
-            mUser = PantryUI.getUser();
-            RecList = PantryUI.getUser().getRecipeList();
-            listSize = PantryUI.getUser().getRecipeSize();
+            mUser = PantryUI.getuser();
+            RecList = PantryUI.getuser().getrecipeList();
+            listSize = PantryUI.getuser().getrecipeSize();
 
             for (int i = 0; i < listSize; ++i)
             {
@@ -206,18 +206,18 @@ public class RecipeList extends AppCompatActivity {
                 case R.id.addOne: //Add missing ingredients to grocery list
                     for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
                     {
-                        int index = PantryUI.getUser().checkInPantry(selectedItem.GetIngredients().get(i));
+                        int index = PantryUI.getuser().checkInPantry(selectedItem.GetIngredients().get(i));
                         if(index < 0)
                         {
                             PantryUI.addToGrocery(selectedItem.ingredients.get(i));
                         }
-                        else if(selectedItem.GetIngredients().get(i).getQuantity() > PantryUI.getUser().getPantry().get(index).getQuantity())
+                        else if(selectedItem.GetIngredients().get(i).getquantity() > PantryUI.getuser().getpantry().get(index).getquantity())
                         {
-                            selectedItem.GetIngredients().get(i).setQuantity(selectedItem.GetIngredients().get(i).getQuantity() - PantryUI.getUser().getPantry().get(index).getQuantity());
+                            selectedItem.GetIngredients().get(i).setquantity(selectedItem.GetIngredients().get(i).getquantity() - PantryUI.getuser().getpantry().get(index).getquantity());
                             PantryUI.addToGrocery(selectedItem.GetIngredients().get(i));
                         }
                     }
-                    if(PantryUI.getSignedIn())
+                    if(PantryUI.getisSignedIn())
                         PantryUI.StoreInFirebase();
 
                     sendGroc();
@@ -229,7 +229,7 @@ public class RecipeList extends AppCompatActivity {
                     {
                         PantryUI.addToGrocery(selectedItem.ingredients.get(i));
                     }
-                    if(PantryUI.getSignedIn())
+                    if(PantryUI.getisSignedIn())
                         PantryUI.StoreInFirebase();
 
                     sendGroc();
@@ -314,7 +314,7 @@ public class RecipeList extends AppCompatActivity {
         RecList.add(recipe);
         RecNameList.add((recipe.recipeName));
 
-        if (!PantryUI.getSignedIn()) {
+        if (!PantryUI.getisSignedIn()) {
             SharedPreferences.Editor editor = recSharedPref.edit();
             editor.putString("recipe" + Integer.toString(RecList.size() - 1), recipe.RecToString());
 
@@ -322,8 +322,8 @@ public class RecipeList extends AppCompatActivity {
             editor.commit();
         }
         else {
-            PantryUI.getUser().setRecipeList(RecList);
-            PantryUI.getUser().setRecipeSize(RecList.size());
+            PantryUI.getuser().setrecipeList(RecList);
+            PantryUI.getuser().setrecipeSize(RecList.size());
             PantryUI.StoreInFirebase();
         }
     }
@@ -334,7 +334,7 @@ public class RecipeList extends AppCompatActivity {
             RecList.remove(position);
             RecNameList.remove(position);
 
-            if (!PantryUI.getSignedIn()) {
+            if (!PantryUI.getisSignedIn()) {
                 SharedPreferences.Editor editor = recSharedPref.edit();
                 editor.clear();
                 editor.commit();
@@ -346,8 +346,8 @@ public class RecipeList extends AppCompatActivity {
                 editor.commit();
             }
             else {
-                PantryUI.getUser().setRecipeList(RecList);
-                PantryUI.getUser().setRecipeSize(RecList.size());
+                PantryUI.getuser().setrecipeList(RecList);
+                PantryUI.getuser().setrecipeSize(RecList.size());
                 PantryUI.StoreInFirebase();
             }
             recreate();

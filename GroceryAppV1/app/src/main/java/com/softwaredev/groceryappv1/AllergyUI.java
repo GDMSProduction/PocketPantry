@@ -110,8 +110,8 @@ public class AllergyUI extends AppCompatActivity {
         }
         else
         {
-            allergyList = PantryUI.getUser().getAllergyList();
-            mSize = PantryUI.getUser().getAllergySize();
+            allergyList = PantryUI.getuser().getallergyList();
+            mSize = PantryUI.getuser().getallergySize();
         }
     }
 
@@ -135,8 +135,8 @@ public class AllergyUI extends AppCompatActivity {
         }
         else
         {
-            allergyList = PantryUI.getUser().getAllergyList();
-            mSize = PantryUI.getUser().getAllergySize();
+            allergyList = PantryUI.getuser().getallergyList();
+            mSize = PantryUI.getuser().getallergySize();
         }
 
         arrAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allergyList);
@@ -201,15 +201,15 @@ public class AllergyUI extends AppCompatActivity {
     {
         allergyList.add(allergy);
 
-        if (!PantryUI.getSignedIn()) {
+        if (!PantryUI.getisSignedIn()) {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("allergy" + Integer.toString(allergyList.size()), allergy);
             editor.putInt("size", allergyList.size());
             editor.apply();
         }
         else {
-        PantryUI.getUser().setAllergyList(allergyList);
-        PantryUI.getUser().setAllergySize(allergyList.size());
+        PantryUI.getuser().setallergyList(allergyList);
+        PantryUI.getuser().setallergySize(allergyList.size());
         PantryUI.StoreInFirebase();
         }
     }
