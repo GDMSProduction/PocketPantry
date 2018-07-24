@@ -10,9 +10,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file("C:/Users/Justin/Desktop/FullSail/P&P2/Keystore/ppkey.jks")
+            storePassword "PP2018"
+            keyAlias "Pocket Pantry"
+            keyPassword "PP2018"
+        }
+    }
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
