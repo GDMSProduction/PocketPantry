@@ -430,40 +430,39 @@ public class PantryUI extends AppCompatActivity {
             }
 
 
-
-        for (int i = 0; i < _pantry.size(); ++i)
-        {
-            if (_pantry.get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
-                _pantry.get(i).setquantity(_pantry.get(i).getquantity() + item.getquantity());
-                isInList = true;
-                break;
-            }
-
-            if (!isInList)
-                _pantry.add(item);
-
-            SharedPreferences.Editor _editor = _sharedPref.edit();
-            _editor.clear();
-            _editor.commit();
-
-            _editor.putInt("size", _pantry.size());
             for (int i = 0; i < _pantry.size(); ++i) {
-                _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
+                if (_pantry.get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
+                    _pantry.get(i).setquantity(_pantry.get(i).getquantity() + item.getquantity());
+                    isInList = true;
+                    break;
+                }
+
+                if (!isInList)
+                    _pantry.add(item);
+
+                SharedPreferences.Editor _editor = _sharedPref.edit();
+                _editor.clear();
+                _editor.commit();
+
+                _editor.putInt("size", _pantry.size());
+                for (int j = 0; i < _pantry.size(); ++j) {
+                    _editor.putString("item" + Integer.toString(j), _pantry.get(j).itemToString());
+                }
+                _editor.commit();
             }
-            _editor.commit();
         } else {
-            for (int i = 0; i < mUser.getGrocery().size(); ++i) {
-                if (mUser.getGrocery().get(i).getName().toLowerCase().equals(item.getName().toLowerCase())) {
-                    grocery.get(i).setQuantity(mUser.getGrocery().get(i).getQuantity() + 1);
+            for (int i = 0; i < user.getgrocery().size(); ++i) {
+                if (user.getgrocery().get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
+                    grocery.get(i).setquantity(user.getgrocery().get(i).getquantity() + 1);
                     isInList = true;
                 }
                 if (isInList)
-                    mUser.getGrocery().get(i).setQuantity(mUser.getGrocery().get(i).getQuantity() + item.getQuantity());
+                    user.getgrocery().get(i).setquantity(user.getgrocery().get(i).getquantity() + item.getquantity());
                 break;
             }
         }
         if (!isInList) {
-            mUser.getGrocery().add(item);
+            user.getgrocery().add(item);
         }
         StoreInFirebase();
     }
