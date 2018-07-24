@@ -218,12 +218,11 @@ public class AllergyUI extends AppCompatActivity {
     {
         ArrayList<String> RecListTemp = RecipeList.RecNameList;
         if(allergyList.size() != 0) {
-            for (int i = 0; i <= allergyList.size(); i++) {
-                for (int j = 0; j <= RecListTemp.size(); j++) {
-                    if (true) {
+            for (int i = 0; i < allergyList.size(); i++) {
+                for (int j = 0; j < RecListTemp.size(); j++) {
+                    if (allergyList.get(i).equals(RecListTemp.get(j))) {
                         return true;
                     }
-
                 }
             }
         }
