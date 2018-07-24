@@ -45,6 +45,13 @@ public class RecipeList extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_list);
         recSharedPref = this.getSharedPreferences("com.softwaredev.groceryappv1.recipeList", Context.MODE_PRIVATE);
 
+        listView = findViewById(R.id.dynRecipeList);
+
+        if (AllergyUI.CheckRec())
+        {
+            startActivity(new Intent(RecipeList.this,popup.class));
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -138,7 +145,6 @@ public class RecipeList extends AppCompatActivity {
         //RecNameList = new ArrayList<>();
         Populate();
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RecNameList);
-        listView = findViewById(R.id.dynRecipeList);
         listView.setAdapter(rAdapt);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

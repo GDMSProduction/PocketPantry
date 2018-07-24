@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class AllergyUI extends AppCompatActivity {
 
+    static String test;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     static ArrayList<String> allergyList  = new ArrayList<>(1);
@@ -213,13 +214,13 @@ public class AllergyUI extends AppCompatActivity {
         PantryUI.StoreInFirebase();
         }
     }
-    public boolean CheckRec()
+    public static boolean CheckRec()
     {
-        ArrayList<String> RecListTemp = AddRecipe.getIngredients();
-        if(allergyList != null) {
+        ArrayList<String> RecListTemp = RecipeList.RecNameList;
+        if(allergyList.size() != 0) {
             for (int i = 0; i <= allergyList.size(); i++) {
                 for (int j = 0; j <= RecListTemp.size(); j++) {
-                    if (allergyList.toArray()[i].equals(RecListTemp.toArray()[j])) {
+                    if (true) {
                         return true;
                     }
 

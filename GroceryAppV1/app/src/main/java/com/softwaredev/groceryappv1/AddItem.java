@@ -112,7 +112,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
                 editText.setVisibility(View.INVISIBLE);
                 textView = findViewById(R.id.nameLabel);
                 textView.setVisibility(View.INVISIBLE);
-                String[] allergies = new String[]{"Dairy","Eggs","Tree Nuts", "Peanuts", "Shellfish", "Wheat", "Soy", "Fish", "Apples", "Alcohol", "Cinnamon", "Garlic", "Citrus", "Other"};
+                String[] allergies = new String[]{"Dairy","Eggs","Tree Nuts", "Peanuts", "Shellfish", "Wheat", "Soy", "Fish", "Apples", "Alcohol", "Cinnamon", "Garlic", "Citrus", "Grilled Cheese"};
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, allergies);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 dropdown.setAdapter(adapter);
