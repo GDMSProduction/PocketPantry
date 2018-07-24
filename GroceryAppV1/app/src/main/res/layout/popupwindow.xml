@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_red_dark">
+    android:background="@drawable/button_bg">
 
     <TextView
         android:id="@+id/textView"
@@ -11,6 +11,7 @@
         android:layout_height="80dp"
         android:layout_centerInParent="true"
         android:text="An allergy matched an ingredient of a recipe!"
+        android:textColor="@android:color/black"
         android:textSize="30sp" />
 
 </RelativeLayout>
