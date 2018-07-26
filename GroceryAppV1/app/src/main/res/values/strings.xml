@@ -15,7 +15,10 @@
     <string name="editButtonText">Edit Item</string>
     <string name="helpList">Pantry - You can add anything you have on hand to your pantry to better keep track of all your food and supplies.
         \n\nGrocery List- This is a wonderful place to store everything you\'re going to need, the add button can make sure you keep track of what you need on your way to the store. As well as having the ability to remove items you feel you dont need anymore!
-        \n\nRecipe List- This is a list of recipes that you can try out as well as making sure you pantry items are conveniently on hand.\n\n\nApplication Credits:\nDevelopers:\nJustin Smith\nDe\'Angelo Rieke\n </string>
+        \n\nRecipe List- This is an area to add custom recipes that will\n be shared across all user in the same account!\n\n
+        Spice Rack- This is a list to store what spices you have on hand\n in your pantry\n\n
+        Allergy List- Store your allergies here and they will be checked against custom recipes and alert you when\n someone is allergic to a recipe you created!
+        \n\n\nApplication Credits:\n\nDevelopers:\n\nJustin Smith - JPSmith@student.fullsail.edu\nDe\'Angelo Rieke - DERieke@student.fullsail.edu\n </string>
     <string name="title_activity_add_recipe">AddRecipe</string>
     <string name="nameColumn">Item name</string>
     <string name="priceAndDateColumn">Expiration Date</string>
