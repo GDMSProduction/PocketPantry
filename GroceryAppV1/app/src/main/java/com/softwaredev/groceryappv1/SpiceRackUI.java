@@ -164,6 +164,21 @@ public class SpiceRackUI extends AppCompatActivity {
         inflater.inflate(R.menu.context_menu, menu);
 
         menu.findItem(R.id.remove).setTitle("Remove item from list");
+        menu.findItem(R.id.removeAll).setTitle("");
+        menu.findItem(R.id.addOne).setTitle("");
+        menu.findItem(R.id.addAll).setTitle("");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String selectedItem = spiceList.get(acmi.position);
+        if (!selectedItem.isEmpty()) {
+           removeItemFromSpice(acmi.position);
+            recreate();
+            return true;
+        }
+        else
+            return super.onContextItemSelected(item);
     }
         public void sendPantry() {
 
@@ -224,6 +239,28 @@ public class SpiceRackUI extends AppCompatActivity {
             PantryUI.getuser().setspiceList(spiceList);
             PantryUI.getuser().setspiceSize(spiceList.size());
             StoreInFirebase();
+        }
+    }
+    public void removeItemFromSpice(int position)
+    {
+        if (position > -1) {
+            spiceList.remove(position);
+
+            if (!isSignedIn) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.commit();
+
+                editor.putInt("size", spiceList.size());
+                for (int i = 0; i < spiceList.size(); ++i) {
+                    editor.putString("spice" + Integer.toString(spiceList.size()), spiceList.get(i));
+                }
+                editor.putInt("size", spiceList.size());
+                editor.commit();
+            } else {
+                StoreInFirebase();
+            }
+
         }
     }
 }

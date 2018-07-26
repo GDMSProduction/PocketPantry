@@ -1,16 +1,25 @@
 package com.softwaredev.groceryappv1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static com.softwaredev.groceryappv1.PantryUI.StoreInFirebase;
+import static com.softwaredev.groceryappv1.PantryUI.isSignedIn;
+import static com.softwaredev.groceryappv1.PantryUI.sharedPref;
 
 public class AddRecipe extends AppCompatActivity {
 
@@ -52,6 +61,7 @@ public class AddRecipe extends AppCompatActivity {
                 finish();
             }
         });
+        registerForContextMenu(listView);
 }
 
     @Override
@@ -62,11 +72,56 @@ public class AddRecipe extends AppCompatActivity {
         listView = findViewById(R.id.ingredientsListView);
         listView.setAdapter(ingAdapt);
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+
+        menu.findItem(R.id.remove).setTitle("Remove item from list");
+        menu.findItem(R.id.removeAll).setTitle("");
+        menu.findItem(R.id.addOne).setTitle("");
+        menu.findItem(R.id.addAll).setTitle("");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String selectedItem = ingredientsString.get(acmi.position);
+        if (!selectedItem.isEmpty()) {
+            removeItemFromIng(acmi.position);
+            recreate();
+            return true;
+        }
+        else
+            return super.onContextItemSelected(item);
+    }
 
     public void sendAddIngredient(View view)
     {
         Intent ingredientIntent = new Intent(this, AddIngredient.class);
         startActivity(ingredientIntent);
+    }
+    public void removeItemFromIng(int position)
+    {
+        if (position > -1) {
+            ingredientsString.remove(position);
+
+            if (!isSignedIn) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.commit();
+
+                editor.putInt("size", ingredientsString.size());
+                for (int i = 0; i < ingredientsString.size(); ++i) {
+                    editor.putString("ingredient" + Integer.toString(ingredientsString.size()), ingredientsString.get(i));
+                }
+                editor.putInt("size", ingredientsString.size());
+                editor.commit();
+            } else {
+                StoreInFirebase();
+            }
+
+        }
     }
 
     public static void addIngredient (Item ingredient)
