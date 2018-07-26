@@ -41,6 +41,10 @@ public class RecipeExp extends AppCompatActivity {
             RecipeBase recipe = RecipeList.RecList.get(position);
 
             ArrayList<Item> ingredients = recipe.GetIngredients();
+            if (PantryUI.getisSignedIn())
+            {
+                ingredients = PantryUI.getuser().getrecipeList().get(position).GetIngredients();
+            }
             String description = "Ingredients: \n";
             for (int i = 0; i < ingredients.size(); ++i)
             {

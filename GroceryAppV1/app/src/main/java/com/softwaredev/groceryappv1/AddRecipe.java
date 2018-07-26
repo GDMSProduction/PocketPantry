@@ -38,6 +38,8 @@ public class AddRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        ingredients.clear();
+        ingredientsString.clear();
 
         Intent intent = getIntent();
         isEditing = intent.getBooleanExtra("inList", false);
@@ -50,7 +52,7 @@ public class AddRecipe extends AppCompatActivity {
 
             for (int i = 0; i < PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients().size(); ++i)
             {
-                ingredientsString.add(PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients().get(i).getname());
+                ingredientsString.add(PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients().get(i).ingredientToString());
             }
 
             EditText editText = findViewById(R.id.editRecNameText);
@@ -138,8 +140,9 @@ public class AddRecipe extends AppCompatActivity {
     {
         if (position > -1) {
             ingredientsString.remove(position);
+            ingredients.remove(position);
 
-            if (!isSignedIn) {
+            if (!PantryUI.getisSignedIn()) {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.clear();
                 editor.commit();
@@ -151,6 +154,7 @@ public class AddRecipe extends AppCompatActivity {
                 editor.putInt("size", ingredientsString.size());
                 editor.commit();
             } else {
+
                 StoreInFirebase();
             }
 

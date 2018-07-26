@@ -676,6 +676,12 @@ public class PantryUI extends AppCompatActivity {
                     adapter = new ItemAdapter(context, pantry, isPantry);
                     pantryLV.setAdapter(adapter);
 
+                    if (!isPantry) {
+                        String total = String.format("%.02f", getTotal());
+                        TextView totalText = findViewById(R.id.totalText);
+                        totalText.setVisibility(View.VISIBLE);
+                        totalText.setText("Total: $" + total);
+                    }
                 }
 
                 @Override
