@@ -12,12 +12,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static com.softwaredev.groceryappv1.PantryUI.StoreInFirebase;
+import static com.softwaredev.groceryappv1.PantryUI.addToGrocery;
+import static com.softwaredev.groceryappv1.PantryUI.isPantry;
+import static com.softwaredev.groceryappv1.PantryUI.isSignedIn;
+import static com.softwaredev.groceryappv1.PantryUI.removeFromList;
 
 public class SpiceRackUI extends AppCompatActivity {
 
@@ -118,7 +127,7 @@ public class SpiceRackUI extends AppCompatActivity {
             spiceList = PantryUI.getuser().getspiceList();
             mSize = PantryUI.getuser().getspiceSize();
         }
-
+        registerForContextMenu(listView);
     }
     @Override
     public void onResume() {
@@ -149,16 +158,29 @@ public class SpiceRackUI extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
 
-    public void sendPantry() {
+        menu.findItem(R.id.remove).setTitle("Remove item from list");
+        menu.findItem(R.id.removeAll).setTitle("");
+        menu.findItem(R.id.addOne).setTitle("");
+        menu.findItem(R.id.addAll).setTitle("");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String selectedItem = spiceList.get(acmi.position);
+        if (!selectedItem.isEmpty()) {
+           removeItemFromSpice(acmi.position);
+            recreate();
+            return true;
+        }
+        else
+            return super.onContextItemSelected(item);
+    }
+        public void sendPantry() {
 
         Intent pantryIntent = new Intent(this, PantryUI.class);
         pantryIntent.putExtra("isPantry", true);
@@ -216,7 +238,29 @@ public class SpiceRackUI extends AppCompatActivity {
         else {
             PantryUI.getuser().setspiceList(spiceList);
             PantryUI.getuser().setspiceSize(spiceList.size());
-            PantryUI.StoreInFirebase();
+            StoreInFirebase();
+        }
+    }
+    public void removeItemFromSpice(int position)
+    {
+        if (position > -1) {
+            spiceList.remove(position);
+
+            if (!isSignedIn) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.commit();
+
+                editor.putInt("size", spiceList.size());
+                for (int i = 0; i < spiceList.size(); ++i) {
+                    editor.putString("spice" + Integer.toString(spiceList.size()), spiceList.get(i));
+                }
+                editor.putInt("size", spiceList.size());
+                editor.commit();
+            } else {
+                StoreInFirebase();
+            }
+
         }
     }
 }

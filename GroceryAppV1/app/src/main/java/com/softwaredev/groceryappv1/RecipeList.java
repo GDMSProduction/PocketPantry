@@ -143,7 +143,7 @@ public class RecipeList extends AppCompatActivity {
         }
 
         //RecNameList = new ArrayList<>();
-        Populate();
+        //Populate();
         rAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, RecNameList);
         listView.setAdapter(rAdapt);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
