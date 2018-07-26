@@ -242,8 +242,16 @@ public class PantryUI extends AppCompatActivity {
                         addToPantry(pantry.get(i));
                     }
                     pantry.clear();
-                    editor.clear();
-                    editor.commit();
+                    grocery.clear();
+                    if (isSignedIn) {
+                        user.getgrocery().clear();
+                        user.setgrocerySize(0);
+                        StoreInFirebase();
+                    }
+                    else {
+                        editor.clear();
+                        editor.commit();
+                    }
                 }
                 recreate();
                 return true;
@@ -451,25 +459,23 @@ public class PantryUI extends AppCompatActivity {
                 _editor.commit();
             }
         } else {
-            for (int i = 0; i < user.getgrocery().size(); ++i) {
-                if (user.getgrocery().get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
-                    grocery.get(i).setquantity(user.getgrocery().get(i).getquantity() + 1);
+            for (int i = 0; i < user.getpantry().size(); ++i) {
+                if (user.getpantry().get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
+                    //user.getpantry().get(i).setquantity(user.getgrocery().get(i).getquantity() + 1);
+                    user.getpantry().get(i).setquantity(user.getpantry().get(i).getquantity() + item.getquantity());
                     isInList = true;
+                    break;
                 }
-                if (isInList)
-                    user.getgrocery().get(i).setquantity(user.getgrocery().get(i).getquantity() + item.getquantity());
-                break;
             }
         }
         if (!isInList) {
-            user.getgrocery().add(item);
+            user.getpantry().add(item);
         }
         StoreInFirebase();
     }
 
 
-    public static void addToGrocery(Item item)
-    {
+    public static void addToGrocery(Item item) {
         boolean isInList = false;
 
         if (!isSignedIn) {
@@ -508,25 +514,20 @@ public class PantryUI extends AppCompatActivity {
                 _editor.putString("item" + Integer.toString(i), _pantry.get(i).itemToString());
             }
             _editor.commit();
-        }
-        else
-        {
+        } else {
             for (int i = 0; i < user.getgrocery().size(); ++i) {
                 if (user.getgrocery().get(i).getname().toLowerCase().equals(item.getname().toLowerCase())) {
                     grocery.get(i).setquantity(user.getgrocery().get(i).getquantity() + 1);
                     isInList = true;
-                }
-                    if (isInList)
-                        user.getgrocery().get(i).setquantity(user.getgrocery().get(i).getquantity() + item.getquantity());
                     break;
                 }
             }
-            if (!isInList)
-            {
+            if (!isInList) {
                 user.getgrocery().add(item);
             }
             StoreInFirebase();
         }
+    }
 
     public float getTotal()
     {
@@ -611,6 +612,8 @@ public class PantryUI extends AppCompatActivity {
     }
 
     public void LoadList () {
+        pantry.clear();
+
         if (!isSignedIn) {
 
             if (isPantry)

@@ -206,8 +206,14 @@ public class RecipeList extends AppCompatActivity {
                     recreate();
                     return true;
                 case R.id.removeAll: //Edit recipe
+                    Intent intent = new Intent(RecipeList.this, AddRecipe.class);
+                    intent.putExtra("position", acmi.position);
+                    intent.putExtra("name", RecList.get(acmi.position).GetName());
+                    intent.putExtra("instructions", RecList.get(acmi.position).GetIns());
+                    //intent.putExtra("ingredients", RecList.get(acmi.position).GetIngredients());
+                    intent.putExtra("inList", true);
 
-                    recreate();
+                    startActivity(intent);
                     return true;
                 case R.id.addOne: //Add missing ingredients to grocery list
                     for (int i = 0; i < selectedItem.GetIngredients().size(); ++i)
@@ -332,6 +338,15 @@ public class RecipeList extends AppCompatActivity {
             PantryUI.getuser().setrecipeSize(RecList.size());
             PantryUI.StoreInFirebase();
         }
+    }
+
+    public static void editRecipe (RecipeBase recipe, int position)
+    {
+        RecList.get(position).recipeName = recipe.GetName();
+        RecList.get(position).instructions = recipe.GetIns();
+        RecList.get(position).ingredients = recipe.GetIngredients();
+
+        PantryUI.StoreInFirebase();
     }
 
     public void removeRecipe(int position)
