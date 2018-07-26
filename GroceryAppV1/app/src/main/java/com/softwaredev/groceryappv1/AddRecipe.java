@@ -29,15 +29,42 @@ public class AddRecipe extends AppCompatActivity {
     private static ArrayList<String> ingredientsString = new ArrayList<> (1);
     ArrayAdapter<String> ingAdapt;
     ListView listView;
+    boolean isEditing = false;
+    String mName = "";
+    String mInstructions = "";
+    int mPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
 
+        Intent intent = getIntent();
+        isEditing = intent.getBooleanExtra("inList", false);
+
+        if (isEditing) {
+            mPosition = intent.getIntExtra("position", -1);
+            mName = intent.getStringExtra("name");
+            mInstructions = intent.getStringExtra("instructions");
+            ingredients = PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients();
+
+            for (int i = 0; i < PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients().size(); ++i)
+            {
+                ingredientsString.add(PantryUI.getuser().getrecipeList().get(mPosition).GetIngredients().get(i).getname());
+            }
+
+            EditText editText = findViewById(R.id.editRecNameText);
+            editText.setText(mName);
+
+            editText = findViewById(R.id.editRecDescText);
+            editText.setText(mInstructions);
+        }
+
         ingAdapt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ingredientsString);
         listView = findViewById(R.id.ingredientsListView);
         listView.setAdapter(ingAdapt);
+
+
 
         Button fab = findViewById(R.id.addrecbutton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +83,13 @@ public class AddRecipe extends AppCompatActivity {
                 else
                     recipeInstructions = insEditText.getText().toString();
 
-                RecipeList.addToRecList(new RecipeBase(recipeName, recipeInstructions, ingredients));
+                if (!isEditing) {
+                    RecipeList.addToRecList(new RecipeBase(recipeName, recipeInstructions, ingredients));
+                }
+                else
+                {
+                    RecipeList.editRecipe(new RecipeBase(recipeName, recipeInstructions, ingredients), mPosition);
+                }
                 ingredients.clear();
                 finish();
             }
